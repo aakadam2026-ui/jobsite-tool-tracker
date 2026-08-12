@@ -1,10 +1,1429 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
   <title>Jobsite Tool Tracker</title>
+
+  <!-- QR / Barcode Scanner -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+
+      margin: 0;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      background: #f3f4f6;
+
+      color: #111827;
+
+    }
+
+
+    .container {
+
+      max-width: 500px;
+
+      margin: auto;
+
+      padding: 18px;
+
+    }
+
+
+    .header {
+
+      background: #111827;
+
+      color: white;
+
+      padding: 20px;
+
+      border-radius: 14px;
+
+      margin-bottom: 18px;
+
+      text-align: center;
+
+    }
+
+
+    .header h1 {
+
+      margin: 0;
+
+      font-size: 23px;
+
+    }
+
+
+    .card {
+
+      background: white;
+
+      padding: 18px;
+
+      border-radius: 14px;
+
+      margin-bottom: 16px;
+
+      box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.08);
+
+    }
+
+
+    button {
+
+      width: 100%;
+
+      border: none;
+
+      border-radius: 10px;
+
+      padding: 15px;
+
+      font-size: 17px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      margin-top: 10px;
+
+    }
+
+
+    button:disabled {
+
+      opacity: 0.5;
+
+      cursor: not-allowed;
+
+    }
+
+
+    .scan {
+
+      background: #111827;
+
+      color: white;
+
+    }
+
+
+    .checkout {
+
+      background: #16a34a;
+
+      color: white;
+
+    }
+
+
+    .checkin {
+
+      background: #2563eb;
+
+      color: white;
+
+    }
+
+
+    .cancel {
+
+      background: #e5e7eb;
+
+      color: #111827;
+
+    }
+
+
+    .info {
+
+      background: #f9fafb;
+
+      padding: 14px;
+
+      border-radius: 10px;
+
+      margin-top: 10px;
+
+    }
+
+
+    .success {
+
+      background: #dcfce7;
+
+      color: #166534;
+
+      padding: 15px;
+
+      border-radius: 10px;
+
+      margin-top: 15px;
+
+      font-weight: bold;
+
+    }
+
+
+    .error {
+
+      background: #fee2e2;
+
+      color: #991b1b;
+
+      padding: 15px;
+
+      border-radius: 10px;
+
+      margin-top: 15px;
+
+      font-weight: bold;
+
+    }
+
+
+    .label {
+
+      color: #6b7280;
+
+      font-size: 13px;
+
+      margin-top: 8px;
+
+    }
+
+
+    .value {
+
+      font-size: 18px;
+
+      font-weight: bold;
+
+    }
+
+
+    #workerReader,
+    #toolboxReader,
+    #checkinReader {
+
+      width: 100%;
+
+      margin-top: 15px;
+
+    }
+
+
+    .hidden {
+
+      display: none;
+
+    }
+
+
+    .loading {
+
+      text-align: center;
+
+      padding: 10px;
+
+      color: #6b7280;
+
+    }
+
+  </style>
+
 </head>
+
+
 <body>
-  <h1>🔧 JOBSITE TOOL TRACKER</h1>
-  <p>GitHub Pages is working!</p>
+
+
+<div class="container">
+
+
+  <div class="header">
+
+    <h1>
+      🔧 JOBSITE TOOL TRACKER
+    </h1>
+
+    <div>
+      Tool Checkout & Check-in
+    </div>
+
+  </div>
+
+
+
+  <!-- ========================= -->
+  <!-- CHECKOUT -->
+  <!-- ========================= -->
+
+  <div class="card">
+
+    <h2>
+      🟢 Check Out
+    </h2>
+
+
+    <div class="label">
+      1. Worker
+    </div>
+
+
+    <div
+      id="workerDisplay"
+      class="info"
+    >
+      No worker scanned
+    </div>
+
+
+    <button
+      class="scan"
+      onclick="startWorkerScan()"
+    >
+      📷 SCAN WORKER BARCODE
+    </button>
+
+
+    <div
+      id="workerScanner"
+      class="hidden"
+    >
+
+      <div id="workerReader"></div>
+
+
+      <button
+        class="cancel"
+        onclick="stopWorkerScan()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+
+
+    <div class="label">
+      2. Toolbox
+    </div>
+
+
+    <div
+      id="toolboxDisplay"
+      class="info"
+    >
+      No toolbox scanned
+    </div>
+
+
+    <button
+      class="scan"
+      onclick="startToolboxScan()"
+    >
+      📷 SCAN TOOLBOX BARCODE
+    </button>
+
+
+    <div
+      id="toolboxScanner"
+      class="hidden"
+    >
+
+      <div id="toolboxReader"></div>
+
+
+      <button
+        class="cancel"
+        onclick="stopToolboxScan()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+
+
+    <button
+      id="checkoutButton"
+      class="checkout"
+      onclick="checkout()"
+    >
+      ✓ CHECK OUT TOOLBOX
+    </button>
+
+  </div>
+
+
+
+  <!-- ========================= -->
+  <!-- CHECK IN -->
+  <!-- ========================= -->
+
+  <div class="card">
+
+    <h2>
+      🔵 Check In
+    </h2>
+
+
+    <p>
+      Scan the toolbox being returned.
+    </p>
+
+
+    <div
+      id="checkinDisplay"
+      class="info"
+    >
+      No toolbox scanned
+    </div>
+
+
+    <button
+      class="scan"
+      onclick="startCheckinScan()"
+    >
+      📷 SCAN TOOLBOX BARCODE
+    </button>
+
+
+    <div
+      id="checkinScanner"
+      class="hidden"
+    >
+
+      <div id="checkinReader"></div>
+
+
+      <button
+        class="cancel"
+        onclick="stopCheckinScan()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+
+    <button
+      id="checkinButton"
+      class="checkin"
+      onclick="checkin()"
+    >
+      ✓ CHECK IN TOOLBOX
+    </button>
+
+  </div>
+
+
+
+  <div id="message"></div>
+
+
+</div>
+
+
+
+<script>
+
+
+// ==================================================
+// APPS SCRIPT API
+// ==================================================
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbxibLo751Co67u_Rmc8DeKIsLDjIzqtwkyxbAMf7oPSM3xd_zS1KFnqVasQzJDRP5xUdg/exec";
+
+
+// ==================================================
+// VARIABLES
+// ==================================================
+
+let workerId = "";
+
+let toolboxId = "";
+
+let checkinToolboxId = "";
+
+
+let workerScanner = null;
+
+let toolboxScanner = null;
+
+let checkinScanner = "";
+
+
+// ==================================================
+// API REQUEST
+// ==================================================
+
+async function apiRequest(
+  action,
+  data = {}
+) {
+
+  const response =
+    await fetch(
+      API_URL,
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type":
+            "text/plain;charset=utf-8"
+
+        },
+
+        body:
+          JSON.stringify({
+
+            action:
+              action,
+
+            ...data
+
+          })
+
+      }
+    );
+
+
+  const result =
+    await response.json();
+
+
+  if (!result.success &&
+      result.error) {
+
+    throw new Error(
+      result.error
+    );
+
+  }
+
+
+  return result;
+
+}
+
+
+
+// ==================================================
+// WORKER SCANNER
+// ==================================================
+
+function startWorkerScan() {
+
+  stopAllScanners();
+
+
+  document
+    .getElementById(
+      "workerScanner"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+
+  workerScanner =
+    new Html5Qrcode(
+      "workerReader"
+    );
+
+
+  workerScanner
+    .start(
+
+      {
+        facingMode: "environment"
+      },
+
+      {
+
+        fps: 10,
+
+        qrbox: {
+          width: 280,
+          height: 150
+        },
+
+        aspectRatio: 1.777
+
+      },
+
+      async function(decodedText) {
+
+        const id =
+          decodedText.trim();
+
+
+        if (!id) return;
+
+
+        stopWorkerScan();
+
+
+        showMessage(
+          "Looking up worker..."
+        );
+
+
+        try {
+
+          const worker =
+            await apiRequest(
+              "getWorker",
+              {
+                workerId: id
+              }
+            );
+
+
+          if (!worker) {
+
+            throw new Error(
+              "Worker not found: " +
+              id
+            );
+
+          }
+
+
+          if (!worker.active) {
+
+            throw new Error(
+              worker.name +
+              " is not active."
+            );
+
+          }
+
+
+          workerId =
+            String(worker.id)
+              .trim();
+
+
+          document
+            .getElementById(
+              "workerDisplay"
+            )
+            .innerHTML =
+
+              "<div class='label'>" +
+              "Worker" +
+              "</div>" +
+
+              "<div class='value'>" +
+              escapeHtml(worker.name) +
+              "</div>" +
+
+              "<div>" +
+              escapeHtml(worker.id) +
+              "</div>" +
+
+              "<div>" +
+              escapeHtml(worker.company) +
+              "</div>" +
+
+              "<div>" +
+              escapeHtml(worker.trade) +
+              "</div>";
+
+          showSuccess(
+            "Worker scanned successfully."
+          );
+
+        }
+
+        catch(error) {
+
+          showError(
+            error.message
+          );
+
+        }
+
+      },
+
+      function() {
+
+        // Normal scanning messages ignored
+
+      }
+
+    )
+
+    .catch(function(error) {
+
+      showError(
+        "Camera could not start.<br><br>" +
+        error
+      );
+
+    });
+
+}
+
+
+
+// ==================================================
+// TOOLBOX SCANNER
+// ==================================================
+
+function startToolboxScan() {
+
+  stopAllScanners();
+
+
+  document
+    .getElementById(
+      "toolboxScanner"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+
+  toolboxScanner =
+    new Html5Qrcode(
+      "toolboxReader"
+    );
+
+
+  toolboxScanner
+    .start(
+
+      {
+        facingMode: "environment"
+      },
+
+      {
+
+        fps: 10,
+
+        qrbox: {
+          width: 280,
+          height: 150
+        },
+
+        aspectRatio: 1.777
+
+      },
+
+      async function(decodedText) {
+
+        const id =
+          decodedText.trim();
+
+
+        if (!id) return;
+
+
+        stopToolboxScan();
+
+
+        showMessage(
+          "Looking up toolbox..."
+        );
+
+
+        try {
+
+          const toolbox =
+            await apiRequest(
+              "getToolbox",
+              {
+                toolboxId: id
+              }
+            );
+
+
+          if (!toolbox) {
+
+            throw new Error(
+              "Toolbox not found: " +
+              id
+            );
+
+          }
+
+
+          toolboxId =
+            String(toolbox.id)
+              .trim();
+
+
+          document
+            .getElementById(
+              "toolboxDisplay"
+            )
+            .innerHTML =
+
+              "<div class='label'>" +
+              "Toolbox" +
+              "</div>" +
+
+              "<div class='value'>" +
+              escapeHtml(toolbox.name) +
+              "</div>" +
+
+              "<div>" +
+              escapeHtml(toolbox.id) +
+              "</div>" +
+
+              "<div>" +
+              escapeHtml(toolbox.type) +
+              "</div>" +
+
+              "<div>" +
+              "Status: " +
+              escapeHtml(toolbox.status) +
+              "</div>";
+
+
+          showSuccess(
+            "Toolbox scanned successfully."
+          );
+
+        }
+
+        catch(error) {
+
+          showError(
+            error.message
+          );
+
+        }
+
+      },
+
+      function() {
+
+        // Normal scanning messages ignored
+
+      }
+
+    )
+
+    .catch(function(error) {
+
+      showError(
+        "Camera could not start.<br><br>" +
+        error
+      );
+
+    });
+
+}
+
+
+
+// ==================================================
+// CHECK-IN SCANNER
+// ==================================================
+
+function startCheckinScan() {
+
+  stopAllScanners();
+
+
+  document
+    .getElementById(
+      "checkinScanner"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+
+  checkinScanner =
+    new Html5Qrcode(
+      "checkinReader"
+    );
+
+
+  checkinScanner
+    .start(
+
+      {
+        facingMode: "environment"
+      },
+
+      {
+
+        fps: 10,
+
+        qrbox: {
+          width: 280,
+          height: 150
+        },
+
+        aspectRatio: 1.777
+
+      },
+
+      async function(decodedText) {
+
+        const id =
+          decodedText.trim();
+
+
+        if (!id) return;
+
+
+        stopCheckinScan();
+
+
+        showMessage(
+          "Looking up toolbox..."
+        );
+
+
+        try {
+
+          const toolbox =
+            await apiRequest(
+              "getToolbox",
+              {
+                toolboxId: id
+              }
+            );
+
+
+          if (!toolbox) {
+
+            throw new Error(
+              "Toolbox not found: " +
+              id
+            );
+
+          }
+
+
+          checkinToolboxId =
+            String(toolbox.id)
+              .trim();
+
+
+          document
+            .getElementById(
+              "checkinDisplay"
+            )
+            .innerHTML =
+
+              "<div class='label'>" +
+              "Toolbox" +
+              "</div>" +
+
+              "<div class='value'>" +
+              escapeHtml(toolbox.name) +
+              "</div>" +
+
+              "<div>" +
+              escapeHtml(toolbox.id) +
+              "</div>" +
+
+              "<div>" +
+              "Status: " +
+              escapeHtml(toolbox.status) +
+              "</div>";
+
+
+          showSuccess(
+            "Toolbox scanned successfully."
+          );
+
+        }
+
+        catch(error) {
+
+          showError(
+            error.message
+          );
+
+        }
+
+      },
+
+      function() {
+
+        // Normal scanning messages ignored
+
+      }
+
+    )
+
+    .catch(function(error) {
+
+      showError(
+        "Camera could not start.<br><br>" +
+        error
+      );
+
+    });
+
+}
+
+
+
+// ==================================================
+// STOP SCANNERS
+// ==================================================
+
+function stopWorkerScan() {
+
+  if (!workerScanner) {
+
+    document
+      .getElementById(
+        "workerScanner"
+      )
+      .classList.add(
+        "hidden"
+      );
+
+    return;
+
+  }
+
+
+  workerScanner
+    .stop()
+    .then(function() {
+
+      workerScanner.clear();
+
+    })
+    .catch(function() {});
+
+
+  workerScanner = null;
+
+
+  document
+    .getElementById(
+      "workerScanner"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+}
+
+
+
+function stopToolboxScan() {
+
+  if (!toolboxScanner) {
+
+    document
+      .getElementById(
+        "toolboxScanner"
+      )
+      .classList.add(
+        "hidden"
+      );
+
+    return;
+
+  }
+
+
+  toolboxScanner
+    .stop()
+    .then(function() {
+
+      toolboxScanner.clear();
+
+    })
+    .catch(function() {});
+
+
+  toolboxScanner = null;
+
+
+  document
+    .getElementById(
+      "toolboxScanner"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+}
+
+
+
+function stopCheckinScan() {
+
+  if (!checkinScanner) {
+
+    document
+      .getElementById(
+        "checkinScanner"
+      )
+      .classList.add(
+        "hidden"
+      );
+
+    return;
+
+  }
+
+
+  checkinScanner
+    .stop()
+    .then(function() {
+
+      checkinScanner.clear();
+
+    })
+    .catch(function() {});
+
+
+  checkinScanner = null;
+
+
+  document
+    .getElementById(
+      "checkinScanner"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+}
+
+
+
+function stopAllScanners() {
+
+  stopWorkerScan();
+
+  stopToolboxScan();
+
+  stopCheckinScan();
+
+}
+
+
+
+// ==================================================
+// CHECKOUT
+// ==================================================
+
+async function checkout() {
+
+  if (!workerId) {
+
+    showError(
+      "Please scan the worker barcode first."
+    );
+
+    return;
+
+  }
+
+
+  if (!toolboxId) {
+
+    showError(
+      "Please scan the toolbox barcode."
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Checking out toolbox..."
+  );
+
+
+  try {
+
+    const result =
+      await apiRequest(
+        "checkout",
+        {
+
+          workerId:
+            workerId,
+
+          toolboxId:
+            toolboxId
+
+        }
+      );
+
+
+    showSuccess(
+
+      "✓ CHECKOUT COMPLETE<br><br>" +
+
+      "Worker: " +
+      escapeHtml(result.worker) +
+
+      "<br>" +
+
+      "Toolbox: " +
+      escapeHtml(result.toolbox) +
+
+      "<br>" +
+
+      "Time: " +
+      escapeHtml(result.time)
+
+    );
+
+
+    resetCheckout();
+
+  }
+
+  catch(error) {
+
+    showError(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+// ==================================================
+// CHECK-IN
+// ==================================================
+
+async function checkin() {
+
+  if (!checkinToolboxId) {
+
+    showError(
+      "Please scan the toolbox barcode first."
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Checking in toolbox..."
+  );
+
+
+  try {
+
+    const result =
+      await apiRequest(
+        "checkin",
+        {
+
+          toolboxId:
+            checkinToolboxId
+
+        }
+      );
+
+
+    showSuccess(
+
+      "✓ CHECK-IN COMPLETE<br><br>" +
+
+      "Worker: " +
+      escapeHtml(result.worker) +
+
+      "<br>" +
+
+      "Toolbox: " +
+      escapeHtml(result.toolbox) +
+
+      "<br>" +
+
+      "Returned: " +
+      escapeHtml(result.time)
+
+    );
+
+
+    checkinToolboxId = "";
+
+
+    document
+      .getElementById(
+        "checkinDisplay"
+      )
+      .innerHTML =
+        "No toolbox scanned";
+
+  }
+
+  catch(error) {
+
+    showError(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+// ==================================================
+// RESET
+// ==================================================
+
+function resetCheckout() {
+
+  workerId = "";
+
+  toolboxId = "";
+
+
+  document
+    .getElementById(
+      "workerDisplay"
+    )
+    .innerHTML =
+      "No worker scanned";
+
+
+  document
+    .getElementById(
+      "toolboxDisplay"
+    )
+    .innerHTML =
+      "No toolbox scanned";
+
+}
+
+
+
+// ==================================================
+// MESSAGES
+// ==================================================
+
+function showSuccess(message) {
+
+  document
+    .getElementById(
+      "message"
+    )
+    .innerHTML =
+
+      "<div class='success'>" +
+      message +
+      "</div>";
+
+}
+
+
+
+function showError(message) {
+
+  document
+    .getElementById(
+      "message"
+    )
+    .innerHTML =
+
+      "<div class='error'>" +
+      "⚠ " +
+      message +
+      "</div>";
+
+}
+
+
+
+function showMessage(message) {
+
+  document
+    .getElementById(
+      "message"
+    )
+    .innerHTML =
+
+      "<div class='info'>" +
+      message +
+      "</div>";
+
+}
+
+
+
+// ==================================================
+// HTML SAFETY
+// ==================================================
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+</script>
+
 </body>
+
 </html>
