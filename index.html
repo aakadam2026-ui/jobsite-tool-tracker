@@ -12,8 +12,8 @@
 
   <title>Jobsite Tool Tracker</title>
 
-  <!-- QR / Barcode Scanner -->
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  <!-- Barcode Scanner -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 
   <style>
@@ -22,234 +22,161 @@
       box-sizing: border-box;
     }
 
+
     body {
-
       margin: 0;
-
-      font-family:
-        Arial,
-        sans-serif;
-
+      font-family: Arial, sans-serif;
       background: #f3f4f6;
-
       color: #111827;
-
     }
 
 
     .container {
-
       max-width: 500px;
-
       margin: auto;
-
       padding: 18px;
-
     }
 
 
     .header {
-
       background: #111827;
-
       color: white;
-
       padding: 20px;
-
       border-radius: 14px;
-
       margin-bottom: 18px;
-
       text-align: center;
-
     }
 
 
     .header h1 {
-
       margin: 0;
-
       font-size: 23px;
-
     }
 
 
     .card {
-
       background: white;
-
       padding: 18px;
-
       border-radius: 14px;
-
       margin-bottom: 16px;
-
-      box-shadow:
-        0 2px 8px
-        rgba(0,0,0,0.08);
-
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
 
     button {
-
       width: 100%;
-
       border: none;
-
       border-radius: 10px;
-
       padding: 15px;
-
       font-size: 17px;
-
       font-weight: bold;
-
       cursor: pointer;
-
       margin-top: 10px;
-
     }
 
 
     button:disabled {
-
       opacity: 0.5;
-
       cursor: not-allowed;
-
     }
 
 
     .scan {
-
       background: #111827;
-
       color: white;
-
     }
 
 
-    .checkout {
-
+    .take {
       background: #16a34a;
-
       color: white;
-
     }
 
 
-    .checkin {
-
+    .return {
       background: #2563eb;
-
       color: white;
-
     }
 
 
     .cancel {
-
       background: #e5e7eb;
-
       color: #111827;
-
     }
 
 
     .info {
-
       background: #f9fafb;
-
       padding: 14px;
-
       border-radius: 10px;
-
       margin-top: 10px;
-
     }
 
 
     .success {
-
       background: #dcfce7;
-
       color: #166534;
-
       padding: 15px;
-
       border-radius: 10px;
-
       margin-top: 15px;
-
       font-weight: bold;
-
     }
 
 
     .error {
-
       background: #fee2e2;
-
       color: #991b1b;
-
       padding: 15px;
-
       border-radius: 10px;
-
       margin-top: 15px;
-
       font-weight: bold;
-
     }
 
 
     .label {
-
       color: #6b7280;
-
       font-size: 13px;
-
       margin-top: 8px;
-
     }
 
 
     .value {
-
       font-size: 18px;
-
       font-weight: bold;
-
-    }
-
-
-    #workerReader,
-    #toolboxReader,
-    #checkinReader {
-
-      width: 100%;
-
-      margin-top: 15px;
-
     }
 
 
     .hidden {
-
       display: none;
-
     }
 
 
-    .loading {
+    .scanner {
+      width: 100%;
+      margin-top: 15px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #000;
+    }
 
-      text-align: center;
 
+    .scanner video {
+      width: 100% !important;
+      border-radius: 12px;
+    }
+
+
+    .scan-instruction {
+      background: #111827;
+      color: white;
       padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
 
-      color: #6b7280;
 
+    .section-title {
+      margin-bottom: 5px;
     }
 
   </style>
@@ -263,6 +190,8 @@
 <div class="container">
 
 
+  <!-- HEADER -->
+
   <div class="header">
 
     <h1>
@@ -270,23 +199,29 @@
     </h1>
 
     <div>
-      Tool Checkout & Check-in
+      Toolbox Tracking
     </div>
 
   </div>
 
 
 
-  <!-- ========================= -->
-  <!-- CHECKOUT -->
-  <!-- ========================= -->
+  <!-- ================================================= -->
+  <!-- TAKE TOOLBOX -->
+  <!-- ================================================= -->
 
   <div class="card">
 
-    <h2>
-      🟢 Check Out
+    <h2 class="section-title">
+      🟢 Take Toolbox
     </h2>
 
+    <p>
+      Worker takes a toolbox.
+    </p>
+
+
+    <!-- WORKER -->
 
     <div class="label">
       1. Worker
@@ -314,7 +249,15 @@
       class="hidden"
     >
 
-      <div id="workerReader"></div>
+      <div class="scan-instruction">
+        Point the camera at the worker Code 39 barcode
+      </div>
+
+
+      <div
+        id="workerReader"
+        class="scanner"
+      ></div>
 
 
       <button
@@ -327,6 +270,8 @@
     </div>
 
 
+
+    <!-- TOOLBOX -->
 
     <div class="label">
       2. Toolbox
@@ -354,7 +299,15 @@
       class="hidden"
     >
 
-      <div id="toolboxReader"></div>
+      <div class="scan-instruction">
+        Point the camera at the toolbox Code 39 barcode
+      </div>
+
+
+      <div
+        id="toolboxReader"
+        class="scanner"
+      ></div>
 
 
       <button
@@ -367,37 +320,35 @@
     </div>
 
 
-
     <button
-      id="checkoutButton"
-      class="checkout"
-      onclick="checkout()"
+      id="takeButton"
+      class="take"
+      onclick="takeToolbox()"
     >
-      ✓ CHECK OUT TOOLBOX
+      ✓ CHECK IN TOOLBOX
     </button>
 
   </div>
 
 
 
-  <!-- ========================= -->
-  <!-- CHECK IN -->
-  <!-- ========================= -->
+  <!-- ================================================= -->
+  <!-- RETURN TOOLBOX -->
+  <!-- ================================================= -->
 
   <div class="card">
 
-    <h2>
-      🔵 Check In
+    <h2 class="section-title">
+      🔵 Return Toolbox
     </h2>
 
-
     <p>
-      Scan the toolbox being returned.
+      Worker returns the toolbox.
     </p>
 
 
     <div
-      id="checkinDisplay"
+      id="returnToolboxDisplay"
       class="info"
     >
       No toolbox scanned
@@ -406,23 +357,31 @@
 
     <button
       class="scan"
-      onclick="startCheckinScan()"
+      onclick="startReturnScan()"
     >
       📷 SCAN TOOLBOX BARCODE
     </button>
 
 
     <div
-      id="checkinScanner"
+      id="returnScanner"
       class="hidden"
     >
 
-      <div id="checkinReader"></div>
+      <div class="scan-instruction">
+        Point the camera at the toolbox Code 39 barcode
+      </div>
+
+
+      <div
+        id="returnReader"
+        class="scanner"
+      ></div>
 
 
       <button
         class="cancel"
-        onclick="stopCheckinScan()"
+        onclick="stopReturnScan()"
       >
         Cancel
       </button>
@@ -431,16 +390,18 @@
 
 
     <button
-      id="checkinButton"
-      class="checkin"
-      onclick="checkin()"
+      id="returnButton"
+      class="return"
+      onclick="returnToolbox()"
     >
-      ✓ CHECK IN TOOLBOX
+      ✓ CHECK OUT TOOLBOX
     </button>
 
   </div>
 
 
+
+  <!-- MESSAGE -->
 
   <div id="message"></div>
 
@@ -452,92 +413,65 @@
 <script>
 
 
-// ==================================================
-// APPS SCRIPT API
-// ==================================================
-
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbxibLo751Co67u_Rmc8DeKIsLDjIzqtwkyxbAMf7oPSM3xd_zS1KFnqVasQzJDRP5xUdg/exec";
-
-
-// ==================================================
+// =====================================================
 // VARIABLES
-// ==================================================
+// =====================================================
 
 let workerId = "";
 
 let toolboxId = "";
 
-let checkinToolboxId = "";
+let returnToolboxId = "";
 
 
 let workerScanner = null;
 
 let toolboxScanner = null;
 
-let checkinScanner = "";
+let returnScanner = null;
 
 
-// ==================================================
-// API REQUEST
-// ==================================================
+// =====================================================
+// CODE 39 SCANNER CONFIG
+// =====================================================
 
-async function apiRequest(
-  action,
-  data = {}
-) {
+const scannerConfig = {
 
-  const response =
-    await fetch(
-      API_URL,
-      {
+  fps: 10,
 
-        method: "POST",
+  qrbox: {
+    width: 280,
+    height: 150
+  },
 
-        headers: {
+  formatsToSupport: [
+    Html5QrcodeSupportedFormats.CODE_39
+  ]
 
-          "Content-Type":
-            "text/plain;charset=utf-8"
-
-        },
-
-        body:
-          JSON.stringify({
-
-            action:
-              action,
-
-            ...data
-
-          })
-
-      }
-    );
+};
 
 
-  const result =
-    await response.json();
+// =====================================================
+// API PLACEHOLDER
+// =====================================================
+//
+// THIS WILL LATER CONNECT TO SHAREPOINT / EXCEL.
+//
+// DO NOT PUT A MICROSOFT PASSWORD OR SECRET HERE.
+//
 
+async function apiRequest(action, data = {}) {
 
-  if (!result.success &&
-      result.error) {
-
-    throw new Error(
-      result.error
-    );
-
-  }
-
-
-  return result;
+  throw new Error(
+    "Excel connection has not been configured yet."
+  );
 
 }
 
 
-
-// ==================================================
+// =====================================================
 // WORKER SCANNER
-// ==================================================
+// =====================================================
 
 function startWorkerScan() {
 
@@ -545,18 +479,17 @@ function startWorkerScan() {
 
 
   document
-    .getElementById(
-      "workerScanner"
-    )
-    .classList.remove(
-      "hidden"
-    );
+    .getElementById("workerScanner")
+    .classList.remove("hidden");
+
+
+  showMessage(
+    "Starting camera..."
+  );
 
 
   workerScanner =
-    new Html5Qrcode(
-      "workerReader"
-    );
+    new Html5Qrcode("workerReader");
 
 
   workerScanner
@@ -566,26 +499,17 @@ function startWorkerScan() {
         facingMode: "environment"
       },
 
-      {
-
-        fps: 10,
-
-        qrbox: {
-          width: 280,
-          height: 150
-        },
-
-        aspectRatio: 1.777
-
-      },
+      scannerConfig,
 
       async function(decodedText) {
 
-        const id =
+        const barcode =
           decodedText.trim();
 
 
-        if (!id) return;
+        if (!barcode) {
+          return;
+        }
 
 
         stopWorkerScan();
@@ -602,7 +526,7 @@ function startWorkerScan() {
             await apiRequest(
               "getWorker",
               {
-                workerId: id
+                barcode: barcode
               }
             );
 
@@ -611,7 +535,7 @@ function startWorkerScan() {
 
             throw new Error(
               "Worker not found: " +
-              id
+              barcode
             );
 
           }
@@ -628,8 +552,7 @@ function startWorkerScan() {
 
 
           workerId =
-            String(worker.id)
-              .trim();
+            String(worker.id).trim();
 
 
           document
@@ -638,25 +561,20 @@ function startWorkerScan() {
             )
             .innerHTML =
 
-              "<div class='label'>" +
-              "Worker" +
-              "</div>" +
+              "<div class='label'>Worker</div>" +
 
               "<div class='value'>" +
               escapeHtml(worker.name) +
               "</div>" +
 
-              "<div>" +
+              "<div>ID: " +
               escapeHtml(worker.id) +
-              "</div>" +
-
-              "<div>" +
-              escapeHtml(worker.company) +
               "</div>" +
 
               "<div>" +
               escapeHtml(worker.trade) +
               "</div>";
+
 
           showSuccess(
             "Worker scanned successfully."
@@ -675,29 +593,32 @@ function startWorkerScan() {
       },
 
       function() {
-
-        // Normal scanning messages ignored
-
+        // Normal scan messages ignored.
       }
 
     )
 
     .catch(function(error) {
 
-      showError(
-        "Camera could not start.<br><br>" +
-        error
-      );
+      workerScanner = null;
+
+      document
+        .getElementById(
+          "workerScanner"
+        )
+        .classList.add("hidden");
+
+
+      showCameraError(error);
 
     });
 
 }
 
 
-
-// ==================================================
-// TOOLBOX SCANNER
-// ==================================================
+// =====================================================
+// TOOLBOX SCANNER FOR TAKING TOOLBOX
+// =====================================================
 
 function startToolboxScan() {
 
@@ -708,15 +629,16 @@ function startToolboxScan() {
     .getElementById(
       "toolboxScanner"
     )
-    .classList.remove(
-      "hidden"
-    );
+    .classList.remove("hidden");
+
+
+  showMessage(
+    "Starting camera..."
+  );
 
 
   toolboxScanner =
-    new Html5Qrcode(
-      "toolboxReader"
-    );
+    new Html5Qrcode("toolboxReader");
 
 
   toolboxScanner
@@ -726,26 +648,17 @@ function startToolboxScan() {
         facingMode: "environment"
       },
 
-      {
-
-        fps: 10,
-
-        qrbox: {
-          width: 280,
-          height: 150
-        },
-
-        aspectRatio: 1.777
-
-      },
+      scannerConfig,
 
       async function(decodedText) {
 
-        const id =
+        const barcode =
           decodedText.trim();
 
 
-        if (!id) return;
+        if (!barcode) {
+          return;
+        }
 
 
         stopToolboxScan();
@@ -762,7 +675,7 @@ function startToolboxScan() {
             await apiRequest(
               "getToolbox",
               {
-                toolboxId: id
+                barcode: barcode
               }
             );
 
@@ -771,15 +684,14 @@ function startToolboxScan() {
 
             throw new Error(
               "Toolbox not found: " +
-              id
+              barcode
             );
 
           }
 
 
           toolboxId =
-            String(toolbox.id)
-              .trim();
+            String(toolbox.id).trim();
 
 
           document
@@ -788,24 +700,21 @@ function startToolboxScan() {
             )
             .innerHTML =
 
-              "<div class='label'>" +
-              "Toolbox" +
-              "</div>" +
+              "<div class='label'>Toolbox</div>" +
 
               "<div class='value'>" +
               escapeHtml(toolbox.name) +
               "</div>" +
 
-              "<div>" +
+              "<div>ID: " +
               escapeHtml(toolbox.id) +
               "</div>" +
 
-              "<div>" +
+              "<div>Type: " +
               escapeHtml(toolbox.type) +
               "</div>" +
 
-              "<div>" +
-              "Status: " +
+              "<div>Status: " +
               escapeHtml(toolbox.status) +
               "</div>";
 
@@ -827,80 +736,75 @@ function startToolboxScan() {
       },
 
       function() {
-
-        // Normal scanning messages ignored
-
+        // Normal scan messages ignored.
       }
 
     )
 
     .catch(function(error) {
 
-      showError(
-        "Camera could not start.<br><br>" +
-        error
-      );
+      toolboxScanner = null;
+
+      document
+        .getElementById(
+          "toolboxScanner"
+        )
+        .classList.add("hidden");
+
+
+      showCameraError(error);
 
     });
 
 }
 
 
+// =====================================================
+// RETURN TOOLBOX SCANNER
+// =====================================================
 
-// ==================================================
-// CHECK-IN SCANNER
-// ==================================================
-
-function startCheckinScan() {
+function startReturnScan() {
 
   stopAllScanners();
 
 
   document
     .getElementById(
-      "checkinScanner"
+      "returnScanner"
     )
-    .classList.remove(
-      "hidden"
-    );
+    .classList.remove("hidden");
 
 
-  checkinScanner =
-    new Html5Qrcode(
-      "checkinReader"
-    );
+  showMessage(
+    "Starting camera..."
+  );
 
 
-  checkinScanner
+  returnScanner =
+    new Html5Qrcode("returnReader");
+
+
+  returnScanner
     .start(
 
       {
         facingMode: "environment"
       },
 
-      {
-
-        fps: 10,
-
-        qrbox: {
-          width: 280,
-          height: 150
-        },
-
-        aspectRatio: 1.777
-
-      },
+      scannerConfig,
 
       async function(decodedText) {
 
-        const id =
+        const barcode =
           decodedText.trim();
 
 
-        if (!id) return;
+        if (!barcode) {
+          return;
+        }
 
 
-        stopCheckinScan();
+        stopReturnScan();
 
 
         showMessage(
@@ -914,7 +818,7 @@ function startCheckinScan() {
             await apiRequest(
               "getToolbox",
               {
-                toolboxId: id
+                barcode: barcode
               }
             );
 
@@ -923,37 +827,37 @@ function startCheckinScan() {
 
             throw new Error(
               "Toolbox not found: " +
-              id
+              barcode
             );
 
           }
 
 
-          checkinToolboxId =
-            String(toolbox.id)
-              .trim();
+          returnToolboxId =
+            String(toolbox.id).trim();
 
 
           document
             .getElementById(
-              "checkinDisplay"
+              "returnToolboxDisplay"
             )
             .innerHTML =
 
-              "<div class='label'>" +
-              "Toolbox" +
-              "</div>" +
+              "<div class='label'>Toolbox</div>" +
 
               "<div class='value'>" +
               escapeHtml(toolbox.name) +
               "</div>" +
 
-              "<div>" +
+              "<div>ID: " +
               escapeHtml(toolbox.id) +
               "</div>" +
 
-              "<div>" +
-              "Status: " +
+              "<div>Type: " +
+              escapeHtml(toolbox.type) +
+              "</div>" +
+
+              "<div>Status: " +
               escapeHtml(toolbox.status) +
               "</div>";
 
@@ -975,155 +879,137 @@ function startCheckinScan() {
       },
 
       function() {
-
-        // Normal scanning messages ignored
-
+        // Normal scan messages ignored.
       }
 
     )
 
     .catch(function(error) {
 
-      showError(
-        "Camera could not start.<br><br>" +
-        error
-      );
+      returnScanner = null;
+
+      document
+        .getElementById(
+          "returnScanner"
+        )
+        .classList.add("hidden");
+
+
+      showCameraError(error);
 
     });
 
 }
 
 
-
-// ==================================================
-// STOP SCANNERS
-// ==================================================
+// =====================================================
+// STOP WORKER SCANNER
+// =====================================================
 
 function stopWorkerScan() {
 
-  if (!workerScanner) {
+  if (workerScanner) {
 
-    document
-      .getElementById(
-        "workerScanner"
-      )
-      .classList.add(
-        "hidden"
-      );
+    const scanner =
+      workerScanner;
 
-    return;
+    workerScanner = null;
+
+
+    scanner
+      .stop()
+      .then(function() {
+
+        scanner.clear();
+
+      })
+      .catch(function() {});
 
   }
-
-
-  workerScanner
-    .stop()
-    .then(function() {
-
-      workerScanner.clear();
-
-    })
-    .catch(function() {});
-
-
-  workerScanner = null;
 
 
   document
     .getElementById(
       "workerScanner"
     )
-    .classList.add(
-      "hidden"
-    );
+    .classList.add("hidden");
 
 }
 
 
+// =====================================================
+// STOP TOOLBOX SCANNER
+// =====================================================
 
 function stopToolboxScan() {
 
-  if (!toolboxScanner) {
+  if (toolboxScanner) {
 
-    document
-      .getElementById(
-        "toolboxScanner"
-      )
-      .classList.add(
-        "hidden"
-      );
+    const scanner =
+      toolboxScanner;
 
-    return;
+    toolboxScanner = null;
+
+
+    scanner
+      .stop()
+      .then(function() {
+
+        scanner.clear();
+
+      })
+      .catch(function() {});
 
   }
-
-
-  toolboxScanner
-    .stop()
-    .then(function() {
-
-      toolboxScanner.clear();
-
-    })
-    .catch(function() {});
-
-
-  toolboxScanner = null;
 
 
   document
     .getElementById(
       "toolboxScanner"
     )
-    .classList.add(
-      "hidden"
-    );
+    .classList.add("hidden");
 
 }
 
 
+// =====================================================
+// STOP RETURN SCANNER
+// =====================================================
 
-function stopCheckinScan() {
+function stopReturnScan() {
 
-  if (!checkinScanner) {
+  if (returnScanner) {
 
-    document
-      .getElementById(
-        "checkinScanner"
-      )
-      .classList.add(
-        "hidden"
-      );
+    const scanner =
+      returnScanner;
 
-    return;
+    returnScanner = null;
+
+
+    scanner
+      .stop()
+      .then(function() {
+
+        scanner.clear();
+
+      })
+      .catch(function() {});
 
   }
 
 
-  checkinScanner
-    .stop()
-    .then(function() {
-
-      checkinScanner.clear();
-
-    })
-    .catch(function() {});
-
-
-  checkinScanner = null;
-
-
   document
     .getElementById(
-      "checkinScanner"
+      "returnScanner"
     )
-    .classList.add(
-      "hidden"
-    );
+    .classList.add("hidden");
 
 }
 
 
+// =====================================================
+// STOP ALL SCANNERS
+// =====================================================
 
 function stopAllScanners() {
 
@@ -1131,17 +1017,21 @@ function stopAllScanners() {
 
   stopToolboxScan();
 
-  stopCheckinScan();
+  stopReturnScan();
 
 }
 
 
+// =====================================================
+// TAKE TOOLBOX
+// Worker receives toolbox
+// Excel:
+// Date      = today
+// Checkin   = current time
+// Checkout  = blank
+// =====================================================
 
-// ==================================================
-// CHECKOUT
-// ==================================================
-
-async function checkout() {
+async function takeToolbox() {
 
   if (!workerId) {
 
@@ -1165,8 +1055,17 @@ async function checkout() {
   }
 
 
+  const button =
+    document.getElementById(
+      "takeButton"
+    );
+
+
+  button.disabled = true;
+
+
   showMessage(
-    "Checking out toolbox..."
+    "Recording toolbox checkout..."
   );
 
 
@@ -1174,7 +1073,7 @@ async function checkout() {
 
     const result =
       await apiRequest(
-        "checkout",
+        "takeToolbox",
         {
 
           workerId:
@@ -1189,7 +1088,7 @@ async function checkout() {
 
     showSuccess(
 
-      "✓ CHECKOUT COMPLETE<br><br>" +
+      "✓ TOOLBOX GIVEN TO WORKER<br><br>" +
 
       "Worker: " +
       escapeHtml(result.worker) +
@@ -1207,7 +1106,7 @@ async function checkout() {
     );
 
 
-    resetCheckout();
+    resetTakeForm();
 
   }
 
@@ -1219,17 +1118,22 @@ async function checkout() {
 
   }
 
+
+  button.disabled = false;
+
 }
 
 
+// =====================================================
+// RETURN TOOLBOX
+// Worker returns toolbox
+// Excel:
+// Checkout = current time
+// =====================================================
 
-// ==================================================
-// CHECK-IN
-// ==================================================
+async function returnToolbox() {
 
-async function checkin() {
-
-  if (!checkinToolboxId) {
+  if (!returnToolboxId) {
 
     showError(
       "Please scan the toolbox barcode first."
@@ -1240,8 +1144,17 @@ async function checkin() {
   }
 
 
+  const button =
+    document.getElementById(
+      "returnButton"
+    );
+
+
+  button.disabled = true;
+
+
   showMessage(
-    "Checking in toolbox..."
+    "Recording toolbox return..."
   );
 
 
@@ -1249,11 +1162,11 @@ async function checkin() {
 
     const result =
       await apiRequest(
-        "checkin",
+        "returnToolbox",
         {
 
           toolboxId:
-            checkinToolboxId
+            returnToolboxId
 
         }
       );
@@ -1261,7 +1174,7 @@ async function checkin() {
 
     showSuccess(
 
-      "✓ CHECK-IN COMPLETE<br><br>" +
+      "✓ TOOLBOX RETURNED<br><br>" +
 
       "Worker: " +
       escapeHtml(result.worker) +
@@ -1273,21 +1186,13 @@ async function checkin() {
 
       "<br>" +
 
-      "Returned: " +
+      "Time: " +
       escapeHtml(result.time)
 
     );
 
 
-    checkinToolboxId = "";
-
-
-    document
-      .getElementById(
-        "checkinDisplay"
-      )
-      .innerHTML =
-        "No toolbox scanned";
+    resetReturnForm();
 
   }
 
@@ -1299,15 +1204,17 @@ async function checkin() {
 
   }
 
+
+  button.disabled = false;
+
 }
 
 
+// =====================================================
+// RESET TAKE FORM
+// =====================================================
 
-// ==================================================
-// RESET
-// ==================================================
-
-function resetCheckout() {
+function resetTakeForm() {
 
   workerId = "";
 
@@ -1332,17 +1239,82 @@ function resetCheckout() {
 }
 
 
+// =====================================================
+// RESET RETURN FORM
+// =====================================================
 
-// ==================================================
+function resetReturnForm() {
+
+  returnToolboxId = "";
+
+
+  document
+    .getElementById(
+      "returnToolboxDisplay"
+    )
+    .innerHTML =
+      "No toolbox scanned";
+
+}
+
+
+// =====================================================
+// CAMERA ERROR
+// =====================================================
+
+function showCameraError(error) {
+
+  const message =
+    error && error.message
+      ? error.message
+      : String(error);
+
+
+  showError(
+
+    "Camera could not start.<br><br>" +
+
+    escapeHtml(message) +
+
+    "<br><br>" +
+
+    "Make sure camera permission is allowed " +
+    "for this website."
+
+  );
+
+}
+
+
+// =====================================================
+// HTML ESCAPING
+// =====================================================
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+
+    .replace(/&/g, "&amp;")
+
+    .replace(/</g, "&lt;")
+
+    .replace(/>/g, "&gt;")
+
+    .replace(/"/g, "&quot;")
+
+    .replace(/'/g, "&#039;");
+
+}
+
+
+// =====================================================
 // MESSAGES
-// ==================================================
+// =====================================================
 
 function showSuccess(message) {
 
   document
-    .getElementById(
-      "message"
-    )
+    .getElementById("message")
     .innerHTML =
 
       "<div class='success'>" +
@@ -1352,13 +1324,10 @@ function showSuccess(message) {
 }
 
 
-
 function showError(message) {
 
   document
-    .getElementById(
-      "message"
-    )
+    .getElementById("message")
     .innerHTML =
 
       "<div class='error'>" +
@@ -1369,13 +1338,10 @@ function showError(message) {
 }
 
 
-
 function showMessage(message) {
 
   document
-    .getElementById(
-      "message"
-    )
+    .getElementById("message")
     .innerHTML =
 
       "<div class='info'>" +
@@ -1383,44 +1349,6 @@ function showMessage(message) {
       "</div>";
 
 }
-
-
-
-// ==================================================
-// HTML SAFETY
-// ==================================================
-
-function escapeHtml(value) {
-
-  return String(value ?? "")
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
 
 </script>
 
