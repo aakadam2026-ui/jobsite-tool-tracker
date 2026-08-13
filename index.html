@@ -16,68 +16,49 @@
 
 <style>
 
+/* =====================================================
+   BASIC
+   ===================================================== */
+
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
   font-family: Arial, sans-serif;
   background: #f3f4f6;
   color: #111827;
 }
 
+
 /* =====================================================
-   FINAL COMPACT LAYOUT
+   MAIN CONTAINER
    ===================================================== */
 
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
 .container {
-  width: 100% !important;
-  max-width: 500px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* Keep cards compact */
-.card {
   width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 18px;
 }
 
-/* Keep header compact */
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
 .header {
   width: 100%;
-  text-align: center;
-}
 
-/* Center JOBSITE TOOL TRACKER */
-.header h1 {
-  width: 100%;
-  text-align: center !important;
-}
-
-/* Make Tool Checkout & Check-in BLACK */
-.header .subtitle {
-  color: #000000 !important;
-  text-align: center !important;
-  font-weight: 600;
-}
-
-/* If subtitle is a normal div instead of .subtitle */
-.header > div {
-  color: #000000 !important;
-  text-align: center !important;
-}
-
-.header {
   background: linear-gradient(
     135deg,
     #111827,
@@ -85,57 +66,126 @@ body {
   );
 
   color: white;
-  padding: 22px 18px;
+
+  padding: 20px 18px;
+
   border-radius: 16px;
+
   margin-bottom: 18px;
+
   text-align: center;
 
   box-shadow:
     0 4px 12px rgba(0,0,0,0.15);
 }
 
+
+/* LOGO */
+
 .company-logo {
-  width: 100%;
-  max-width: 260px;
+  width: auto;
+
+  max-width: 240px;
+
   height: auto;
+
   display: block;
-  margin: 0 auto 18px auto;
+
+  margin: 0 auto 14px auto;
 
   background: white;
+
   padding: 8px;
+
   border-radius: 8px;
 }
 
+
+/* TITLE */
+
 .header h1 {
   margin: 0;
+
+  width: 100%;
+
+  text-align: center;
+
   font-size: 23px;
+
   font-weight: 800;
+
+  color: white;
+
   letter-spacing: 0.5px;
 }
 
-.subtitle {
+
+/* SUBTITLE */
+
+.header .subtitle {
   margin-top: 7px;
+
+  width: 100%;
+
+  text-align: center;
+
   font-size: 15px;
-  color: #dbeafe;
-}
+
+  font-weight: 600;
+
+  color: #000000;
+
+  background: white;
+
+  border-radius: 6px;
+
+  padding: 5px 8px;
 }
 
+
+/* =====================================================
+   CARDS
+   ===================================================== */
+
 .card {
+  width: 100%;
+
   background: white;
+
   padding: 18px;
+
   border-radius: 14px;
+
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.08);
 }
+
+.card h2 {
+  margin-top: 0;
+}
+
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
 
 button {
   width: 100%;
+
   border: none;
+
   border-radius: 10px;
+
   padding: 15px;
+
   font-size: 17px;
+
   font-weight: bold;
+
   cursor: pointer;
+
   margin-top: 10px;
 }
 
@@ -163,65 +213,170 @@ button:disabled {
   color: #111827;
 }
 
+
+/* =====================================================
+   INFORMATION
+   ===================================================== */
+
 .info {
   background: #f9fafb;
+
   padding: 14px;
+
   border-radius: 10px;
+
   margin-top: 10px;
 }
 
 .success {
   background: #dcfce7;
+
   color: #166534;
+
   padding: 15px;
+
   border-radius: 10px;
+
   margin-top: 15px;
+
   font-weight: bold;
 }
 
 .error {
   background: #fee2e2;
+
   color: #991b1b;
+
   padding: 15px;
+
   border-radius: 10px;
+
   margin-top: 15px;
+
   font-weight: bold;
 }
 
 .label {
   color: #6b7280;
+
   font-size: 13px;
+
   margin-top: 8px;
 }
 
 .value {
   font-size: 18px;
+
   font-weight: bold;
 }
 
+
+/* =====================================================
+   HIDDEN
+   ===================================================== */
+
 .hidden {
-  display: none;
+  display: none !important;
 }
+
+
+/* =====================================================
+   SCANNER
+   ===================================================== */
 
 .scanner {
   width: 100%;
+
   margin-top: 15px;
+
   overflow: hidden;
+
   border-radius: 12px;
+
   background: #000;
+
+  position: relative;
 }
 
 .scanner video {
   width: 100% !important;
+
+  height: auto !important;
+
+  display: block;
+
   border-radius: 12px;
 }
 
 .scan-instruction {
   background: #111827;
+
   color: white;
+
   padding: 10px;
+
   text-align: center;
+
   font-size: 14px;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  .container {
+    width: 100%;
+
+    max-width: 500px;
+
+    padding: 12px;
+  }
+
+  .header {
+    padding: 18px 14px;
+  }
+
+  .company-logo {
+    max-width: 220px;
+  }
+
+  .header h1 {
+    font-size: 21px;
+  }
+
+}
+
+
+/* =====================================================
+   LAPTOP / DESKTOP
+   KEEP SAME COMPACT WIDTH
+   ===================================================== */
+
+@media (min-width: 601px) {
+
+  .container {
+    width: 500px;
+
+    max-width: 500px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+  }
+
+}
+
+
+/* =====================================================
+   PREVENT PAGE MOVEMENT DURING SCANNING
+   ===================================================== */
+
+html.scanning,
+body.scanning {
+  overflow: hidden !important;
 }
 
 </style>
@@ -232,232 +387,243 @@ button:disabled {
 <body>
 
 
-<div class="">
+<div class="container">
 
-  <img
-    src="logo.png"
-    class="company-logo"
-    alt="Spirit Construction Services, Inc."
-  >
 
-  <h1>
-    JOBSITE TOOL TRACKER
-  </h1>
+  <!-- =================================================
+       HEADER
+       ================================================= -->
 
-  <div class="subtitle">
-    Tool Checkout & Check-in
+  <div class="header">
+
+    <img
+      src="logo.png"
+      class="company-logo"
+      alt="Spirit Construction Services, Inc."
+    >
+
+    <h1>
+      JOBSITE TOOL TRACKER
+    </h1>
+
+    <div class="subtitle">
+      Tool Checkout & Check-in
+    </div>
+
   </div>
 
+
+  <!-- =================================================
+       CHECK IN / GIVE TOOL TO WORKER
+       ================================================= -->
+
+  <div class="card">
+
+    <h2>
+      🔵 Check In
+    </h2>
+
+    <p>
+      Scan the worker first, then scan the tool being given to the worker.
+    </p>
+
+
+    <!-- WORKER -->
+
+    <div class="label">
+      1. Worker
+    </div>
+
+    <div
+      id="workerDisplay"
+      class="info">
+
+      No worker scanned
+
+    </div>
+
+
+    <button
+      id="workerScanButton"
+      class="scan"
+      onclick="startWorkerScan()">
+
+      📷 SCAN WORKER BARCODE
+
+    </button>
+
+
+    <div
+      id="workerScanner"
+      class="hidden">
+
+      <div class="scan-instruction">
+
+        Point the camera at the worker Code 39 barcode
+
+      </div>
+
+      <div
+        id="workerReader"
+        class="scanner">
+      </div>
+
+      <button
+        class="cancel"
+        onclick="stopWorkerScan()">
+
+        Cancel
+
+      </button>
+
+    </div>
+
+
+    <!-- TOOL -->
+
+    <div class="label">
+
+      2. Tool
+
+    </div>
+
+    <div
+      id="toolDisplay"
+      class="info">
+
+      No tool scanned
+
+    </div>
+
+
+    <button
+      id="toolScanButton"
+      class="scan"
+      onclick="startToolScan()">
+
+      📷 SCAN TOOL BARCODE
+
+    </button>
+
+
+    <div
+      id="toolScanner"
+      class="hidden">
+
+      <div class="scan-instruction">
+
+        Point the camera at the tool Code 39 barcode
+
+      </div>
+
+      <div
+        id="toolReader"
+        class="scanner">
+      </div>
+
+      <button
+        class="cancel"
+        onclick="stopToolScan()">
+
+        Cancel
+
+      </button>
+
+    </div>
+
+
+    <button
+      id="checkinButton"
+      class="checkin"
+      onclick="checkin()">
+
+      ✓ CHECK IN TOOL
+
+    </button>
+
+  </div>
+
+
+  <!-- =================================================
+       CHECK OUT / RETURN TOOL
+       ================================================= -->
+
+  <div class="card">
+
+    <h2>
+      🟢 Check Out
+    </h2>
+
+    <p>
+      Scan the tool being returned by the worker.
+    </p>
+
+
+    <div
+      id="checkoutToolDisplay"
+      class="info">
+
+      No tool scanned
+
+    </div>
+
+
+    <button
+      id="checkoutScanButton"
+      class="scan"
+      onclick="startCheckoutScan()">
+
+      📷 SCAN TOOL BARCODE
+
+    </button>
+
+
+    <div
+      id="checkoutScanner"
+      class="hidden">
+
+      <div class="scan-instruction">
+
+        Point the camera at the tool Code 39 barcode
+
+      </div>
+
+      <div
+        id="checkoutReader"
+        class="scanner">
+      </div>
+
+      <button
+        class="cancel"
+        onclick="stopCheckoutScan()">
+
+        Cancel
+
+      </button>
+
+    </div>
+
+
+    <button
+      id="checkoutButton"
+      class="checkout"
+      onclick="checkout()">
+
+      ✓ CHECK OUT TOOL
+
+    </button>
+
+  </div>
+
+
+  <!-- =================================================
+       MESSAGE
+       ================================================= -->
+
+  <div id="message"></div>
+
+
 </div>
-
-
-
-<!-- CHECK IN / GIVE TOOL TO WORKER -->
-
-<div class="card">
-
-<h2>🔵 Check In</h2>
-
-<p>
-Scan the worker first, then scan the tool being given to the worker.
-</p>
-
-
-<!-- WORKER -->
-
-<div class="label">
-1. Worker
-</div>
-
-<div
-id="workerDisplay"
-class="info">
-
-No worker scanned
-
-</div>
-
-
-<button
-id="workerScanButton"
-class="scan"
-onclick="startWorkerScan()">
-
-📷 SCAN WORKER BARCODE
-
-</button>
-
-
-<div
-id="workerScanner"
-class="hidden">
-
-<div class="scan-instruction">
-
-Point the camera at the worker Code 39 barcode
-
-</div>
-
-<div
-id="workerReader"
-class="scanner">
-</div>
-
-<button
-class="cancel"
-onclick="stopWorkerScan()">
-
-Cancel
-
-</button>
-
-</div>
-
-
-
-<!-- TOOL -->
-
-<div class="label">
-
-2. Tool
-
-</div>
-
-
-<div
-id="toolDisplay"
-class="info">
-
-No tool scanned
-
-</div>
-
-
-<button
-id="toolScanButton"
-class="scan"
-onclick="startToolScan()">
-
-📷 SCAN TOOL BARCODE
-
-</button>
-
-
-<div
-id="toolScanner"
-class="hidden">
-
-<div class="scan-instruction">
-
-Point the camera at the tool Code 39 barcode
-
-</div>
-
-<div
-id="toolReader"
-class="scanner">
-</div>
-
-<button
-class="cancel"
-onclick="stopToolScan()">
-
-Cancel
-
-</button>
-
-</div>
-
-
-<button
-id="checkinButton"
-class="checkin"
-onclick="checkin()">
-
-✓ CHECK IN TOOL
-
-</button>
-
-</div>
-
-
-
-<!-- CHECK OUT / RETURN TOOL -->
-
-<div class="card">
-
-<h2>🟢 Check Out</h2>
-
-<p>
-Scan the tool being returned by the worker.
-</p>
-
-
-<div
-id="checkoutToolDisplay"
-class="info">
-
-No tool scanned
-
-</div>
-
-
-<button
-id="checkoutScanButton"
-class="scan"
-onclick="startCheckoutScan()">
-
-📷 SCAN TOOL BARCODE
-
-</button>
-
-
-<div
-id="checkoutScanner"
-class="hidden">
-
-<div class="scan-instruction">
-
-Point the camera at the tool Code 39 barcode
-
-</div>
-
-<div
-id="checkoutReader"
-class="scanner">
-</div>
-
-<button
-class="cancel"
-onclick="stopCheckoutScan()">
-
-Cancel
-
-</button>
-
-</div>
-
-
-<button
-id="checkoutButton"
-class="checkout"
-onclick="checkout()">
-
-✓ CHECK OUT TOOL
-
-</button>
-
-</div>
-
-
-
-<!-- MESSAGE -->
-
-<div id="message"></div>
-
-
-</div>
-
 
 
 <script>
@@ -502,16 +668,16 @@ let checkoutScanLocked = false;
 
 const scannerConfig = {
 
-fps: 10,
+  fps: 10,
 
-qrbox: {
-  width: 300,
-  height: 120
-},
+  qrbox: {
+    width: 300,
+    height: 120
+  },
 
-formatsToSupport: [
-  Html5QrcodeSupportedFormats.CODE_39
-]
+  formatsToSupport: [
+    Html5QrcodeSupportedFormats.CODE_39
+  ]
 
 };
 
@@ -522,99 +688,167 @@ formatsToSupport: [
 
 function callApi(action, params, success, failure) {
 
-const callbackName =
-"apiCallback_" +
-Date.now() +
-"_" +
-Math.floor(Math.random() * 10000);
+  const callbackName =
+    "apiCallback_" +
+    Date.now() +
+    "_" +
+    Math.floor(Math.random() * 10000);
 
 
-window[callbackName] =
-function(result) {
+  window[callbackName] =
+    function(result) {
 
-try {
+      try {
 
-if (
-result &&
-result.success === false
-) {
+        if (
+          result &&
+          result.success === false
+        ) {
 
-failure({
-message:
-result.error ||
-"An error occurred."
-});
+          failure({
+            message:
+              result.error ||
+              "An error occurred."
+          });
 
-return;
+          return;
+        }
+
+        success(result);
+
+      }
+
+      catch(error) {
+
+        failure(error);
+
+      }
+
+      finally {
+
+        delete window[callbackName];
+
+        if (script.parentNode) {
+          script.remove();
+        }
+
+      }
+
+    };
+
+
+  const script =
+    document.createElement("script");
+
+
+  let url =
+    API_URL +
+    "?action=" +
+    encodeURIComponent(action) +
+    "&callback=" +
+    encodeURIComponent(callbackName);
+
+
+  Object.keys(params || {}).forEach(
+    function(key) {
+
+      url +=
+        "&" +
+        encodeURIComponent(key) +
+        "=" +
+        encodeURIComponent(
+          params[key]
+        );
+
+    }
+  );
+
+
+  script.src = url;
+
+
+  script.onerror =
+    function() {
+
+      delete window[callbackName];
+
+      if (script.parentNode) {
+        script.remove();
+      }
+
+      failure({
+        message:
+          "Could not connect to Google Sheets."
+      });
+
+    };
+
+
+  document.body.appendChild(script);
 
 }
 
-success(result);
+
+// =====================================================
+// START SCANNING - PAGE POSITION
+// =====================================================
+
+function lockPagePosition() {
+
+  const savedScrollPosition =
+    window.scrollY;
+
+
+  document.documentElement
+    .classList.add("scanning");
+
+  document.body
+    .classList.add("scanning");
+
+
+  requestAnimationFrame(function() {
+
+    window.scrollTo(
+      0,
+      savedScrollPosition
+    );
+
+  });
+
+
+  setTimeout(function() {
+
+    window.scrollTo(
+      0,
+      savedScrollPosition
+    );
+
+  }, 50);
+
+
+  setTimeout(function() {
+
+    window.scrollTo(
+      0,
+      savedScrollPosition
+    );
+
+  }, 250);
 
 }
 
-catch(error) {
 
-failure(error);
+// =====================================================
+// STOP SCANNING - PAGE POSITION
+// =====================================================
 
-}
+function unlockPagePosition() {
 
-finally {
+  document.documentElement
+    .classList.remove("scanning");
 
-delete window[callbackName];
-
-script.remove();
-
-}
-
-};
-
-
-const script =
-document.createElement("script");
-
-
-let url =
-API_URL +
-"?action=" +
-encodeURIComponent(action) +
-"&callback=" +
-encodeURIComponent(callbackName);
-
-
-Object.keys(params || {}).forEach(
-function(key) {
-
-url +=
-"&" +
-encodeURIComponent(key) +
-"=" +
-encodeURIComponent(
-params[key]
-);
-
-});
-
-
-script.src = url;
-
-
-script.onerror =
-function() {
-
-delete window[callbackName];
-
-script.remove();
-
-failure({
-message:
-"Could not connect to Google Sheets."
-});
-
-};
-
-
-document.body.appendChild(script);
+  document.body
+    .classList.remove("scanning");
 
 }
 
@@ -625,171 +859,175 @@ document.body.appendChild(script);
 
 function startWorkerScan() {
 
-if (workerScanner) {
-return;
-}
+  if (workerScanner) {
+    return;
+  }
 
-workerScanLocked = false;
 
+  workerScanLocked = false;
 
-const savedScrollPosition = window.scrollY;
 
-document
-  .getElementById("workerScanner")
-  .classList.remove("hidden");
+  document
+    .getElementById("workerScanner")
+    .classList.remove("hidden");
 
-window.scrollTo(0, savedScrollPosition);
 
-setTimeout(function() {
-  window.scrollTo(0, savedScrollPosition);
-}, 100);
+  lockPagePosition();
 
-showMessage(
-"Starting camera..."
-);
 
+  showMessage(
+    "Starting camera..."
+  );
 
-workerScanner =
-new Html5Qrcode(
-"workerReader"
-);
 
+  workerScanner =
+    new Html5Qrcode(
+      "workerReader"
+    );
 
-workerScanner
-.start(
 
-{
-facingMode: "environment"
-},
+  workerScanner
+    .start(
 
-scannerConfig,
+      {
+        facingMode: "environment"
+      },
 
-function(decodedText) {
+      scannerConfig,
 
-if (workerScanLocked) {
-return;
-}
+      function(decodedText) {
 
+        if (workerScanLocked) {
+          return;
+        }
 
-workerScanLocked = true;
 
+        workerScanLocked = true;
 
-workerId =
-decodedText.trim();
 
+        workerId =
+          decodedText.trim();
 
-showMessage(
-"Worker barcode detected: " +
-workerId
-);
 
+        showMessage(
+          "Worker barcode detected: " +
+          workerId
+        );
 
-callApi(
 
-"getWorker",
+        callApi(
 
-{
-barcode: workerId
-},
+          "getWorker",
 
-function(worker) {
+          {
+            barcode: workerId
+          },
 
+          function(worker) {
 
-if (!worker.found) {
+            if (!worker.found) {
 
-workerScanLocked = false;
+              workerScanLocked = false;
 
-showError(
-"Worker not found: " +
-workerId
-);
+              showError(
+                "Worker not found: " +
+                workerId
+              );
 
-return;
+              return;
+            }
 
-}
 
+            if (!worker.active) {
 
-if (!worker.active) {
+              workerScanLocked = false;
 
-workerScanLocked = false;
+              showError(
+                worker.name +
+                " is not active."
+              );
 
-showError(
-worker.name +
-" is not active."
-);
+              return;
+            }
 
-return;
 
-}
+            document
+              .getElementById(
+                "workerDisplay"
+              )
+              .innerHTML =
 
+              "<div class='label'>" +
+              "Worker" +
+              "</div>" +
 
-document
-.getElementById(
-"workerDisplay"
-)
-.innerHTML =
+              "<div class='value'>" +
+              escapeHtml(
+                worker.name
+              ) +
+              "</div>" +
 
-"<div class='label'>Worker</div>" +
+              "<div>ID: " +
+              escapeHtml(
+                worker.id
+              ) +
+              "</div>" +
 
-"<div class='value'>" +
-escapeHtml(worker.name) +
-"</div>" +
+              "<div>Trade: " +
+              escapeHtml(
+                worker.trade
+              ) +
+              "</div>";
 
-"<div>ID: " +
-escapeHtml(worker.id) +
-"</div>" +
 
-"<div>Trade: " +
-escapeHtml(worker.trade) +
-"</div>";
+            stopWorkerScan();
 
 
-stopWorkerScan();
+            showSuccess(
+              "Worker scanned: " +
+              worker.name
+            );
 
+          },
 
-showSuccess(
-"Worker scanned: " +
-worker.name
-);
+          function(error) {
 
-},
+            workerScanLocked = false;
 
-function(error) {
+            showError(
+              error.message ||
+              "Could not find worker."
+            );
 
-workerScanLocked = false;
+          }
 
-showError(
-error.message ||
-"Could not find worker."
-);
+        );
 
-}
+      },
 
-);
+      function(errorMessage) {
 
-},
+        // Normal scanner messages ignored.
 
-function(errorMessage) {
+      }
 
-// Normal scanner messages ignored.
+    )
 
-}
+    .catch(function(error) {
 
-)
+      workerScanner = null;
 
-.catch(function(error) {
+      document
+        .getElementById(
+          "workerScanner"
+        )
+        .classList.add("hidden");
 
-workerScanner = null;
+      unlockPagePosition();
 
-document
-.getElementById(
-"workerScanner"
-)
-.classList.add("hidden");
+      showCameraError(error);
 
-showCameraError(error);
-
-});
+    });
 
 }
 
@@ -800,31 +1038,34 @@ showCameraError(error);
 
 function stopWorkerScan() {
 
-if (workerScanner) {
+  if (workerScanner) {
 
-const scanner =
-workerScanner;
+    const scanner =
+      workerScanner;
 
-workerScanner = null;
-
-
-scanner
-.stop()
-.then(function() {
-
-scanner.clear();
-
-})
-.catch(function() {});
-
-}
+    workerScanner = null;
 
 
-document
-.getElementById(
-"workerScanner"
-)
-.classList.add("hidden");
+    scanner
+      .stop()
+      .then(function() {
+
+        scanner.clear();
+
+      })
+      .catch(function() {});
+
+  }
+
+
+  document
+    .getElementById(
+      "workerScanner"
+    )
+    .classList.add("hidden");
+
+
+  unlockPagePosition();
 
 }
 
@@ -835,164 +1076,170 @@ document
 
 function startToolScan() {
 
-if (toolScanner) {
-return;
-}
-
-toolScanLocked = false;
+  if (toolScanner) {
+    return;
+  }
 
 
-const savedScrollPosition = window.scrollY;
-
-document
-  .getElementById(
-    "toolboxScanner"
-  )
-  .classList.remove("hidden");
-
-window.scrollTo(0, savedScrollPosition);
-
-setTimeout(function() {
-  window.scrollTo(0, savedScrollPosition);
-}, 100);
+  toolScanLocked = false;
 
 
-showMessage(
-"Starting camera..."
-);
+  document
+    .getElementById(
+      "toolScanner"
+    )
+    .classList.remove("hidden");
 
 
-toolScanner =
-new Html5Qrcode(
-"toolReader"
-);
+  lockPagePosition();
 
 
-toolScanner
-.start(
-
-{
-facingMode: "environment"
-},
-
-scannerConfig,
-
-function(decodedText) {
-
-if (toolScanLocked) {
-return;
-}
+  showMessage(
+    "Starting camera..."
+  );
 
 
-toolScanLocked = true;
+  toolScanner =
+    new Html5Qrcode(
+      "toolReader"
+    );
 
 
-toolId =
-decodedText.trim();
+  toolScanner
+    .start(
+
+      {
+        facingMode: "environment"
+      },
+
+      scannerConfig,
+
+      function(decodedText) {
+
+        if (toolScanLocked) {
+          return;
+        }
 
 
-showMessage(
-"Tool barcode detected: " +
-toolId
-);
+        toolScanLocked = true;
 
 
-callApi(
-
-"getTool",
-
-{
-barcode: toolId
-},
-
-function(tool) {
+        toolId =
+          decodedText.trim();
 
 
-if (!tool.found) {
-
-toolScanLocked = false;
-
-showError(
-"Tool not found: " +
-toolId
-);
-
-return;
-
-}
+        showMessage(
+          "Tool barcode detected: " +
+          toolId
+        );
 
 
-document
-.getElementById(
-"toolDisplay"
-)
-.innerHTML =
+        callApi(
 
-"<div class='label'>Tool</div>" +
+          "getTool",
 
-"<div class='value'>" +
-escapeHtml(tool.name) +
-"</div>" +
+          {
+            barcode: toolId
+          },
 
-"<div>ID: " +
-escapeHtml(tool.id) +
-"</div>" +
+          function(tool) {
 
-"<div>Type: " +
-escapeHtml(tool.type) +
-"</div>" +
+            if (!tool.found) {
 
-"<div>Status: " +
-escapeHtml(tool.status) +
-"</div>";
+              toolScanLocked = false;
+
+              showError(
+                "Tool not found: " +
+                toolId
+              );
+
+              return;
+            }
 
 
-stopToolScan();
+            document
+              .getElementById(
+                "toolDisplay"
+              )
+              .innerHTML =
+
+              "<div class='label'>" +
+              "Tool" +
+              "</div>" +
+
+              "<div class='value'>" +
+              escapeHtml(
+                tool.name
+              ) +
+              "</div>" +
+
+              "<div>ID: " +
+              escapeHtml(
+                tool.id
+              ) +
+              "</div>" +
+
+              "<div>Type: " +
+              escapeHtml(
+                tool.type
+              ) +
+              "</div>" +
+
+              "<div>Status: " +
+              escapeHtml(
+                tool.status
+              ) +
+              "</div>";
 
 
-showSuccess(
-"Tool scanned: " +
-tool.name
-);
+            stopToolScan();
 
-},
 
-function(error) {
+            showSuccess(
+              "Tool scanned: " +
+              tool.name
+            );
 
-toolScanLocked = false;
+          },
 
-showError(
-error.message ||
-"Could not find tool."
-);
+          function(error) {
 
-}
+            toolScanLocked = false;
 
-);
+            showError(
+              error.message ||
+              "Could not find tool."
+            );
 
-},
+          }
 
-function(errorMessage) {
+        );
 
-// Normal scanner messages ignored.
+      },
 
-}
+      function(errorMessage) {
 
-)
+        // Normal scanner messages ignored.
 
-.catch(function(error) {
+      }
 
-toolScanner = null;
+    )
 
-document
-.getElementById(
-"toolScanner"
-)
-.classList.add("hidden");
+    .catch(function(error) {
 
-showCameraError(error);
+      toolScanner = null;
 
-});
+      document
+        .getElementById(
+          "toolScanner"
+        )
+        .classList.add("hidden");
+
+      unlockPagePosition();
+
+      showCameraError(error);
+
+    });
 
 }
 
@@ -1003,31 +1250,34 @@ showCameraError(error);
 
 function stopToolScan() {
 
-if (toolScanner) {
+  if (toolScanner) {
 
-const scanner =
-toolScanner;
+    const scanner =
+      toolScanner;
 
-toolScanner = null;
-
-
-scanner
-.stop()
-.then(function() {
-
-scanner.clear();
-
-})
-.catch(function() {});
-
-}
+    toolScanner = null;
 
 
-document
-.getElementById(
-"toolScanner"
-)
-.classList.add("hidden");
+    scanner
+      .stop()
+      .then(function() {
+
+        scanner.clear();
+
+      })
+      .catch(function() {});
+
+  }
+
+
+  document
+    .getElementById(
+      "toolScanner"
+    )
+    .classList.add("hidden");
+
+
+  unlockPagePosition();
 
 }
 
@@ -1038,164 +1288,170 @@ document
 
 function startCheckoutScan() {
 
-if (checkoutScanner) {
-return;
-}
-
-checkoutScanLocked = false;
+  if (checkoutScanner) {
+    return;
+  }
 
 
-const savedScrollPosition = window.scrollY;
-
-document
-  .getElementById(
-    "checkinScanner"
-  )
-  .classList.remove("hidden");
-
-window.scrollTo(0, savedScrollPosition);
-
-setTimeout(function() {
-  window.scrollTo(0, savedScrollPosition);
-}, 100);
+  checkoutScanLocked = false;
 
 
-showMessage(
-"Starting camera..."
-);
+  document
+    .getElementById(
+      "checkoutScanner"
+    )
+    .classList.remove("hidden");
 
 
-checkoutScanner =
-new Html5Qrcode(
-"checkoutReader"
-);
+  lockPagePosition();
 
 
-checkoutScanner
-.start(
-
-{
-facingMode: "environment"
-},
-
-scannerConfig,
-
-function(decodedText) {
-
-if (checkoutScanLocked) {
-return;
-}
+  showMessage(
+    "Starting camera..."
+  );
 
 
-checkoutScanLocked = true;
+  checkoutScanner =
+    new Html5Qrcode(
+      "checkoutReader"
+    );
 
 
-checkoutToolId =
-decodedText.trim();
+  checkoutScanner
+    .start(
+
+      {
+        facingMode: "environment"
+      },
+
+      scannerConfig,
+
+      function(decodedText) {
+
+        if (checkoutScanLocked) {
+          return;
+        }
 
 
-showMessage(
-"Tool barcode detected: " +
-checkoutToolId
-);
+        checkoutScanLocked = true;
 
 
-callApi(
-
-"getTool",
-
-{
-barcode: checkoutToolId
-},
-
-function(tool) {
+        checkoutToolId =
+          decodedText.trim();
 
 
-if (!tool.found) {
-
-checkoutScanLocked = false;
-
-showError(
-"Tool not found: " +
-checkoutToolId
-);
-
-return;
-
-}
+        showMessage(
+          "Tool barcode detected: " +
+          checkoutToolId
+        );
 
 
-document
-.getElementById(
-"checkoutToolDisplay"
-)
-.innerHTML =
+        callApi(
 
-"<div class='label'>Tool</div>" +
+          "getTool",
 
-"<div class='value'>" +
-escapeHtml(tool.name) +
-"</div>" +
+          {
+            barcode: checkoutToolId
+          },
 
-"<div>ID: " +
-escapeHtml(tool.id) +
-"</div>" +
+          function(tool) {
 
-"<div>Type: " +
-escapeHtml(tool.type) +
-"</div>" +
+            if (!tool.found) {
 
-"<div>Status: " +
-escapeHtml(tool.status) +
-"</div>";
+              checkoutScanLocked = false;
+
+              showError(
+                "Tool not found: " +
+                checkoutToolId
+              );
+
+              return;
+            }
 
 
-stopCheckoutScan();
+            document
+              .getElementById(
+                "checkoutToolDisplay"
+              )
+              .innerHTML =
+
+              "<div class='label'>" +
+              "Tool" +
+              "</div>" +
+
+              "<div class='value'>" +
+              escapeHtml(
+                tool.name
+              ) +
+              "</div>" +
+
+              "<div>ID: " +
+              escapeHtml(
+                tool.id
+              ) +
+              "</div>" +
+
+              "<div>Type: " +
+              escapeHtml(
+                tool.type
+              ) +
+              "</div>" +
+
+              "<div>Status: " +
+              escapeHtml(
+                tool.status
+              ) +
+              "</div>";
 
 
-showSuccess(
-"Tool scanned: " +
-tool.name
-);
+            stopCheckoutScan();
 
-},
 
-function(error) {
+            showSuccess(
+              "Tool scanned: " +
+              tool.name
+            );
 
-checkoutScanLocked = false;
+          },
 
-showError(
-error.message ||
-"Could not find tool."
-);
+          function(error) {
 
-}
+            checkoutScanLocked = false;
 
-);
+            showError(
+              error.message ||
+              "Could not find tool."
+            );
 
-},
+          }
 
-function(errorMessage) {
+        );
 
-// Normal scanner messages ignored.
+      },
 
-}
+      function(errorMessage) {
 
-)
+        // Normal scanner messages ignored.
 
-.catch(function(error) {
+      }
 
-checkoutScanner = null;
+    )
 
-document
-.getElementById(
-"checkoutScanner"
-)
-.classList.add("hidden");
+    .catch(function(error) {
 
-showCameraError(error);
+      checkoutScanner = null;
 
-});
+      document
+        .getElementById(
+          "checkoutScanner"
+        )
+        .classList.add("hidden");
+
+      unlockPagePosition();
+
+      showCameraError(error);
+
+    });
 
 }
 
@@ -1206,240 +1462,260 @@ showCameraError(error);
 
 function stopCheckoutScan() {
 
-if (checkoutScanner) {
+  if (checkoutScanner) {
 
-const scanner =
-checkoutScanner;
+    const scanner =
+      checkoutScanner;
 
-checkoutScanner = null;
-
-
-scanner
-.stop()
-.then(function() {
-
-scanner.clear();
-
-})
-.catch(function() {});
-
-}
+    checkoutScanner = null;
 
 
-document
-.getElementById(
-"checkoutScanner"
-)
-.classList.add("hidden");
+    scanner
+      .stop()
+      .then(function() {
+
+        scanner.clear();
+
+      })
+      .catch(function() {});
+
+  }
+
+
+  document
+    .getElementById(
+      "checkoutScanner"
+    )
+    .classList.add("hidden");
+
+
+  unlockPagePosition();
 
 }
 
 
 // =====================================================
 // CHECK IN
-// Worker receives tool
+// WORKER RECEIVES TOOL
 // =====================================================
 
 function checkin() {
 
-if (!workerId) {
+  if (!workerId) {
 
-showError(
-"Please scan the worker barcode first."
-);
+    showError(
+      "Please scan the worker barcode first."
+    );
 
-return;
-
-}
-
-
-if (!toolId) {
-
-showError(
-"Please scan the tool barcode."
-);
-
-return;
-
-}
+    return;
+  }
 
 
-showMessage(
-"Checking in tool..."
-);
+  if (!toolId) {
+
+    showError(
+      "Please scan the tool barcode."
+    );
+
+    return;
+  }
 
 
-document
-.getElementById(
-"checkinButton"
-)
-.disabled = true;
+  showMessage(
+    "Checking in tool..."
+  );
 
 
-callApi(
-
-"checkinTool",
-
-{
-workerId: workerId,
-toolId: toolId
-},
-
-function(result) {
+  document
+    .getElementById(
+      "checkinButton"
+    )
+    .disabled = true;
 
 
-showSuccess(
+  callApi(
 
-"✓ CHECK-IN COMPLETE<br><br>" +
+    "checkinTool",
 
-"Worker: " +
-escapeHtml(result.worker) +
-"<br>" +
+    {
+      workerId: workerId,
+      toolId: toolId
+    },
 
-"Tool: " +
-escapeHtml(result.tool) +
-"<br>" +
+    function(result) {
 
-"Transaction ID: " +
-escapeHtml(result.transactionId) +
-"<br>" +
+      showSuccess(
 
-"Time: " +
-escapeHtml(result.time)
+        "✓ CHECK-IN COMPLETE<br><br>" +
 
-);
+        "Worker: " +
+        escapeHtml(
+          result.worker
+        ) +
+
+        "<br>" +
+
+        "Tool: " +
+        escapeHtml(
+          result.tool
+        ) +
+
+        "<br>" +
+
+        "Transaction ID: " +
+        escapeHtml(
+          result.transactionId
+        ) +
+
+        "<br>" +
+
+        "Time: " +
+        escapeHtml(
+          result.time
+        )
+
+      );
 
 
-resetCheckin();
+      resetCheckin();
 
 
-document
-.getElementById(
-"checkinButton"
-)
-.disabled = false;
+      document
+        .getElementById(
+          "checkinButton"
+        )
+        .disabled = false;
 
-},
+    },
 
-function(error) {
+    function(error) {
 
-document
-.getElementById(
-"checkinButton"
-)
-.disabled = false;
+      document
+        .getElementById(
+          "checkinButton"
+        )
+        .disabled = false;
 
 
-showError(
-error.message
-);
+      showError(
+        error.message
+      );
 
-}
+    }
 
-);
+  );
 
 }
 
 
 // =====================================================
 // CHECK OUT
-// Worker returns tool
+// WORKER RETURNS TOOL
 // =====================================================
 
 function checkout() {
 
-if (!checkoutToolId) {
+  if (!checkoutToolId) {
 
-showError(
-"Please scan the tool barcode."
-);
+    showError(
+      "Please scan the tool barcode."
+    );
 
-return;
-
-}
-
-
-showMessage(
-"Checking out tool..."
-);
+    return;
+  }
 
 
-document
-.getElementById(
-"checkoutButton"
-)
-.disabled = true;
+  showMessage(
+    "Checking out tool..."
+  );
 
 
-callApi(
-
-"checkoutTool",
-
-{
-toolId:
-checkoutToolId
-},
-
-function(result) {
+  document
+    .getElementById(
+      "checkoutButton"
+    )
+    .disabled = true;
 
 
-showSuccess(
+  callApi(
 
-"✓ CHECK-OUT COMPLETE<br><br>" +
+    "checkoutTool",
 
-"Worker: " +
-escapeHtml(result.worker) +
-"<br>" +
+    {
+      toolId:
+        checkoutToolId
+    },
 
-"Tool: " +
-escapeHtml(result.tool) +
-"<br>" +
+    function(result) {
 
-"Transaction ID: " +
-escapeHtml(result.transactionId) +
-"<br>" +
+      showSuccess(
 
-"Returned: " +
-escapeHtml(result.time)
+        "✓ CHECK-OUT COMPLETE<br><br>" +
 
-);
+        "Worker: " +
+        escapeHtml(
+          result.worker
+        ) +
 
+        "<br>" +
 
-checkoutToolId = "";
+        "Tool: " +
+        escapeHtml(
+          result.tool
+        ) +
 
+        "<br>" +
 
-document
-.getElementById(
-"checkoutToolDisplay"
-)
-.innerHTML =
-"No tool scanned";
+        "Transaction ID: " +
+        escapeHtml(
+          result.transactionId
+        ) +
 
+        "<br>" +
 
-document
-.getElementById(
-"checkoutButton"
-)
-.disabled = false;
+        "Returned: " +
+        escapeHtml(
+          result.time
+        )
 
-},
-
-function(error) {
-
-document
-.getElementById(
-"checkoutButton"
-)
-.disabled = false;
+      );
 
 
-showError(
-error.message
-);
+      checkoutToolId = "";
 
-}
 
-);
+      document
+        .getElementById(
+          "checkoutToolDisplay"
+        )
+        .innerHTML =
+        "No tool scanned";
+
+
+      document
+        .getElementById(
+          "checkoutButton"
+        )
+        .disabled = false;
+
+    },
+
+    function(error) {
+
+      document
+        .getElementById(
+          "checkoutButton"
+        )
+        .disabled = false;
+
+
+      showError(
+        error.message
+      );
+
+    }
+
+  );
 
 }
 
@@ -1450,25 +1726,25 @@ error.message
 
 function resetCheckin() {
 
-workerId = "";
+  workerId = "";
 
-toolId = "";
-
-
-document
-.getElementById(
-"workerDisplay"
-)
-.innerHTML =
-"No worker scanned";
+  toolId = "";
 
 
-document
-.getElementById(
-"toolDisplay"
-)
-.innerHTML =
-"No tool scanned";
+  document
+    .getElementById(
+      "workerDisplay"
+    )
+    .innerHTML =
+    "No worker scanned";
+
+
+  document
+    .getElementById(
+      "toolDisplay"
+    )
+    .innerHTML =
+    "No tool scanned";
 
 }
 
@@ -1479,23 +1755,23 @@ document
 
 function showCameraError(error) {
 
-let message =
-error && error.message
-? error.message
-: String(error);
+  let message =
+    error && error.message
+      ? error.message
+      : String(error);
 
 
-showError(
+  showError(
 
-"Camera could not start.<br><br>" +
+    "Camera could not start.<br><br>" +
 
-escapeHtml(message) +
+    escapeHtml(message) +
 
-"<br><br>" +
+    "<br><br>" +
 
-"Make sure camera permission is allowed for this website."
+    "Make sure camera permission is allowed for this website."
 
-);
+  );
 
 }
 
@@ -1506,42 +1782,42 @@ escapeHtml(message) +
 
 function escapeHtml(value) {
 
-if (
-value === null ||
-value === undefined
-) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
 
-return "";
+    return "";
 
-}
+  }
 
 
-return String(value)
+  return String(value)
 
-.replace(
-/&/g,
-"&amp;"
-)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
 
-.replace(
-/</g,
-"&lt;"
-)
+    .replace(
+      /</g,
+      "&lt;"
+    )
 
-.replace(
-/>/g,
-"&gt;"
-)
+    .replace(
+      />/g,
+      "&gt;"
+    )
 
-.replace(
-/"/g,
-"&quot;"
-)
+    .replace(
+      /"/g,
+      "&quot;"
+    )
 
-.replace(
-/'/g,
-"&#039;"
-);
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
@@ -1552,46 +1828,46 @@ return String(value)
 
 function showSuccess(message) {
 
-document
-.getElementById(
-"message"
-)
-.innerHTML =
+  document
+    .getElementById(
+      "message"
+    )
+    .innerHTML =
 
-"<div class='success'>" +
-message +
-"</div>";
+    "<div class='success'>" +
+    message +
+    "</div>";
 
 }
 
 
 function showError(message) {
 
-document
-.getElementById(
-"message"
-)
-.innerHTML =
+  document
+    .getElementById(
+      "message"
+    )
+    .innerHTML =
 
-"<div class='error'>" +
-"⚠ " +
-message +
-"</div>";
+    "<div class='error'>" +
+    "⚠ " +
+    message +
+    "</div>";
 
 }
 
 
 function showMessage(message) {
 
-document
-.getElementById(
-"message"
-)
-.innerHTML =
+  document
+    .getElementById(
+      "message"
+    )
+    .innerHTML =
 
-"<div class='info'>" +
-message +
-"</div>";
+    "<div class='info'>" +
+    message +
+    "</div>";
 
 }
 
