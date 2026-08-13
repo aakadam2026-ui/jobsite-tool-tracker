@@ -3,441 +3,389 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+>
 
-  <title>Jobsite Tool Tracker</title>
+<title>Jobsite Tool Tracker</title>
 
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-  <style>
+<style>
 
-    * {
-      box-sizing: border-box;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f4f6;
-      color: #111827;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+}
 
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 18px;
-    }
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 18px;
+}
 
-    .header {
-      background: #111827;
-      color: white;
-      padding: 20px;
-      border-radius: 14px;
-      margin-bottom: 18px;
-      text-align: center;
-    }
+.header {
+  background: #111827;
+  color: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  text-align: center;
+}
 
-    .header h1 {
-      margin: 0;
-      font-size: 23px;
-    }
+.header h1 {
+  margin: 0;
+  font-size: 23px;
+}
 
-    .card {
-      background: white;
-      padding: 18px;
-      border-radius: 14px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      padding: 15px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+button {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-    .scan {
-      background: #111827;
-      color: white;
-    }
+.scan {
+  background: #111827;
+  color: white;
+}
 
-    .take {
-      background: #16a34a;
-      color: white;
-    }
+.checkout {
+  background: #16a34a;
+  color: white;
+}
 
-    .return {
-      background: #2563eb;
-      color: white;
-    }
+.checkin {
+  background: #2563eb;
+  color: white;
+}
 
-    .cancel {
-      background: #e5e7eb;
-      color: #111827;
-    }
+.cancel {
+  background: #e5e7eb;
+  color: #111827;
+}
 
-    .danger {
-      background: #dc2626;
-      color: white;
-    }
+.info {
+  background: #f9fafb;
+  padding: 14px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
 
-    .info {
-      background: #f9fafb;
-      padding: 14px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
+.success {
+  background: #dcfce7;
+  color: #166534;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-weight: bold;
+}
 
-    .success {
-      background: #dcfce7;
-      color: #166534;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
-      font-weight: bold;
-    }
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-weight: bold;
+}
 
-    .error {
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
-      font-weight: bold;
-    }
+.label {
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 8px;
+}
 
-    .label {
-      color: #6b7280;
-      font-size: 13px;
-      margin-top: 8px;
-    }
+.value {
+  font-size: 18px;
+  font-weight: bold;
+}
 
-    .value {
-      font-size: 18px;
-      font-weight: bold;
-    }
+.hidden {
+  display: none;
+}
 
-    .hidden {
-      display: none;
-    }
+.scanner {
+  width: 100%;
+  margin-top: 15px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
 
-    .scanner {
-      width: 100%;
-      margin-top: 15px;
-      overflow: hidden;
-      border-radius: 12px;
-      background: #000;
-    }
+.scanner video {
+  width: 100% !important;
+  border-radius: 12px;
+}
 
-    .scanner video {
-      width: 100% !important;
-      border-radius: 12px;
-    }
+.scan-instruction {
+  background: #111827;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
 
-    .scan-instruction {
-      background: #111827;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
+.status-available {
+  color: #16a34a;
+  font-weight: bold;
+}
 
-    .status-available {
-      color: #16a34a;
-      font-weight: bold;
-    }
+.status-out {
+  color: #dc2626;
+  font-weight: bold;
+}
 
-    .status-out {
-      color: #dc2626;
-      font-weight: bold;
-    }
+.transaction {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+}
 
-    .transaction {
-      background: #f9fafb;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .small {
-      font-size: 13px;
-      color: #6b7280;
-    }
-
-  </style>
+</style>
 
 </head>
 
 
 <body>
 
-
 <div class="container">
 
 
-  <!-- HEADER -->
+<div class="header">
 
-  <div class="header">
+<h1>🔧 JOBSITE TOOL TRACKER</h1>
 
-    <h1>
-      🔧 JOBSITE TOOL TRACKER
-    </h1>
+<div>
+Toolbox Checkout & Check-in
+</div>
 
-    <div>
-      Toolbox Checkout & Check-in
-    </div>
+</div>
 
-  </div>
 
 
+<!-- ================================================= -->
+<!-- CHECKOUT -->
+<!-- ================================================= -->
 
-  <!-- ================================================= -->
-  <!-- TAKE TOOLBOX -->
-  <!-- ================================================= -->
+<div class="card">
 
-  <div class="card">
+<h2>🟢 Worker Takes Toolbox</h2>
 
-    <h2>
-      🟢 Worker Takes Toolbox
-    </h2>
+<p>
+Scan the worker and then scan the toolbox.
+</p>
 
-    <p>
-      Scan the worker and then scan the toolbox.
-    </p>
 
+<div class="label">
+1. Worker
+</div>
 
-    <!-- WORKER -->
 
-    <div class="label">
-      1. Worker
-    </div>
+<div id="workerDisplay" class="info">
+No worker scanned
+</div>
 
 
-    <div
-      id="workerDisplay"
-      class="info"
-    >
-      No worker scanned
-    </div>
+<button
+id="workerScanButton"
+class="scan"
+onclick="startWorkerScan()"
+>
+📷 SCAN WORKER BARCODE
+</button>
 
 
-    <button
-      id="workerScanButton"
-      class="scan"
-      onclick="startWorkerScan()"
-    >
-      📷 SCAN WORKER BARCODE
-    </button>
+<div
+id="workerScanner"
+class="hidden"
+>
 
+<div class="scan-instruction">
+Point camera at worker Code 39 barcode
+</div>
 
-    <div
-      id="workerScanner"
-      class="hidden"
-    >
+<div
+id="workerReader"
+class="scanner"
+></div>
 
-      <div class="scan-instruction">
-        Point camera at worker Code 39 barcode
-      </div>
+<button
+class="cancel"
+onclick="stopWorkerScan()"
+>
+Cancel
+</button>
 
-      <div
-        id="workerReader"
-        class="scanner"
-      ></div>
+</div>
 
-      <button
-        class="cancel"
-        onclick="stopWorkerScan()"
-      >
-        Cancel
-      </button>
 
-    </div>
 
+<div class="label">
+2. Toolbox
+</div>
 
 
-    <!-- TOOLBOX -->
+<div id="toolboxDisplay" class="info">
+No toolbox scanned
+</div>
 
-    <div class="label">
-      2. Toolbox
-    </div>
 
+<button
+id="toolboxScanButton"
+class="scan"
+onclick="startToolboxScan()"
+>
+📷 SCAN TOOLBOX BARCODE
+</button>
 
-    <div
-      id="toolboxDisplay"
-      class="info"
-    >
-      No toolbox scanned
-    </div>
 
+<div
+id="toolboxScanner"
+class="hidden"
+>
 
-    <button
-      id="toolboxScanButton"
-      class="scan"
-      onclick="startToolboxScan()"
-    >
-      📷 SCAN TOOLBOX BARCODE
-    </button>
+<div class="scan-instruction">
+Point camera at toolbox Code 39 barcode
+</div>
 
+<div
+id="toolboxReader"
+class="scanner"
+></div>
 
-    <div
-      id="toolboxScanner"
-      class="hidden"
-    >
+<button
+class="cancel"
+onclick="stopToolboxScan()"
+>
+Cancel
+</button>
 
-      <div class="scan-instruction">
-        Point camera at toolbox Code 39 barcode
-      </div>
+</div>
 
-      <div
-        id="toolboxReader"
-        class="scanner"
-      ></div>
 
-      <button
-        class="cancel"
-        onclick="stopToolboxScan()"
-      >
-        Cancel
-      </button>
+<button
+id="checkoutButton"
+class="checkout"
+onclick="checkout()"
+>
+✓ CHECK OUT TOOLBOX
+</button>
 
-    </div>
+</div>
 
 
-    <button
-      id="takeButton"
-      class="take"
-      onclick="takeToolbox()"
-    >
-      ✓ CHECK IN TOOLBOX
-    </button>
 
-  </div>
+<!-- ================================================= -->
+<!-- CHECKIN -->
+<!-- ================================================= -->
 
+<div class="card">
 
+<h2>🔵 Worker Returns Toolbox</h2>
 
-  <!-- ================================================= -->
-  <!-- RETURN TOOLBOX -->
-  <!-- ================================================= -->
+<p>
+Scan the toolbox being returned.
+</p>
 
-  <div class="card">
 
-    <h2>
-      🔵 Worker Returns Toolbox
-    </h2>
+<div
+id="checkinToolboxDisplay"
+class="info"
+>
+No toolbox scanned
+</div>
 
-    <p>
-      Scan the toolbox being returned.
-    </p>
 
+<button
+id="checkinScanButton"
+class="scan"
+onclick="startCheckinScan()"
+>
+📷 SCAN TOOLBOX BARCODE
+</button>
 
-    <div
-      id="returnToolboxDisplay"
-      class="info"
-    >
-      No toolbox scanned
-    </div>
 
+<div
+id="checkinScanner"
+class="hidden"
+>
 
-    <button
-      id="returnScanButton"
-      class="scan"
-      onclick="startReturnScan()"
-    >
-      📷 SCAN TOOLBOX BARCODE
-    </button>
+<div class="scan-instruction">
+Point camera at toolbox Code 39 barcode
+</div>
 
+<div
+id="checkinReader"
+class="scanner"
+></div>
 
-    <div
-      id="returnScanner"
-      class="hidden"
-    >
+<button
+class="cancel"
+onclick="stopCheckinScan()"
+>
+Cancel
+</button>
 
-      <div class="scan-instruction">
-        Point camera at toolbox Code 39 barcode
-      </div>
+</div>
 
-      <div
-        id="returnReader"
-        class="scanner"
-      ></div>
 
-      <button
-        class="cancel"
-        onclick="stopReturnScan()"
-      >
-        Cancel
-      </button>
+<button
+id="checkinButton"
+class="checkin"
+onclick="checkin()"
+>
+✓ CHECK IN TOOLBOX
+</button>
 
-    </div>
+</div>
 
 
-    <button
-      id="returnButton"
-      class="return"
-      onclick="returnToolbox()"
-    >
-      ✓ CHECK OUT TOOLBOX
-    </button>
 
-  </div>
+<!-- ================================================= -->
+<!-- STATUS -->
+<!-- ================================================= -->
 
+<div class="card">
 
+<h2>📋 Current Toolbox Status</h2>
 
-  <!-- ================================================= -->
-  <!-- CURRENT TOOLBOX -->
-  <!-- ================================================= -->
+<div id="currentStatus">
+Loading...
+</div>
 
-  <div class="card">
+</div>
 
-    <h2>
-      📋 Current Status
-    </h2>
 
-    <div id="currentStatus">
-      Loading...
-    </div>
-
-  </div>
-
-
-
-  <!-- ================================================= -->
-  <!-- RECENT TRANSACTIONS -->
-  <!-- ================================================= -->
-
-  <div class="card">
-
-    <h2>
-      🕐 Recent Transactions
-    </h2>
-
-    <div id="transactions">
-      No transactions yet.
-    </div>
-
-  </div>
-
-
-
-  <!-- MESSAGE -->
-
-  <div id="message"></div>
+<div id="message"></div>
 
 
 </div>
@@ -448,63 +396,19 @@
 
 
 // =====================================================
-// TEMPORARY DATABASE
+// IMPORTANT
 // =====================================================
 //
-// This is temporary.
-// Later these records will come from Excel.
+// Replace this with your deployed Apps Script Web App URL.
+//
+// Example:
+//
+// https://script.google.com/macros/s/XXXXXXXXXXXX/exec
 //
 // =====================================================
 
-
-// -----------------------------------------------------
-// WORKERS
-// -----------------------------------------------------
-
-const workers = [
-
-  {
-    barcode: "10001",
-    id: "10001",
-    name: "Daniel Abston",
-    trade: "Mechanical",
-    active: true
-  },
-
-  {
-    barcode: "10002",
-    id: "10002",
-    name: "Cody Coffman",
-    trade: "Mechanical",
-    active: true
-  },
-
-  {
-    barcode: "10003",
-    id: "10003",
-    name: "Abhishek Kadam",
-    trade: "Mechanical",
-    active: true
-  }
-
-];
-
-
-// -----------------------------------------------------
-// TOOLBOXES
-// -----------------------------------------------------
-
-const toolboxes = [
-
-  {
-    barcode: "TB10001",
-    id: "TB10001",
-    name: "Box 1",
-    type: "Mechanical",
-    status: "Available"
-  }
-
-];
+const API_URL =
+  "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
 
 
@@ -516,59 +420,26 @@ let workerId = "";
 
 let toolboxId = "";
 
-let returnToolboxId = "";
+let checkinToolboxId = "";
 
 
 let workerScanner = null;
 
 let toolboxScanner = null;
 
-let returnScanner = null;
+let checkinScanner = null;
+
+
+let workerScanLocked = false;
+
+let toolboxScanLocked = false;
+
+let checkinScanLocked = false;
 
 
 
 // =====================================================
-// LOCAL STORAGE
-// =====================================================
-
-const STORAGE_KEY =
-  "jobsite_tool_tracker_transactions";
-
-
-
-function getTransactions() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(STORAGE_KEY)
-    ) || [];
-
-  }
-
-  catch(error) {
-
-    return [];
-
-  }
-
-}
-
-
-
-function saveTransactions(transactions) {
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(transactions)
-  );
-
-}
-
-
-
-// =====================================================
-// CODE 39 SCANNER
+// SCANNER CONFIG
 // =====================================================
 
 const scannerConfig = {
@@ -581,7 +452,9 @@ const scannerConfig = {
   },
 
   formatsToSupport: [
+
     Html5QrcodeSupportedFormats.CODE_39
+
   ]
 
 };
@@ -589,84 +462,104 @@ const scannerConfig = {
 
 
 // =====================================================
-// FIND WORKER
+// API CALL
 // =====================================================
 
-function findWorker(barcode) {
+function apiCall(action, params, callback) {
 
-  const search =
-    String(barcode)
-      .trim()
-      .toUpperCase();
-
-
-  return workers.find(function(worker) {
-
-    return worker.barcode
-      .toUpperCase() === search;
-
-  }) || null;
-
-}
+  const callbackName =
+    "apiCallback_" +
+    Date.now() +
+    "_" +
+    Math.floor(
+      Math.random() * 100000
+    );
 
 
+  window[callbackName] =
+    function(response) {
 
-// =====================================================
-// FIND TOOLBOX
-// =====================================================
+      delete window[callbackName];
 
-function findToolbox(barcode) {
+      script.remove();
 
-  const search =
-    String(barcode)
-      .trim()
-      .toUpperCase();
+      if (
+        response &&
+        response.success === false
+      ) {
 
+        showError(
+          response.error ||
+          "Server error."
+        );
 
-  return toolboxes.find(function(toolbox) {
+        return;
 
-    return toolbox.barcode
-      .toUpperCase() === search;
+      }
 
-  }) || null;
+      callback(
+        response.data
+      );
 
-}
-
-
-
-// =====================================================
-// GET OPEN TOOLBOX TRANSACTION
-// =====================================================
-
-function getOpenTransaction(toolboxId) {
-
-  const transactions =
-    getTransactions();
+    };
 
 
-  for (
-    let i = transactions.length - 1;
-    i >= 0;
-    i--
-  ) {
-
-    const transaction =
-      transactions[i];
+  const query =
+    new URLSearchParams();
 
 
-    if (
-      transaction.toolboxId === toolboxId &&
-      !transaction.checkout
-    ) {
-
-      return transaction;
-
-    }
-
-  }
+  query.set(
+    "action",
+    action
+  );
 
 
-  return null;
+  query.set(
+    "callback",
+    callbackName
+  );
+
+
+  Object.keys(params || {})
+    .forEach(function(key) {
+
+      query.set(
+        key,
+        params[key]
+      );
+
+    });
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.src =
+    API_URL +
+    "?" +
+    query.toString();
+
+
+  script.onerror =
+    function() {
+
+      delete window[callbackName];
+
+      script.remove();
+
+      showError(
+        "Could not connect to Google Sheets."
+      );
+
+    };
+
+
+  document
+    .body
+    .appendChild(script);
 
 }
 
@@ -678,12 +571,20 @@ function getOpenTransaction(toolboxId) {
 
 function startWorkerScan() {
 
-  stopAllScanners();
+  if (workerScanner) {
+    return;
+  }
+
+
+  workerScanLocked = false;
 
 
   document
-    .getElementById("workerScanner")
-    .classList.remove("hidden");
+    .getElementById(
+      "workerScanner"
+    )
+    .classList
+    .remove("hidden");
 
 
   showMessage(
@@ -708,81 +609,108 @@ function startWorkerScan() {
 
       function(decodedText) {
 
+        if (workerScanLocked) {
+          return;
+        }
+
+
+        workerScanLocked = true;
+
+
         const barcode =
           decodedText.trim();
 
 
-        if (!barcode) {
-          return;
-        }
+        showMessage(
+          "Worker barcode detected."
+        );
 
 
-        stopWorkerScan();
+        apiCall(
+
+          "getWorker",
+
+          {
+            workerBarcode:
+              barcode
+          },
+
+          function(worker) {
+
+            if (!worker) {
+
+              workerScanLocked = false;
+
+              showError(
+                "Worker not found: " +
+                barcode
+              );
+
+              return;
+
+            }
 
 
-        const worker =
-          findWorker(barcode);
+            if (!worker.active) {
+
+              workerScanLocked = false;
+
+              showError(
+                worker.name +
+                " is not active."
+              );
+
+              return;
+
+            }
 
 
-        if (!worker) {
-
-          showError(
-            "Worker not found: " +
-            barcode
-          );
-
-          return;
-
-        }
+            workerId =
+              worker.id;
 
 
-        if (!worker.active) {
+            document
+              .getElementById(
+                "workerDisplay"
+              )
+              .innerHTML =
 
-          showError(
-            worker.name +
-            " is not active."
-          );
+              "<div class='label'>Worker</div>" +
 
-          return;
+              "<div class='value'>" +
+              escapeHtml(
+                worker.name
+              ) +
+              "</div>" +
 
-        }
+              "<div>ID: " +
+              escapeHtml(
+                worker.id
+              ) +
+              "</div>" +
 
-
-        workerId =
-          worker.id;
-
-
-        document
-          .getElementById(
-            "workerDisplay"
-          )
-          .innerHTML =
-
-            "<div class='label'>Worker</div>" +
-
-            "<div class='value'>" +
-            escapeHtml(worker.name) +
-            "</div>" +
-
-            "<div>ID: " +
-            escapeHtml(worker.id) +
-            "</div>" +
-
-            "<div>" +
-            escapeHtml(worker.trade) +
-            "</div>";
+              "<div>Trade: " +
+              escapeHtml(
+                worker.trade
+              ) +
+              "</div>";
 
 
-        showSuccess(
-          "Worker scanned: " +
-          worker.name
+            stopWorkerScan();
+
+
+            showSuccess(
+              "Worker scanned: " +
+              worker.name
+            );
+
+          }
+
         );
 
       },
 
-      function() {
-        // Normal scan messages ignored.
-      }
+      function() {}
 
     )
 
@@ -794,7 +722,8 @@ function startWorkerScan() {
         .getElementById(
           "workerScanner"
         )
-        .classList.add("hidden");
+        .classList
+        .add("hidden");
 
 
       showCameraError(error);
@@ -811,14 +740,20 @@ function startWorkerScan() {
 
 function startToolboxScan() {
 
-  stopAllScanners();
+  if (toolboxScanner) {
+    return;
+  }
+
+
+  toolboxScanLocked = false;
 
 
   document
     .getElementById(
       "toolboxScanner"
     )
-    .classList.remove("hidden");
+    .classList
+    .remove("hidden");
 
 
   showMessage(
@@ -843,110 +778,112 @@ function startToolboxScan() {
 
       function(decodedText) {
 
+        if (toolboxScanLocked) {
+          return;
+        }
+
+
+        toolboxScanLocked = true;
+
+
         const barcode =
           decodedText.trim();
 
 
-        if (!barcode) {
-          return;
-        }
+        apiCall(
+
+          "getToolbox",
+
+          {
+            toolboxBarcode:
+              barcode
+          },
+
+          function(toolbox) {
+
+            if (!toolbox) {
+
+              toolboxScanLocked = false;
+
+              showError(
+                "Toolbox not found: " +
+                barcode
+              );
+
+              return;
+
+            }
 
 
-        stopToolboxScan();
+            toolboxId =
+              toolbox.id;
 
 
-        const toolbox =
-          findToolbox(barcode);
+            document
+              .getElementById(
+                "toolboxDisplay"
+              )
+              .innerHTML =
+
+              "<div class='label'>Toolbox</div>" +
+
+              "<div class='value'>" +
+              escapeHtml(
+                toolbox.name
+              ) +
+              "</div>" +
+
+              "<div>ID: " +
+              escapeHtml(
+                toolbox.id
+              ) +
+              "</div>" +
+
+              "<div>Type: " +
+              escapeHtml(
+                toolbox.type
+              ) +
+              "</div>" +
+
+              "<div>Status: " +
+              escapeHtml(
+                toolbox.status
+              ) +
+              "</div>";
 
 
-        if (!toolbox) {
-
-          showError(
-            "Toolbox not found: " +
-            barcode
-          );
-
-          return;
-
-        }
+            stopToolboxScan();
 
 
-        toolboxId =
-          toolbox.id;
+            if (
+              String(toolbox.status)
+                .toLowerCase()
+                .includes("not")
+            ) {
 
+              showError(
+                toolbox.name +
+                " is not available."
+              );
 
-        const openTransaction =
-          getOpenTransaction(
-            toolbox.id
-          );
+            }
 
+            else {
 
-        let currentStatus =
-          "Available";
+              showSuccess(
+                "Toolbox scanned: " +
+                toolbox.name
+              );
 
+            }
 
-        if (openTransaction) {
+          }
 
-          currentStatus =
-            "Checked Out";
-
-        }
-
-
-        document
-          .getElementById(
-            "toolboxDisplay"
-          )
-          .innerHTML =
-
-            "<div class='label'>Toolbox</div>" +
-
-            "<div class='value'>" +
-            escapeHtml(toolbox.name) +
-            "</div>" +
-
-            "<div>ID: " +
-            escapeHtml(toolbox.id) +
-            "</div>" +
-
-            "<div>Type: " +
-            escapeHtml(toolbox.type) +
-            "</div>" +
-
-            "<div>Status: " +
-
-            (
-              currentStatus === "Available"
-                ? "<span class='status-available'>Available</span>"
-                : "<span class='status-out'>Checked Out</span>"
-            ) +
-
-            "</div>";
-
-
-        if (openTransaction) {
-
-          showError(
-            "This toolbox is currently with " +
-            openTransaction.workerName
-          );
-
-        }
-
-        else {
-
-          showSuccess(
-            "Toolbox scanned: " +
-            toolbox.name
-          );
-
-        }
+        );
 
       },
 
-      function() {
-        // Normal scan messages ignored.
-      }
+      function() {}
 
     )
 
@@ -958,7 +895,8 @@ function startToolboxScan() {
         .getElementById(
           "toolboxScanner"
         )
-        .classList.add("hidden");
+        .classList
+        .add("hidden");
 
 
       showCameraError(error);
@@ -970,19 +908,25 @@ function startToolboxScan() {
 
 
 // =====================================================
-// RETURN SCANNER
+// CHECKIN SCANNER
 // =====================================================
 
-function startReturnScan() {
+function startCheckinScan() {
 
-  stopAllScanners();
+  if (checkinScanner) {
+    return;
+  }
+
+
+  checkinScanLocked = false;
 
 
   document
     .getElementById(
-      "returnScanner"
+      "checkinScanner"
     )
-    .classList.remove("hidden");
+    .classList
+    .remove("hidden");
 
 
   showMessage(
@@ -990,13 +934,13 @@ function startReturnScan() {
   );
 
 
-  returnScanner =
+  checkinScanner =
     new Html5Qrcode(
-      "returnReader"
+      "checkinReader"
     );
 
 
-  returnScanner
+  checkinScanner
     .start(
 
       {
@@ -1007,102 +951,102 @@ function startReturnScan() {
 
       function(decodedText) {
 
+        if (checkinScanLocked) {
+          return;
+        }
+
+
+        checkinScanLocked = true;
+
+
         const barcode =
           decodedText.trim();
 
 
-        if (!barcode) {
-          return;
-        }
+        apiCall(
+
+          "getToolbox",
+
+          {
+            toolboxBarcode:
+              barcode
+          },
+
+          function(toolbox) {
+
+            if (!toolbox) {
+
+              checkinScanLocked = false;
+
+              showError(
+                "Toolbox not found: " +
+                barcode
+              );
+
+              return;
+
+            }
 
 
-        stopReturnScan();
+            checkinToolboxId =
+              toolbox.id;
 
 
-        const toolbox =
-          findToolbox(barcode);
+            document
+              .getElementById(
+                "checkinToolboxDisplay"
+              )
+              .innerHTML =
+
+              "<div class='label'>Toolbox</div>" +
+
+              "<div class='value'>" +
+              escapeHtml(
+                toolbox.name
+              ) +
+              "</div>" +
+
+              "<div>ID: " +
+              escapeHtml(
+                toolbox.id
+              ) +
+              "</div>" +
+
+              "<div>Status: " +
+              escapeHtml(
+                toolbox.status
+              ) +
+              "</div>";
 
 
-        if (!toolbox) {
-
-          showError(
-            "Toolbox not found: " +
-            barcode
-          );
-
-          return;
-
-        }
+            stopCheckinScan();
 
 
-        returnToolboxId =
-          toolbox.id;
+            showSuccess(
+              "Toolbox scanned: " +
+              toolbox.name
+            );
 
+          }
 
-        const openTransaction =
-          getOpenTransaction(
-            toolbox.id
-          );
-
-
-        if (!openTransaction) {
-
-          showError(
-            "This toolbox is not currently checked out."
-          );
-
-          return;
-
-        }
-
-
-        document
-          .getElementById(
-            "returnToolboxDisplay"
-          )
-          .innerHTML =
-
-            "<div class='label'>Toolbox</div>" +
-
-            "<div class='value'>" +
-            escapeHtml(toolbox.name) +
-            "</div>" +
-
-            "<div>ID: " +
-            escapeHtml(toolbox.id) +
-            "</div>" +
-
-            "<div>Currently with:</div>" +
-
-            "<div class='value'>" +
-            escapeHtml(
-              openTransaction.workerName
-            ) +
-            "</div>";
-
-
-        showSuccess(
-          "Toolbox belongs to " +
-          openTransaction.workerName
         );
 
       },
 
-      function() {
-        // Normal scan messages ignored.
-      }
+      function() {}
 
     )
 
     .catch(function(error) {
 
-      returnScanner = null;
+      checkinScanner = null;
 
       document
         .getElementById(
-          "returnScanner"
+          "checkinScanner"
         )
-        .classList.add("hidden");
+        .classList
+        .add("hidden");
 
 
       showCameraError(error);
@@ -1114,7 +1058,7 @@ function startReturnScan() {
 
 
 // =====================================================
-// STOP WORKER SCANNER
+// STOP WORKER
 // =====================================================
 
 function stopWorkerScan() {
@@ -1143,14 +1087,15 @@ function stopWorkerScan() {
     .getElementById(
       "workerScanner"
     )
-    .classList.add("hidden");
+    .classList
+    .add("hidden");
 
 }
 
 
 
 // =====================================================
-// STOP TOOLBOX SCANNER
+// STOP TOOLBOX
 // =====================================================
 
 function stopToolboxScan() {
@@ -1179,24 +1124,25 @@ function stopToolboxScan() {
     .getElementById(
       "toolboxScanner"
     )
-    .classList.add("hidden");
+    .classList
+    .add("hidden");
 
 }
 
 
 
 // =====================================================
-// STOP RETURN SCANNER
+// STOP CHECKIN
 // =====================================================
 
-function stopReturnScan() {
+function stopCheckinScan() {
 
-  if (returnScanner) {
+  if (checkinScanner) {
 
     const scanner =
-      returnScanner;
+      checkinScanner;
 
-    returnScanner = null;
+    checkinScanner = null;
 
 
     scanner
@@ -1213,35 +1159,20 @@ function stopReturnScan() {
 
   document
     .getElementById(
-      "returnScanner"
+      "checkinScanner"
     )
-    .classList.add("hidden");
+    .classList
+    .add("hidden");
 
 }
 
 
 
 // =====================================================
-// STOP ALL
+// CHECKOUT
 // =====================================================
 
-function stopAllScanners() {
-
-  stopWorkerScan();
-
-  stopToolboxScan();
-
-  stopReturnScan();
-
-}
-
-
-
-// =====================================================
-// TAKE TOOLBOX
-// =====================================================
-
-function takeToolbox() {
+function checkout() {
 
   if (!workerId) {
 
@@ -1265,132 +1196,97 @@ function takeToolbox() {
   }
 
 
-  const worker =
-    workers.find(function(w) {
-
-      return w.id === workerId;
-
-    });
-
-
-  const toolbox =
-    findToolbox(toolboxId);
-
-
-  if (!worker || !toolbox) {
-
-    showError(
-      "Worker or toolbox could not be found."
-    );
-
-    return;
-
-  }
-
-
-  const existing =
-    getOpenTransaction(
-      toolbox.id
+  const button =
+    document.getElementById(
+      "checkoutButton"
     );
 
 
-  if (existing) {
-
-    showError(
-
-      toolbox.name +
-      " is already with " +
-      existing.workerName
-
-    );
-
-    return;
-
-  }
+  button.disabled = true;
 
 
-  const now =
-    new Date();
-
-
-  const transaction = {
-
-    timestamp:
-      now.toISOString(),
-
-    date:
-      getDateString(now),
-
-    workerId:
-      worker.id,
-
-    workerName:
-      worker.name,
-
-    toolboxId:
-      toolbox.id,
-
-    toolboxName:
-      toolbox.name,
-
-    checkin:
-      getTimeString(now),
-
-    checkout:
-      ""
-
-  };
-
-
-  const transactions =
-    getTransactions();
-
-
-  transactions.push(
-    transaction
+  showMessage(
+    "Checking out toolbox..."
   );
 
 
-  saveTransactions(
-    transactions
+  apiCall(
+
+    "checkout",
+
+    {
+      workerId:
+        workerId,
+
+      toolboxId:
+        toolboxId
+    },
+
+    function(result) {
+
+      showSuccess(
+
+        "✓ CHECKOUT COMPLETE<br><br>" +
+
+        "Worker: " +
+        escapeHtml(
+          result.worker
+        ) +
+
+        "<br>Toolbox: " +
+        escapeHtml(
+          result.toolbox
+        ) +
+
+        "<br>Time: " +
+        escapeHtml(
+          result.time
+        )
+
+      );
+
+
+      workerId = "";
+
+      toolboxId = "";
+
+
+      document
+        .getElementById(
+          "workerDisplay"
+        )
+        .innerHTML =
+        "No worker scanned";
+
+
+      document
+        .getElementById(
+          "toolboxDisplay"
+        )
+        .innerHTML =
+        "No toolbox scanned";
+
+
+      button.disabled = false;
+
+
+      loadStatus();
+
+    }
+
   );
-
-
-  showSuccess(
-
-    "✓ TOOLBOX GIVEN TO WORKER<br><br>" +
-
-    "Worker: " +
-    escapeHtml(worker.name) +
-
-    "<br>" +
-
-    "Toolbox: " +
-    escapeHtml(toolbox.name) +
-
-    "<br>" +
-
-    "Check-in: " +
-    escapeHtml(transaction.checkin)
-
-  );
-
-
-  resetTakeForm();
-
-  updateDisplay();
 
 }
 
 
 
 // =====================================================
-// RETURN TOOLBOX
+// CHECKIN
 // =====================================================
 
-function returnToolbox() {
+function checkin() {
 
-  if (!returnToolboxId) {
+  if (!checkinToolboxId) {
 
     showError(
       "Please scan the toolbox barcode first."
@@ -1401,362 +1297,70 @@ function returnToolbox() {
   }
 
 
-  const transaction =
-    getOpenTransaction(
-      returnToolboxId
-    );
-
-
-  if (!transaction) {
-
-    showError(
-      "This toolbox is not currently checked out."
-    );
-
-    return;
-
-  }
-
-
-  const now =
-    new Date();
-
-
-  transaction.checkout =
-    getTimeString(now);
-
-
-  const transactions =
-    getTransactions();
-
-
-  for (
-    let i = 0;
-    i < transactions.length;
-    i++
-  ) {
-
-    if (
-      transactions[i].timestamp ===
-      transaction.timestamp
-    ) {
-
-      transactions[i] =
-        transaction;
-
-      break;
-
-    }
-
-  }
-
-
-  saveTransactions(
-    transactions
-  );
-
-
-  showSuccess(
-
-    "✓ TOOLBOX RETURNED<br><br>" +
-
-    "Worker: " +
-    escapeHtml(transaction.workerName) +
-
-    "<br>" +
-
-    "Toolbox: " +
-    escapeHtml(transaction.toolboxName) +
-
-    "<br>" +
-
-    "Checkout: " +
-    escapeHtml(transaction.checkout)
-
-  );
-
-
-  resetReturnForm();
-
-  updateDisplay();
-
-}
-
-
-
-// =====================================================
-// RESET TAKE
-// =====================================================
-
-function resetTakeForm() {
-
-  workerId = "";
-
-  toolboxId = "";
-
-
-  document
-    .getElementById(
-      "workerDisplay"
-    )
-    .innerHTML =
-      "No worker scanned";
-
-
-  document
-    .getElementById(
-      "toolboxDisplay"
-    )
-    .innerHTML =
-      "No toolbox scanned";
-
-}
-
-
-
-// =====================================================
-// RESET RETURN
-// =====================================================
-
-function resetReturnForm() {
-
-  returnToolboxId = "";
-
-
-  document
-    .getElementById(
-      "returnToolboxDisplay"
-    )
-    .innerHTML =
-      "No toolbox scanned";
-
-}
-
-
-
-// =====================================================
-// CURRENT STATUS
-// =====================================================
-
-function updateCurrentStatus() {
-
-  const container =
+  const button =
     document.getElementById(
-      "currentStatus"
+      "checkinButton"
     );
 
 
-  let html = "";
+  button.disabled = true;
 
 
-  toolboxes.forEach(function(toolbox) {
-
-    const transaction =
-      getOpenTransaction(
-        toolbox.id
-      );
+  showMessage(
+    "Checking in toolbox..."
+  );
 
 
-    if (transaction) {
+  apiCall(
 
-      html +=
+    "checkin",
 
-        "<div class='transaction'>" +
+    {
+      toolboxId:
+        checkinToolboxId
+    },
 
-        "<strong>" +
-        escapeHtml(toolbox.name) +
-        "</strong>" +
+    function(result) {
 
-        "<br>" +
+      showSuccess(
 
-        "<span class='status-out'>" +
-        "CHECKED OUT" +
-        "</span>" +
-
-        "<br>" +
+        "✓ CHECK-IN COMPLETE<br><br>" +
 
         "Worker: " +
         escapeHtml(
-          transaction.workerName
+          result.worker
         ) +
 
-        "<br>" +
-
-        "Since: " +
+        "<br>Toolbox: " +
         escapeHtml(
-          transaction.checkin
+          result.toolbox
         ) +
 
-        "</div>";
+        "<br>Returned: " +
+        escapeHtml(
+          result.time
+        )
 
-    }
-
-    else {
-
-      html +=
-
-        "<div class='transaction'>" +
-
-        "<strong>" +
-        escapeHtml(toolbox.name) +
-        "</strong>" +
-
-        "<br>" +
-
-        "<span class='status-available'>" +
-        "AVAILABLE" +
-        "</span>" +
-
-        "</div>";
-
-    }
-
-  });
-
-
-  container.innerHTML =
-    html || "No toolbox data.";
-
-}
-
-
-
-// =====================================================
-// TRANSACTIONS DISPLAY
-// =====================================================
-
-function updateTransactions() {
-
-  const container =
-    document.getElementById(
-      "transactions"
-    );
-
-
-  const transactions =
-    getTransactions();
-
-
-  if (!transactions.length) {
-
-    container.innerHTML =
-      "No transactions yet.";
-
-    return;
-
-  }
-
-
-  const recent =
-    transactions
-      .slice()
-      .reverse()
-      .slice(0, 10);
-
-
-  let html = "";
-
-
-  recent.forEach(function(transaction) {
-
-    html +=
-
-      "<div class='transaction'>" +
-
-      "<strong>" +
-      escapeHtml(
-        transaction.toolboxName
-      ) +
-      "</strong>" +
-
-      "<br>" +
-
-      "Worker: " +
-      escapeHtml(
-        transaction.workerName
-      ) +
-
-      "<br>" +
-
-      "Date: " +
-      escapeHtml(
-        transaction.date
-      ) +
-
-      "<br>" +
-
-      "Checkin: " +
-      escapeHtml(
-        transaction.checkin
       );
 
 
-    if (transaction.checkout) {
+      checkinToolboxId = "";
 
-      html +=
 
-        "<br>" +
+      document
+        .getElementById(
+          "checkinToolboxDisplay"
+        )
+        .innerHTML =
+        "No toolbox scanned";
 
-        "Checkout: " +
-        escapeHtml(
-          transaction.checkout
-        );
 
-    }
+      button.disabled = false;
 
-    else {
 
-      html +=
-
-        "<br>" +
-
-        "<span class='status-out'>" +
-        "Currently checked out" +
-        "</span>";
+      loadStatus();
 
     }
-
-
-    html +=
-      "</div>";
-
-  });
-
-
-  container.innerHTML =
-    html;
-
-}
-
-
-
-// =====================================================
-// UPDATE EVERYTHING
-// =====================================================
-
-function updateDisplay() {
-
-  updateCurrentStatus();
-
-  updateTransactions();
-
-}
-
-
-
-// =====================================================
-// DATE
-// =====================================================
-
-function getDateString(date) {
-
-  return (
-
-    (date.getMonth() + 1) +
-    "/" +
-    date.getDate() +
-    "/" +
-    date.getFullYear()
 
   );
 
@@ -1765,17 +1369,90 @@ function getDateString(date) {
 
 
 // =====================================================
-// TIME
+// LOAD STATUS
 // =====================================================
 
-function getTimeString(date) {
+function loadStatus() {
 
-  return date.toLocaleTimeString(
-    [],
-    {
-      hour: "numeric",
-      minute: "2-digit"
+  apiCall(
+
+    "getStatus",
+
+    {},
+
+    function(status) {
+
+      const container =
+        document.getElementById(
+          "currentStatus"
+        );
+
+
+      if (!status.length) {
+
+        container.innerHTML =
+          "No toolbox data.";
+
+        return;
+
+      }
+
+
+      let html = "";
+
+
+      status.forEach(function(toolbox) {
+
+        const unavailable =
+          toolbox.status ===
+          "Not Available";
+
+
+        html +=
+
+          "<div class='transaction'>" +
+
+          "<strong>" +
+          escapeHtml(
+            toolbox.name
+          ) +
+          "</strong>" +
+
+          "<br>" +
+
+          (
+            unavailable
+
+              ? "<span class='status-out'>NOT AVAILABLE</span>"
+
+              : "<span class='status-available'>AVAILABLE</span>"
+          );
+
+
+        if (unavailable) {
+
+          html +=
+
+            "<br>Worker: " +
+
+            escapeHtml(
+              toolbox.worker
+            );
+
+        }
+
+
+        html +=
+          "</div>";
+
+      });
+
+
+      container.innerHTML =
+        html;
+
     }
+
   );
 
 }
@@ -1812,12 +1489,14 @@ function showCameraError(error) {
 
 
 // =====================================================
-// HTML ESCAPE
+// ESCAPE HTML
 // =====================================================
 
 function escapeHtml(value) {
 
-  return String(value ?? "")
+  return String(
+    value ?? ""
+  )
 
     .replace(
       /&/g,
@@ -1860,9 +1539,9 @@ function showSuccess(message) {
     )
     .innerHTML =
 
-      "<div class='success'>" +
-      message +
-      "</div>";
+    "<div class='success'>" +
+    message +
+    "</div>";
 
 }
 
@@ -1876,10 +1555,10 @@ function showError(message) {
     )
     .innerHTML =
 
-      "<div class='error'>" +
-      "⚠ " +
-      message +
-      "</div>";
+    "<div class='error'>" +
+    "⚠ " +
+    message +
+    "</div>";
 
 }
 
@@ -1893,9 +1572,9 @@ function showMessage(message) {
     )
     .innerHTML =
 
-      "<div class='info'>" +
-      message +
-      "</div>";
+    "<div class='info'>" +
+    message +
+    "</div>";
 
 }
 
@@ -1905,10 +1584,9 @@ function showMessage(message) {
 // START
 // =====================================================
 
-updateDisplay();
+loadStatus();
 
 </script>
-
 
 </body>
 
