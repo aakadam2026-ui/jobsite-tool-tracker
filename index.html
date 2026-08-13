@@ -12,16 +12,13 @@
 
   <title>Jobsite Tool Tracker</title>
 
-  <!-- Barcode Scanner -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-
 
   <style>
 
     * {
       box-sizing: border-box;
     }
-
 
     body {
       margin: 0;
@@ -30,13 +27,11 @@
       color: #111827;
     }
 
-
     .container {
       max-width: 500px;
       margin: auto;
       padding: 18px;
     }
-
 
     .header {
       background: #111827;
@@ -47,12 +42,10 @@
       text-align: center;
     }
 
-
     .header h1 {
       margin: 0;
       font-size: 23px;
     }
-
 
     .card {
       background: white;
@@ -61,7 +54,6 @@
       margin-bottom: 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-
 
     button {
       width: 100%;
@@ -74,36 +66,35 @@
       margin-top: 10px;
     }
 
-
     button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
-
 
     .scan {
       background: #111827;
       color: white;
     }
 
-
     .take {
       background: #16a34a;
       color: white;
     }
-
 
     .return {
       background: #2563eb;
       color: white;
     }
 
-
     .cancel {
       background: #e5e7eb;
       color: #111827;
     }
 
+    .danger {
+      background: #dc2626;
+      color: white;
+    }
 
     .info {
       background: #f9fafb;
@@ -111,7 +102,6 @@
       border-radius: 10px;
       margin-top: 10px;
     }
-
 
     .success {
       background: #dcfce7;
@@ -122,7 +112,6 @@
       font-weight: bold;
     }
 
-
     .error {
       background: #fee2e2;
       color: #991b1b;
@@ -132,24 +121,20 @@
       font-weight: bold;
     }
 
-
     .label {
       color: #6b7280;
       font-size: 13px;
       margin-top: 8px;
     }
 
-
     .value {
       font-size: 18px;
       font-weight: bold;
     }
 
-
     .hidden {
       display: none;
     }
-
 
     .scanner {
       width: 100%;
@@ -159,12 +144,10 @@
       background: #000;
     }
 
-
     .scanner video {
       width: 100% !important;
       border-radius: 12px;
     }
-
 
     .scan-instruction {
       background: #111827;
@@ -174,9 +157,27 @@
       font-size: 14px;
     }
 
+    .status-available {
+      color: #16a34a;
+      font-weight: bold;
+    }
 
-    .section-title {
-      margin-bottom: 5px;
+    .status-out {
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    .transaction {
+      background: #f9fafb;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #6b7280;
     }
 
   </style>
@@ -199,7 +200,7 @@
     </h1>
 
     <div>
-      Toolbox Tracking
+      Toolbox Checkout & Check-in
     </div>
 
   </div>
@@ -212,12 +213,12 @@
 
   <div class="card">
 
-    <h2 class="section-title">
-      🟢 Take Toolbox
+    <h2>
+      🟢 Worker Takes Toolbox
     </h2>
 
     <p>
-      Worker takes a toolbox.
+      Scan the worker and then scan the toolbox.
     </p>
 
 
@@ -237,6 +238,7 @@
 
 
     <button
+      id="workerScanButton"
       class="scan"
       onclick="startWorkerScan()"
     >
@@ -250,15 +252,13 @@
     >
 
       <div class="scan-instruction">
-        Point the camera at the worker Code 39 barcode
+        Point camera at worker Code 39 barcode
       </div>
-
 
       <div
         id="workerReader"
         class="scanner"
       ></div>
-
 
       <button
         class="cancel"
@@ -287,6 +287,7 @@
 
 
     <button
+      id="toolboxScanButton"
       class="scan"
       onclick="startToolboxScan()"
     >
@@ -300,15 +301,13 @@
     >
 
       <div class="scan-instruction">
-        Point the camera at the toolbox Code 39 barcode
+        Point camera at toolbox Code 39 barcode
       </div>
-
 
       <div
         id="toolboxReader"
         class="scanner"
       ></div>
-
 
       <button
         class="cancel"
@@ -338,12 +337,12 @@
 
   <div class="card">
 
-    <h2 class="section-title">
-      🔵 Return Toolbox
+    <h2>
+      🔵 Worker Returns Toolbox
     </h2>
 
     <p>
-      Worker returns the toolbox.
+      Scan the toolbox being returned.
     </p>
 
 
@@ -356,6 +355,7 @@
 
 
     <button
+      id="returnScanButton"
       class="scan"
       onclick="startReturnScan()"
     >
@@ -369,15 +369,13 @@
     >
 
       <div class="scan-instruction">
-        Point the camera at the toolbox Code 39 barcode
+        Point camera at toolbox Code 39 barcode
       </div>
-
 
       <div
         id="returnReader"
         class="scanner"
       ></div>
-
 
       <button
         class="cancel"
@@ -401,6 +399,42 @@
 
 
 
+  <!-- ================================================= -->
+  <!-- CURRENT TOOLBOX -->
+  <!-- ================================================= -->
+
+  <div class="card">
+
+    <h2>
+      📋 Current Status
+    </h2>
+
+    <div id="currentStatus">
+      Loading...
+    </div>
+
+  </div>
+
+
+
+  <!-- ================================================= -->
+  <!-- RECENT TRANSACTIONS -->
+  <!-- ================================================= -->
+
+  <div class="card">
+
+    <h2>
+      🕐 Recent Transactions
+    </h2>
+
+    <div id="transactions">
+      No transactions yet.
+    </div>
+
+  </div>
+
+
+
   <!-- MESSAGE -->
 
   <div id="message"></div>
@@ -411,6 +445,67 @@
 
 
 <script>
+
+
+// =====================================================
+// TEMPORARY DATABASE
+// =====================================================
+//
+// This is temporary.
+// Later these records will come from Excel.
+//
+// =====================================================
+
+
+// -----------------------------------------------------
+// WORKERS
+// -----------------------------------------------------
+
+const workers = [
+
+  {
+    barcode: "10001",
+    id: "10001",
+    name: "Daniel Abston",
+    trade: "Mechanical",
+    active: true
+  },
+
+  {
+    barcode: "10002",
+    id: "10002",
+    name: "Cody Coffman",
+    trade: "Mechanical",
+    active: true
+  },
+
+  {
+    barcode: "10003",
+    id: "10003",
+    name: "Abhishek Kadam",
+    trade: "Mechanical",
+    active: true
+  }
+
+];
+
+
+// -----------------------------------------------------
+// TOOLBOXES
+// -----------------------------------------------------
+
+const toolboxes = [
+
+  {
+    barcode: "TB10001",
+    id: "TB10001",
+    name: "Box 1",
+    type: "Mechanical",
+    status: "Available"
+  }
+
+];
+
 
 
 // =====================================================
@@ -431,8 +526,49 @@ let toolboxScanner = null;
 let returnScanner = null;
 
 
+
 // =====================================================
-// CODE 39 SCANNER CONFIG
+// LOCAL STORAGE
+// =====================================================
+
+const STORAGE_KEY =
+  "jobsite_tool_tracker_transactions";
+
+
+
+function getTransactions() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    ) || [];
+
+  }
+
+  catch(error) {
+
+    return [];
+
+  }
+
+}
+
+
+
+function saveTransactions(transactions) {
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(transactions)
+  );
+
+}
+
+
+
+// =====================================================
+// CODE 39 SCANNER
 // =====================================================
 
 const scannerConfig = {
@@ -451,22 +587,89 @@ const scannerConfig = {
 };
 
 
-// =====================================================
-// API PLACEHOLDER
-// =====================================================
-//
-// THIS WILL LATER CONNECT TO SHAREPOINT / EXCEL.
-//
-// DO NOT PUT A MICROSOFT PASSWORD OR SECRET HERE.
-//
 
-async function apiRequest(action, data = {}) {
+// =====================================================
+// FIND WORKER
+// =====================================================
 
-  throw new Error(
-    "Excel connection has not been configured yet."
-  );
+function findWorker(barcode) {
+
+  const search =
+    String(barcode)
+      .trim()
+      .toUpperCase();
+
+
+  return workers.find(function(worker) {
+
+    return worker.barcode
+      .toUpperCase() === search;
+
+  }) || null;
 
 }
+
+
+
+// =====================================================
+// FIND TOOLBOX
+// =====================================================
+
+function findToolbox(barcode) {
+
+  const search =
+    String(barcode)
+      .trim()
+      .toUpperCase();
+
+
+  return toolboxes.find(function(toolbox) {
+
+    return toolbox.barcode
+      .toUpperCase() === search;
+
+  }) || null;
+
+}
+
+
+
+// =====================================================
+// GET OPEN TOOLBOX TRANSACTION
+// =====================================================
+
+function getOpenTransaction(toolboxId) {
+
+  const transactions =
+    getTransactions();
+
+
+  for (
+    let i = transactions.length - 1;
+    i >= 0;
+    i--
+  ) {
+
+    const transaction =
+      transactions[i];
+
+
+    if (
+      transaction.toolboxId === toolboxId &&
+      !transaction.checkout
+    ) {
+
+      return transaction;
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
 
 
 // =====================================================
@@ -489,7 +692,9 @@ function startWorkerScan() {
 
 
   workerScanner =
-    new Html5Qrcode("workerReader");
+    new Html5Qrcode(
+      "workerReader"
+    );
 
 
   workerScanner
@@ -501,7 +706,7 @@ function startWorkerScan() {
 
       scannerConfig,
 
-      async function(decodedText) {
+      function(decodedText) {
 
         const barcode =
           decodedText.trim();
@@ -515,80 +720,63 @@ function startWorkerScan() {
         stopWorkerScan();
 
 
-        showMessage(
-          "Looking up worker..."
-        );
+        const worker =
+          findWorker(barcode);
 
 
-        try {
-
-          const worker =
-            await apiRequest(
-              "getWorker",
-              {
-                barcode: barcode
-              }
-            );
-
-
-          if (!worker) {
-
-            throw new Error(
-              "Worker not found: " +
-              barcode
-            );
-
-          }
-
-
-          if (!worker.active) {
-
-            throw new Error(
-              worker.name +
-              " is not active."
-            );
-
-          }
-
-
-          workerId =
-            String(worker.id).trim();
-
-
-          document
-            .getElementById(
-              "workerDisplay"
-            )
-            .innerHTML =
-
-              "<div class='label'>Worker</div>" +
-
-              "<div class='value'>" +
-              escapeHtml(worker.name) +
-              "</div>" +
-
-              "<div>ID: " +
-              escapeHtml(worker.id) +
-              "</div>" +
-
-              "<div>" +
-              escapeHtml(worker.trade) +
-              "</div>";
-
-
-          showSuccess(
-            "Worker scanned successfully."
-          );
-
-        }
-
-        catch(error) {
+        if (!worker) {
 
           showError(
-            error.message
+            "Worker not found: " +
+            barcode
           );
 
+          return;
+
         }
+
+
+        if (!worker.active) {
+
+          showError(
+            worker.name +
+            " is not active."
+          );
+
+          return;
+
+        }
+
+
+        workerId =
+          worker.id;
+
+
+        document
+          .getElementById(
+            "workerDisplay"
+          )
+          .innerHTML =
+
+            "<div class='label'>Worker</div>" +
+
+            "<div class='value'>" +
+            escapeHtml(worker.name) +
+            "</div>" +
+
+            "<div>ID: " +
+            escapeHtml(worker.id) +
+            "</div>" +
+
+            "<div>" +
+            escapeHtml(worker.trade) +
+            "</div>";
+
+
+        showSuccess(
+          "Worker scanned: " +
+          worker.name
+        );
 
       },
 
@@ -616,8 +804,9 @@ function startWorkerScan() {
 }
 
 
+
 // =====================================================
-// TOOLBOX SCANNER FOR TAKING TOOLBOX
+// TOOLBOX SCANNER
 // =====================================================
 
 function startToolboxScan() {
@@ -638,7 +827,9 @@ function startToolboxScan() {
 
 
   toolboxScanner =
-    new Html5Qrcode("toolboxReader");
+    new Html5Qrcode(
+      "toolboxReader"
+    );
 
 
   toolboxScanner
@@ -650,7 +841,7 @@ function startToolboxScan() {
 
       scannerConfig,
 
-      async function(decodedText) {
+      function(decodedText) {
 
         const barcode =
           decodedText.trim();
@@ -664,71 +855,89 @@ function startToolboxScan() {
         stopToolboxScan();
 
 
-        showMessage(
-          "Looking up toolbox..."
-        );
+        const toolbox =
+          findToolbox(barcode);
 
 
-        try {
+        if (!toolbox) {
 
-          const toolbox =
-            await apiRequest(
-              "getToolbox",
-              {
-                barcode: barcode
-              }
-            );
+          showError(
+            "Toolbox not found: " +
+            barcode
+          );
 
+          return;
 
-          if (!toolbox) {
-
-            throw new Error(
-              "Toolbox not found: " +
-              barcode
-            );
-
-          }
+        }
 
 
-          toolboxId =
-            String(toolbox.id).trim();
+        toolboxId =
+          toolbox.id;
 
 
-          document
-            .getElementById(
-              "toolboxDisplay"
-            )
-            .innerHTML =
-
-              "<div class='label'>Toolbox</div>" +
-
-              "<div class='value'>" +
-              escapeHtml(toolbox.name) +
-              "</div>" +
-
-              "<div>ID: " +
-              escapeHtml(toolbox.id) +
-              "</div>" +
-
-              "<div>Type: " +
-              escapeHtml(toolbox.type) +
-              "</div>" +
-
-              "<div>Status: " +
-              escapeHtml(toolbox.status) +
-              "</div>";
+        const openTransaction =
+          getOpenTransaction(
+            toolbox.id
+          );
 
 
-          showSuccess(
-            "Toolbox scanned successfully."
+        let currentStatus =
+          "Available";
+
+
+        if (openTransaction) {
+
+          currentStatus =
+            "Checked Out";
+
+        }
+
+
+        document
+          .getElementById(
+            "toolboxDisplay"
+          )
+          .innerHTML =
+
+            "<div class='label'>Toolbox</div>" +
+
+            "<div class='value'>" +
+            escapeHtml(toolbox.name) +
+            "</div>" +
+
+            "<div>ID: " +
+            escapeHtml(toolbox.id) +
+            "</div>" +
+
+            "<div>Type: " +
+            escapeHtml(toolbox.type) +
+            "</div>" +
+
+            "<div>Status: " +
+
+            (
+              currentStatus === "Available"
+                ? "<span class='status-available'>Available</span>"
+                : "<span class='status-out'>Checked Out</span>"
+            ) +
+
+            "</div>";
+
+
+        if (openTransaction) {
+
+          showError(
+            "This toolbox is currently with " +
+            openTransaction.workerName
           );
 
         }
 
-        catch(error) {
+        else {
 
-          showError(
-            error.message
+          showSuccess(
+            "Toolbox scanned: " +
+            toolbox.name
           );
 
         }
@@ -759,8 +968,9 @@ function startToolboxScan() {
 }
 
 
+
 // =====================================================
-// RETURN TOOLBOX SCANNER
+// RETURN SCANNER
 // =====================================================
 
 function startReturnScan() {
@@ -781,7 +991,9 @@ function startReturnScan() {
 
 
   returnScanner =
-    new Html5Qrcode("returnReader");
+    new Html5Qrcode(
+      "returnReader"
+    );
 
 
   returnScanner
@@ -793,7 +1005,7 @@ function startReturnScan() {
 
       scannerConfig,
 
-      async function(decodedText) {
+      function(decodedText) {
 
         const barcode =
           decodedText.trim();
@@ -807,74 +1019,72 @@ function startReturnScan() {
         stopReturnScan();
 
 
-        showMessage(
-          "Looking up toolbox..."
-        );
+        const toolbox =
+          findToolbox(barcode);
 
 
-        try {
-
-          const toolbox =
-            await apiRequest(
-              "getToolbox",
-              {
-                barcode: barcode
-              }
-            );
-
-
-          if (!toolbox) {
-
-            throw new Error(
-              "Toolbox not found: " +
-              barcode
-            );
-
-          }
-
-
-          returnToolboxId =
-            String(toolbox.id).trim();
-
-
-          document
-            .getElementById(
-              "returnToolboxDisplay"
-            )
-            .innerHTML =
-
-              "<div class='label'>Toolbox</div>" +
-
-              "<div class='value'>" +
-              escapeHtml(toolbox.name) +
-              "</div>" +
-
-              "<div>ID: " +
-              escapeHtml(toolbox.id) +
-              "</div>" +
-
-              "<div>Type: " +
-              escapeHtml(toolbox.type) +
-              "</div>" +
-
-              "<div>Status: " +
-              escapeHtml(toolbox.status) +
-              "</div>";
-
-
-          showSuccess(
-            "Toolbox scanned successfully."
-          );
-
-        }
-
-        catch(error) {
+        if (!toolbox) {
 
           showError(
-            error.message
+            "Toolbox not found: " +
+            barcode
           );
 
+          return;
+
         }
+
+
+        returnToolboxId =
+          toolbox.id;
+
+
+        const openTransaction =
+          getOpenTransaction(
+            toolbox.id
+          );
+
+
+        if (!openTransaction) {
+
+          showError(
+            "This toolbox is not currently checked out."
+          );
+
+          return;
+
+        }
+
+
+        document
+          .getElementById(
+            "returnToolboxDisplay"
+          )
+          .innerHTML =
+
+            "<div class='label'>Toolbox</div>" +
+
+            "<div class='value'>" +
+            escapeHtml(toolbox.name) +
+            "</div>" +
+
+            "<div>ID: " +
+            escapeHtml(toolbox.id) +
+            "</div>" +
+
+            "<div>Currently with:</div>" +
+
+            "<div class='value'>" +
+            escapeHtml(
+              openTransaction.workerName
+            ) +
+            "</div>";
+
+
+        showSuccess(
+          "Toolbox belongs to " +
+          openTransaction.workerName
+        );
 
       },
 
@@ -900,6 +1110,7 @@ function startReturnScan() {
     });
 
 }
+
 
 
 // =====================================================
@@ -937,6 +1148,7 @@ function stopWorkerScan() {
 }
 
 
+
 // =====================================================
 // STOP TOOLBOX SCANNER
 // =====================================================
@@ -970,6 +1182,7 @@ function stopToolboxScan() {
     .classList.add("hidden");
 
 }
+
 
 
 // =====================================================
@@ -1007,8 +1220,9 @@ function stopReturnScan() {
 }
 
 
+
 // =====================================================
-// STOP ALL SCANNERS
+// STOP ALL
 // =====================================================
 
 function stopAllScanners() {
@@ -1022,16 +1236,12 @@ function stopAllScanners() {
 }
 
 
+
 // =====================================================
 // TAKE TOOLBOX
-// Worker receives toolbox
-// Excel:
-// Date      = today
-// Checkin   = current time
-// Checkout  = blank
 // =====================================================
 
-async function takeToolbox() {
+function takeToolbox() {
 
   if (!workerId) {
 
@@ -1055,83 +1265,130 @@ async function takeToolbox() {
   }
 
 
-  const button =
-    document.getElementById(
-      "takeButton"
+  const worker =
+    workers.find(function(w) {
+
+      return w.id === workerId;
+
+    });
+
+
+  const toolbox =
+    findToolbox(toolboxId);
+
+
+  if (!worker || !toolbox) {
+
+    showError(
+      "Worker or toolbox could not be found."
+    );
+
+    return;
+
+  }
+
+
+  const existing =
+    getOpenTransaction(
+      toolbox.id
     );
 
 
-  button.disabled = true;
+  if (existing) {
+
+    showError(
+
+      toolbox.name +
+      " is already with " +
+      existing.workerName
+
+    );
+
+    return;
+
+  }
 
 
-  showMessage(
-    "Recording toolbox checkout..."
+  const now =
+    new Date();
+
+
+  const transaction = {
+
+    timestamp:
+      now.toISOString(),
+
+    date:
+      getDateString(now),
+
+    workerId:
+      worker.id,
+
+    workerName:
+      worker.name,
+
+    toolboxId:
+      toolbox.id,
+
+    toolboxName:
+      toolbox.name,
+
+    checkin:
+      getTimeString(now),
+
+    checkout:
+      ""
+
+  };
+
+
+  const transactions =
+    getTransactions();
+
+
+  transactions.push(
+    transaction
   );
 
 
-  try {
-
-    const result =
-      await apiRequest(
-        "takeToolbox",
-        {
-
-          workerId:
-            workerId,
-
-          toolboxId:
-            toolboxId
-
-        }
-      );
+  saveTransactions(
+    transactions
+  );
 
 
-    showSuccess(
+  showSuccess(
 
-      "✓ TOOLBOX GIVEN TO WORKER<br><br>" +
+    "✓ TOOLBOX GIVEN TO WORKER<br><br>" +
 
-      "Worker: " +
-      escapeHtml(result.worker) +
+    "Worker: " +
+    escapeHtml(worker.name) +
 
-      "<br>" +
+    "<br>" +
 
-      "Toolbox: " +
-      escapeHtml(result.toolbox) +
+    "Toolbox: " +
+    escapeHtml(toolbox.name) +
 
-      "<br>" +
+    "<br>" +
 
-      "Time: " +
-      escapeHtml(result.time)
+    "Check-in: " +
+    escapeHtml(transaction.checkin)
 
-    );
-
-
-    resetTakeForm();
-
-  }
-
-  catch(error) {
-
-    showError(
-      error.message
-    );
-
-  }
+  );
 
 
-  button.disabled = false;
+  resetTakeForm();
+
+  updateDisplay();
 
 }
 
 
+
 // =====================================================
 // RETURN TOOLBOX
-// Worker returns toolbox
-// Excel:
-// Checkout = current time
 // =====================================================
 
-async function returnToolbox() {
+function returnToolbox() {
 
   if (!returnToolboxId) {
 
@@ -1144,74 +1401,91 @@ async function returnToolbox() {
   }
 
 
-  const button =
-    document.getElementById(
-      "returnButton"
+  const transaction =
+    getOpenTransaction(
+      returnToolboxId
     );
 
 
-  button.disabled = true;
+  if (!transaction) {
+
+    showError(
+      "This toolbox is not currently checked out."
+    );
+
+    return;
+
+  }
 
 
-  showMessage(
-    "Recording toolbox return..."
+  const now =
+    new Date();
+
+
+  transaction.checkout =
+    getTimeString(now);
+
+
+  const transactions =
+    getTransactions();
+
+
+  for (
+    let i = 0;
+    i < transactions.length;
+    i++
+  ) {
+
+    if (
+      transactions[i].timestamp ===
+      transaction.timestamp
+    ) {
+
+      transactions[i] =
+        transaction;
+
+      break;
+
+    }
+
+  }
+
+
+  saveTransactions(
+    transactions
   );
 
 
-  try {
+  showSuccess(
 
-    const result =
-      await apiRequest(
-        "returnToolbox",
-        {
+    "✓ TOOLBOX RETURNED<br><br>" +
 
-          toolboxId:
-            returnToolboxId
+    "Worker: " +
+    escapeHtml(transaction.workerName) +
 
-        }
-      );
+    "<br>" +
 
+    "Toolbox: " +
+    escapeHtml(transaction.toolboxName) +
 
-    showSuccess(
+    "<br>" +
 
-      "✓ TOOLBOX RETURNED<br><br>" +
+    "Checkout: " +
+    escapeHtml(transaction.checkout)
 
-      "Worker: " +
-      escapeHtml(result.worker) +
-
-      "<br>" +
-
-      "Toolbox: " +
-      escapeHtml(result.toolbox) +
-
-      "<br>" +
-
-      "Time: " +
-      escapeHtml(result.time)
-
-    );
+  );
 
 
-    resetReturnForm();
+  resetReturnForm();
 
-  }
-
-  catch(error) {
-
-    showError(
-      error.message
-    );
-
-  }
-
-
-  button.disabled = false;
+  updateDisplay();
 
 }
 
 
+
 // =====================================================
-// RESET TAKE FORM
+// RESET TAKE
 // =====================================================
 
 function resetTakeForm() {
@@ -1239,8 +1513,9 @@ function resetTakeForm() {
 }
 
 
+
 // =====================================================
-// RESET RETURN FORM
+// RESET RETURN
 // =====================================================
 
 function resetReturnForm() {
@@ -1256,6 +1531,255 @@ function resetReturnForm() {
       "No toolbox scanned";
 
 }
+
+
+
+// =====================================================
+// CURRENT STATUS
+// =====================================================
+
+function updateCurrentStatus() {
+
+  const container =
+    document.getElementById(
+      "currentStatus"
+    );
+
+
+  let html = "";
+
+
+  toolboxes.forEach(function(toolbox) {
+
+    const transaction =
+      getOpenTransaction(
+        toolbox.id
+      );
+
+
+    if (transaction) {
+
+      html +=
+
+        "<div class='transaction'>" +
+
+        "<strong>" +
+        escapeHtml(toolbox.name) +
+        "</strong>" +
+
+        "<br>" +
+
+        "<span class='status-out'>" +
+        "CHECKED OUT" +
+        "</span>" +
+
+        "<br>" +
+
+        "Worker: " +
+        escapeHtml(
+          transaction.workerName
+        ) +
+
+        "<br>" +
+
+        "Since: " +
+        escapeHtml(
+          transaction.checkin
+        ) +
+
+        "</div>";
+
+    }
+
+    else {
+
+      html +=
+
+        "<div class='transaction'>" +
+
+        "<strong>" +
+        escapeHtml(toolbox.name) +
+        "</strong>" +
+
+        "<br>" +
+
+        "<span class='status-available'>" +
+        "AVAILABLE" +
+        "</span>" +
+
+        "</div>";
+
+    }
+
+  });
+
+
+  container.innerHTML =
+    html || "No toolbox data.";
+
+}
+
+
+
+// =====================================================
+// TRANSACTIONS DISPLAY
+// =====================================================
+
+function updateTransactions() {
+
+  const container =
+    document.getElementById(
+      "transactions"
+    );
+
+
+  const transactions =
+    getTransactions();
+
+
+  if (!transactions.length) {
+
+    container.innerHTML =
+      "No transactions yet.";
+
+    return;
+
+  }
+
+
+  const recent =
+    transactions
+      .slice()
+      .reverse()
+      .slice(0, 10);
+
+
+  let html = "";
+
+
+  recent.forEach(function(transaction) {
+
+    html +=
+
+      "<div class='transaction'>" +
+
+      "<strong>" +
+      escapeHtml(
+        transaction.toolboxName
+      ) +
+      "</strong>" +
+
+      "<br>" +
+
+      "Worker: " +
+      escapeHtml(
+        transaction.workerName
+      ) +
+
+      "<br>" +
+
+      "Date: " +
+      escapeHtml(
+        transaction.date
+      ) +
+
+      "<br>" +
+
+      "Checkin: " +
+      escapeHtml(
+        transaction.checkin
+      );
+
+
+    if (transaction.checkout) {
+
+      html +=
+
+        "<br>" +
+
+        "Checkout: " +
+        escapeHtml(
+          transaction.checkout
+        );
+
+    }
+
+    else {
+
+      html +=
+
+        "<br>" +
+
+        "<span class='status-out'>" +
+        "Currently checked out" +
+        "</span>";
+
+    }
+
+
+    html +=
+      "</div>";
+
+  });
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+
+// =====================================================
+// UPDATE EVERYTHING
+// =====================================================
+
+function updateDisplay() {
+
+  updateCurrentStatus();
+
+  updateTransactions();
+
+}
+
+
+
+// =====================================================
+// DATE
+// =====================================================
+
+function getDateString(date) {
+
+  return (
+
+    (date.getMonth() + 1) +
+    "/" +
+    date.getDate() +
+    "/" +
+    date.getFullYear()
+
+  );
+
+}
+
+
+
+// =====================================================
+// TIME
+// =====================================================
+
+function getTimeString(date) {
+
+  return date.toLocaleTimeString(
+    [],
+    {
+      hour: "numeric",
+      minute: "2-digit"
+    }
+  );
+
+}
+
 
 
 // =====================================================
@@ -1286,25 +1810,42 @@ function showCameraError(error) {
 }
 
 
+
 // =====================================================
-// HTML ESCAPING
+// HTML ESCAPE
 // =====================================================
 
 function escapeHtml(value) {
 
   return String(value ?? "")
 
-    .replace(/&/g, "&amp;")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
 
-    .replace(/</g, "&lt;")
+    .replace(
+      /</g,
+      "&lt;"
+    )
 
-    .replace(/>/g, "&gt;")
+    .replace(
+      />/g,
+      "&gt;"
+    )
 
-    .replace(/"/g, "&quot;")
+    .replace(
+      /"/g,
+      "&quot;"
+    )
 
-    .replace(/'/g, "&#039;");
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
+
 
 
 // =====================================================
@@ -1314,7 +1855,9 @@ function escapeHtml(value) {
 function showSuccess(message) {
 
   document
-    .getElementById("message")
+    .getElementById(
+      "message"
+    )
     .innerHTML =
 
       "<div class='success'>" +
@@ -1324,10 +1867,13 @@ function showSuccess(message) {
 }
 
 
+
 function showError(message) {
 
   document
-    .getElementById("message")
+    .getElementById(
+      "message"
+    )
     .innerHTML =
 
       "<div class='error'>" +
@@ -1338,10 +1884,13 @@ function showError(message) {
 }
 
 
+
 function showMessage(message) {
 
   document
-    .getElementById("message")
+    .getElementById(
+      "message"
+    )
     .innerHTML =
 
       "<div class='info'>" +
@@ -1350,7 +1899,16 @@ function showMessage(message) {
 
 }
 
+
+
+// =====================================================
+// START
+// =====================================================
+
+updateDisplay();
+
 </script>
+
 
 </body>
 
