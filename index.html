@@ -13,12 +13,7 @@
 
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-
 <style>
-
-/* =====================================================
-   BASIC
-   ===================================================== */
 
 * {
   box-sizing: border-box;
@@ -26,10 +21,10 @@
 
 html,
 body {
+  width: 100%;
+  max-width: 100%;
   margin: 0;
   padding: 0;
-  width: 100%;
-  min-height: 100%;
   overflow-x: hidden;
 }
 
@@ -38,7 +33,6 @@ body {
   background: #f3f4f6;
   color: #111827;
 }
-
 
 /* =====================================================
    MAIN CONTAINER
@@ -51,14 +45,12 @@ body {
   padding: 18px;
 }
 
-
 /* =====================================================
    HEADER
    ===================================================== */
 
 .header {
   width: 100%;
-
   background: linear-gradient(
     135deg,
     #111827,
@@ -66,27 +58,19 @@ body {
   );
 
   color: white;
-
   padding: 20px 18px;
-
   border-radius: 16px;
-
   margin-bottom: 18px;
-
   text-align: center;
 
   box-shadow:
     0 4px 12px rgba(0,0,0,0.15);
 }
 
-
-/* LOGO */
-
 .company-logo {
   width: auto;
-
-  max-width: 240px;
-
+  max-width: 260px;
+  max-height: 90px;
   height: auto;
 
   display: block;
@@ -94,54 +78,48 @@ body {
   margin: 0 auto 14px auto;
 
   background: white;
-
   padding: 8px;
-
   border-radius: 8px;
+
+  object-fit: contain;
 }
-
-
-/* TITLE */
 
 .header h1 {
   margin: 0;
+  padding: 0;
 
   width: 100%;
 
   text-align: center;
 
   font-size: 23px;
+  line-height: 1.2;
 
   font-weight: 800;
 
-  color: white;
-
   letter-spacing: 0.5px;
+
+  color: white;
 }
 
-
-/* SUBTITLE */
-
-.header .subtitle {
-  margin-top: 7px;
+.subtitle {
+  margin-top: 8px;
 
   width: 100%;
 
   text-align: center;
 
   font-size: 15px;
-
   font-weight: 600;
 
   color: #000000;
 
   background: white;
 
-  border-radius: 6px;
+  padding: 6px 10px;
 
-  padding: 5px 8px;
+  border-radius: 7px;
 }
-
 
 /* =====================================================
    CARDS
@@ -165,7 +143,6 @@ body {
 .card h2 {
   margin-top: 0;
 }
-
 
 /* =====================================================
    BUTTONS
@@ -191,6 +168,7 @@ button {
 
 button:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .scan {
@@ -213,9 +191,8 @@ button:disabled {
   color: #111827;
 }
 
-
 /* =====================================================
-   INFORMATION
+   INFORMATION BOX
    ===================================================== */
 
 .info {
@@ -226,6 +203,8 @@ button:disabled {
   border-radius: 10px;
 
   margin-top: 10px;
+
+  word-wrap: break-word;
 }
 
 .success {
@@ -270,32 +249,34 @@ button:disabled {
   font-weight: bold;
 }
 
-
-/* =====================================================
-   HIDDEN
-   ===================================================== */
-
 .hidden {
   display: none !important;
 }
-
 
 /* =====================================================
    SCANNER
    ===================================================== */
 
-.scanner {
+.scanner-wrapper {
   width: 100%;
 
-  margin-top: 15px;
-
-  overflow: hidden;
-
-  border-radius: 12px;
+  margin-top: 12px;
 
   background: #000;
 
+  border-radius: 12px;
+
+  overflow: hidden;
+
   position: relative;
+}
+
+.scanner {
+  width: 100%;
+
+  background: #000;
+
+  overflow: hidden;
 }
 
 .scanner video {
@@ -303,9 +284,11 @@ button:disabled {
 
   height: auto !important;
 
-  display: block;
+  max-height: 320px;
 
-  border-radius: 12px;
+  object-fit: cover;
+
+  display: block;
 }
 
 .scan-instruction {
@@ -320,6 +303,17 @@ button:disabled {
   font-size: 14px;
 }
 
+/* =====================================================
+   KEEP SCANNER FROM PUSHING PAGE SIDEWAYS
+   ===================================================== */
+
+#workerScanner,
+#toolScanner,
+#checkoutScanner {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
 
 /* =====================================================
    MOBILE
@@ -328,10 +322,6 @@ button:disabled {
 @media (max-width: 600px) {
 
   .container {
-    width: 100%;
-
-    max-width: 500px;
-
     padding: 12px;
   }
 
@@ -341,42 +331,57 @@ button:disabled {
 
   .company-logo {
     max-width: 220px;
+    max-height: 80px;
   }
 
   .header h1 {
     font-size: 21px;
   }
 
+  .card {
+    padding: 15px;
+  }
+
+  button {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .scanner video {
+    max-height: 280px;
+  }
+
 }
 
-
 /* =====================================================
-   LAPTOP / DESKTOP
-   KEEP SAME COMPACT WIDTH
+   DESKTOP
    ===================================================== */
 
 @media (min-width: 601px) {
 
+  body {
+    display: block;
+  }
+
   .container {
     width: 500px;
-
     max-width: 500px;
-
     margin-left: auto;
-
     margin-right: auto;
   }
 
 }
 
-
 /* =====================================================
-   PREVENT PAGE MOVEMENT DURING SCANNING
+   PREVENT CAMERA FROM MOVING PAGE
    ===================================================== */
 
-html.scanning,
+html {
+  scroll-behavior: auto;
+}
+
 body.scanning {
-  overflow: hidden !important;
+  overflow-x: hidden;
 }
 
 </style>
@@ -386,241 +391,234 @@ body.scanning {
 
 <body>
 
-
 <div class="container">
 
 
-  <!-- =================================================
-       HEADER
-       ================================================= -->
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
-  <div class="header">
+<div class="header">
 
-    <img
-      src="logo.png"
-      class="company-logo"
-      alt="Spirit Construction Services, Inc."
-    >
+  <img
+    src="logo.png"
+    class="company-logo"
+    alt="Spirit Construction Services, Inc."
+  >
 
-    <h1>
-      JOBSITE TOOL TRACKER
-    </h1>
+  <h1>
+    JOBSITE TOOL TRACKER
+  </h1>
 
-    <div class="subtitle">
-      Tool Checkout & Check-in
-    </div>
-
+  <div class="subtitle">
+    Tool Checkout & Check-in
   </div>
 
+</div>
 
-  <!-- =================================================
-       CHECK IN / GIVE TOOL TO WORKER
-       ================================================= -->
 
-  <div class="card">
+<!-- =====================================================
+     CHECK IN / GIVE TOOL TO WORKER
+     ===================================================== -->
 
-    <h2>
-      🔵 Check In
-    </h2>
+<div class="card">
 
-    <p>
-      Scan the worker first, then scan the tool being given to the worker.
-    </p>
+<h2>🔵 Check In</h2>
 
+<p>
+Scan the worker first, then scan the tool being given to the worker.
+</p>
 
-    <!-- WORKER -->
 
-    <div class="label">
-      1. Worker
-    </div>
+<!-- WORKER -->
 
-    <div
-      id="workerDisplay"
-      class="info">
+<div class="label">
+1. Worker
+</div>
 
-      No worker scanned
+<div
+id="workerDisplay"
+class="info">
 
-    </div>
+No worker scanned
 
+</div>
 
-    <button
-      id="workerScanButton"
-      class="scan"
-      onclick="startWorkerScan()">
 
-      📷 SCAN WORKER BARCODE
+<button
+id="workerScanButton"
+class="scan"
+onclick="startWorkerScan()">
 
-    </button>
+📷 SCAN WORKER BARCODE
 
+</button>
 
-    <div
-      id="workerScanner"
-      class="hidden">
 
-      <div class="scan-instruction">
+<div
+id="workerScanner"
+class="hidden">
 
-        Point the camera at the worker Code 39 barcode
+<div class="scan-instruction">
 
-      </div>
+Point the camera at the worker Code 39 barcode
 
-      <div
-        id="workerReader"
-        class="scanner">
-      </div>
+</div>
 
-      <button
-        class="cancel"
-        onclick="stopWorkerScan()">
+<div
+id="workerReader"
+class="scanner">
+</div>
 
-        Cancel
+<button
+class="cancel"
+onclick="stopWorkerScan()">
 
-      </button>
+Cancel
 
-    </div>
+</button>
 
+</div>
 
-    <!-- TOOL -->
 
-    <div class="label">
+<!-- TOOL -->
 
-      2. Tool
+<div class="label">
 
-    </div>
+2. Tool
 
-    <div
-      id="toolDisplay"
-      class="info">
+</div>
 
-      No tool scanned
+<div
+id="toolDisplay"
+class="info">
 
-    </div>
+No tool scanned
 
+</div>
 
-    <button
-      id="toolScanButton"
-      class="scan"
-      onclick="startToolScan()">
 
-      📷 SCAN TOOL BARCODE
+<button
+id="toolScanButton"
+class="scan"
+onclick="startToolScan()">
 
-    </button>
+📷 SCAN TOOL BARCODE
 
+</button>
 
-    <div
-      id="toolScanner"
-      class="hidden">
 
-      <div class="scan-instruction">
+<div
+id="toolScanner"
+class="hidden">
 
-        Point the camera at the tool Code 39 barcode
+<div class="scan-instruction">
 
-      </div>
+Point the camera at the tool Code 39 barcode
 
-      <div
-        id="toolReader"
-        class="scanner">
-      </div>
+</div>
 
-      <button
-        class="cancel"
-        onclick="stopToolScan()">
+<div
+id="toolReader"
+class="scanner">
+</div>
 
-        Cancel
+<button
+class="cancel"
+onclick="stopToolScan()">
 
-      </button>
+Cancel
 
-    </div>
+</button>
 
+</div>
 
-    <button
-      id="checkinButton"
-      class="checkin"
-      onclick="checkin()">
 
-      ✓ CHECK IN TOOL
+<button
+id="checkinButton"
+class="checkin"
+onclick="checkin()">
 
-    </button>
+✓ CHECK IN TOOL
 
-  </div>
+</button>
 
+</div>
 
-  <!-- =================================================
-       CHECK OUT / RETURN TOOL
-       ================================================= -->
 
-  <div class="card">
+<!-- =====================================================
+     CHECK OUT / RETURN TOOL
+     ===================================================== -->
 
-    <h2>
-      🟢 Check Out
-    </h2>
+<div class="card">
 
-    <p>
-      Scan the tool being returned by the worker.
-    </p>
+<h2>🟢 Check Out</h2>
 
+<p>
+Scan the tool being returned by the worker.
+</p>
 
-    <div
-      id="checkoutToolDisplay"
-      class="info">
 
-      No tool scanned
+<div
+id="checkoutToolDisplay"
+class="info">
 
-    </div>
+No tool scanned
 
+</div>
 
-    <button
-      id="checkoutScanButton"
-      class="scan"
-      onclick="startCheckoutScan()">
 
-      📷 SCAN TOOL BARCODE
+<button
+id="checkoutScanButton"
+class="scan"
+onclick="startCheckoutScan()">
 
-    </button>
+📷 SCAN TOOL BARCODE
 
+</button>
 
-    <div
-      id="checkoutScanner"
-      class="hidden">
 
-      <div class="scan-instruction">
+<div
+id="checkoutScanner"
+class="hidden">
 
-        Point the camera at the tool Code 39 barcode
+<div class="scan-instruction">
 
-      </div>
+Point the camera at the tool Code 39 barcode
 
-      <div
-        id="checkoutReader"
-        class="scanner">
-      </div>
+</div>
 
-      <button
-        class="cancel"
-        onclick="stopCheckoutScan()">
+<div
+id="checkoutReader"
+class="scanner">
+</div>
 
-        Cancel
+<button
+class="cancel"
+onclick="stopCheckoutScan()">
 
-      </button>
+Cancel
 
-    </div>
+</button>
 
+</div>
 
-    <button
-      id="checkoutButton"
-      class="checkout"
-      onclick="checkout()">
 
-      ✓ CHECK OUT TOOL
+<button
+id="checkoutButton"
+class="checkout"
+onclick="checkout()">
 
-    </button>
+✓ CHECK OUT TOOL
 
-  </div>
+</button>
 
+</div>
 
-  <!-- =================================================
-       MESSAGE
-       ================================================= -->
 
-  <div id="message"></div>
+<!-- MESSAGE -->
+
+<div id="message"></div>
 
 
 </div>
@@ -647,19 +645,46 @@ let toolId = "";
 
 let checkoutToolId = "";
 
-
 let workerScanner = null;
 
 let toolScanner = null;
 
-let checkoutScanner = null;
+let checkoutScanner = "";
 
+let checkoutScannerObject = null;
 
 let workerScanLocked = false;
 
 let toolScanLocked = false;
 
 let checkoutScanLocked = false;
+
+
+// =====================================================
+// SAVE SCROLL POSITION
+// =====================================================
+
+let savedScrollPosition = 0;
+
+
+function saveScrollPosition() {
+
+  savedScrollPosition =
+    window.pageYOffset ||
+    document.documentElement.scrollTop ||
+    0;
+
+}
+
+
+function restoreScrollPosition() {
+
+  window.scrollTo(
+    0,
+    savedScrollPosition
+  );
+
+}
 
 
 // =====================================================
@@ -686,13 +711,20 @@ const scannerConfig = {
 // API CALL
 // =====================================================
 
-function callApi(action, params, success, failure) {
+function callApi(
+  action,
+  params,
+  success,
+  failure
+) {
 
   const callbackName =
     "apiCallback_" +
     Date.now() +
     "_" +
-    Math.floor(Math.random() * 10000);
+    Math.floor(
+      Math.random() * 10000
+    );
 
 
   window[callbackName] =
@@ -712,6 +744,7 @@ function callApi(action, params, success, failure) {
           });
 
           return;
+
         }
 
         success(result);
@@ -728,7 +761,7 @@ function callApi(action, params, success, failure) {
 
         delete window[callbackName];
 
-        if (script.parentNode) {
+        if (script) {
           script.remove();
         }
 
@@ -749,19 +782,20 @@ function callApi(action, params, success, failure) {
     encodeURIComponent(callbackName);
 
 
-  Object.keys(params || {}).forEach(
-    function(key) {
+  Object.keys(params || {})
+    .forEach(
+      function(key) {
 
-      url +=
-        "&" +
-        encodeURIComponent(key) +
-        "=" +
-        encodeURIComponent(
-          params[key]
-        );
+        url +=
+          "&" +
+          encodeURIComponent(key) +
+          "=" +
+          encodeURIComponent(
+            params[key]
+          );
 
-    }
-  );
+      }
+    );
 
 
   script.src = url;
@@ -772,9 +806,7 @@ function callApi(action, params, success, failure) {
 
       delete window[callbackName];
 
-      if (script.parentNode) {
-        script.remove();
-      }
+      script.remove();
 
       failure({
         message:
@@ -790,70 +822,6 @@ function callApi(action, params, success, failure) {
 
 
 // =====================================================
-// START SCANNING - PAGE POSITION
-// =====================================================
-
-function lockPagePosition() {
-
-  const savedScrollPosition =
-    window.scrollY;
-
-
-  document.documentElement
-    .classList.add("scanning");
-
-  document.body
-    .classList.add("scanning");
-
-
-  requestAnimationFrame(function() {
-
-    window.scrollTo(
-      0,
-      savedScrollPosition
-    );
-
-  });
-
-
-  setTimeout(function() {
-
-    window.scrollTo(
-      0,
-      savedScrollPosition
-    );
-
-  }, 50);
-
-
-  setTimeout(function() {
-
-    window.scrollTo(
-      0,
-      savedScrollPosition
-    );
-
-  }, 250);
-
-}
-
-
-// =====================================================
-// STOP SCANNING - PAGE POSITION
-// =====================================================
-
-function unlockPagePosition() {
-
-  document.documentElement
-    .classList.remove("scanning");
-
-  document.body
-    .classList.remove("scanning");
-
-}
-
-
-// =====================================================
 // WORKER SCANNER
 // =====================================================
 
@@ -864,15 +832,26 @@ function startWorkerScan() {
   }
 
 
+  saveScrollPosition();
+
+
   workerScanLocked = false;
 
 
-  document
-    .getElementById("workerScanner")
-    .classList.remove("hidden");
+  const scannerElement =
+    document.getElementById(
+      "workerScanner"
+    );
 
 
-  lockPagePosition();
+  scannerElement.classList.remove(
+    "hidden"
+  );
+
+
+  document.body.classList.add(
+    "scanning"
+  );
 
 
   showMessage(
@@ -890,7 +869,8 @@ function startWorkerScan() {
     .start(
 
       {
-        facingMode: "environment"
+        facingMode:
+          "environment"
       },
 
       scannerConfig,
@@ -910,8 +890,7 @@ function startWorkerScan() {
 
 
         showMessage(
-          "Worker barcode detected: " +
-          workerId
+          "Worker barcode detected."
         );
 
 
@@ -935,6 +914,7 @@ function startWorkerScan() {
               );
 
               return;
+
             }
 
 
@@ -948,6 +928,7 @@ function startWorkerScan() {
               );
 
               return;
+
             }
 
 
@@ -1013,21 +994,29 @@ function startWorkerScan() {
 
     )
 
-    .catch(function(error) {
+    .catch(
+      function(error) {
 
-      workerScanner = null;
+        workerScanner = null;
 
-      document
-        .getElementById(
-          "workerScanner"
-        )
-        .classList.add("hidden");
+        document
+          .getElementById(
+            "workerScanner"
+          )
+          .classList.add(
+            "hidden"
+          );
 
-      unlockPagePosition();
+        document.body.classList.remove(
+          "scanning"
+        );
 
-      showCameraError(error);
+        restoreScrollPosition();
 
-    });
+        showCameraError(error);
+
+      }
+    );
 
 }
 
@@ -1048,12 +1037,39 @@ function stopWorkerScan() {
 
     scanner
       .stop()
-      .then(function() {
+      .then(
+        function() {
 
-        scanner.clear();
+          scanner.clear();
 
-      })
-      .catch(function() {});
+          document.body.classList.remove(
+            "scanning"
+          );
+
+          restoreScrollPosition();
+
+        }
+      )
+      .catch(
+        function() {
+
+          document.body.classList.remove(
+            "scanning"
+          );
+
+          restoreScrollPosition();
+
+        }
+      );
+
+  }
+  else {
+
+    document.body.classList.remove(
+      "scanning"
+    );
+
+    restoreScrollPosition();
 
   }
 
@@ -1062,10 +1078,9 @@ function stopWorkerScan() {
     .getElementById(
       "workerScanner"
     )
-    .classList.add("hidden");
-
-
-  unlockPagePosition();
+    .classList.add(
+      "hidden"
+    );
 
 }
 
@@ -1081,6 +1096,9 @@ function startToolScan() {
   }
 
 
+  saveScrollPosition();
+
+
   toolScanLocked = false;
 
 
@@ -1088,10 +1106,14 @@ function startToolScan() {
     .getElementById(
       "toolScanner"
     )
-    .classList.remove("hidden");
+    .classList.remove(
+      "hidden"
+    );
 
 
-  lockPagePosition();
+  document.body.classList.add(
+    "scanning"
+  );
 
 
   showMessage(
@@ -1109,7 +1131,8 @@ function startToolScan() {
     .start(
 
       {
-        facingMode: "environment"
+        facingMode:
+          "environment"
       },
 
       scannerConfig,
@@ -1129,8 +1152,7 @@ function startToolScan() {
 
 
         showMessage(
-          "Tool barcode detected: " +
-          toolId
+          "Tool barcode detected."
         );
 
 
@@ -1154,6 +1176,7 @@ function startToolScan() {
               );
 
               return;
+
             }
 
 
@@ -1225,21 +1248,29 @@ function startToolScan() {
 
     )
 
-    .catch(function(error) {
+    .catch(
+      function(error) {
 
-      toolScanner = null;
+        toolScanner = null;
 
-      document
-        .getElementById(
-          "toolScanner"
-        )
-        .classList.add("hidden");
+        document
+          .getElementById(
+            "toolScanner"
+          )
+          .classList.add(
+            "hidden"
+          );
 
-      unlockPagePosition();
+        document.body.classList.remove(
+          "scanning"
+        );
 
-      showCameraError(error);
+        restoreScrollPosition();
 
-    });
+        showCameraError(error);
+
+      }
+    );
 
 }
 
@@ -1260,12 +1291,39 @@ function stopToolScan() {
 
     scanner
       .stop()
-      .then(function() {
+      .then(
+        function() {
 
-        scanner.clear();
+          scanner.clear();
 
-      })
-      .catch(function() {});
+          document.body.classList.remove(
+            "scanning"
+          );
+
+          restoreScrollPosition();
+
+        }
+      )
+      .catch(
+        function() {
+
+          document.body.classList.remove(
+            "scanning"
+          );
+
+          restoreScrollPosition();
+
+        }
+      );
+
+  }
+  else {
+
+    document.body.classList.remove(
+      "scanning"
+    );
+
+    restoreScrollPosition();
 
   }
 
@@ -1274,10 +1332,9 @@ function stopToolScan() {
     .getElementById(
       "toolScanner"
     )
-    .classList.add("hidden");
-
-
-  unlockPagePosition();
+    .classList.add(
+      "hidden"
+    );
 
 }
 
@@ -1288,9 +1345,12 @@ function stopToolScan() {
 
 function startCheckoutScan() {
 
-  if (checkoutScanner) {
+  if (checkoutScannerObject) {
     return;
   }
+
+
+  saveScrollPosition();
 
 
   checkoutScanLocked = false;
@@ -1300,10 +1360,14 @@ function startCheckoutScan() {
     .getElementById(
       "checkoutScanner"
     )
-    .classList.remove("hidden");
+    .classList.remove(
+      "hidden"
+    );
 
 
-  lockPagePosition();
+  document.body.classList.add(
+    "scanning"
+  );
 
 
   showMessage(
@@ -1311,17 +1375,18 @@ function startCheckoutScan() {
   );
 
 
-  checkoutScanner =
+  checkoutScannerObject =
     new Html5Qrcode(
       "checkoutReader"
     );
 
 
-  checkoutScanner
+  checkoutScannerObject
     .start(
 
       {
-        facingMode: "environment"
+        facingMode:
+          "environment"
       },
 
       scannerConfig,
@@ -1341,8 +1406,7 @@ function startCheckoutScan() {
 
 
         showMessage(
-          "Tool barcode detected: " +
-          checkoutToolId
+          "Tool barcode detected."
         );
 
 
@@ -1351,7 +1415,8 @@ function startCheckoutScan() {
           "getTool",
 
           {
-            barcode: checkoutToolId
+            barcode:
+              checkoutToolId
           },
 
           function(tool) {
@@ -1366,6 +1431,7 @@ function startCheckoutScan() {
               );
 
               return;
+
             }
 
 
@@ -1437,21 +1503,29 @@ function startCheckoutScan() {
 
     )
 
-    .catch(function(error) {
+    .catch(
+      function(error) {
 
-      checkoutScanner = null;
+        checkoutScannerObject = null;
 
-      document
-        .getElementById(
-          "checkoutScanner"
-        )
-        .classList.add("hidden");
+        document
+          .getElementById(
+            "checkoutScanner"
+          )
+          .classList.add(
+            "hidden"
+          );
 
-      unlockPagePosition();
+        document.body.classList.remove(
+          "scanning"
+        );
 
-      showCameraError(error);
+        restoreScrollPosition();
 
-    });
+        showCameraError(error);
+
+      }
+    );
 
 }
 
@@ -1462,22 +1536,49 @@ function startCheckoutScan() {
 
 function stopCheckoutScan() {
 
-  if (checkoutScanner) {
+  if (checkoutScannerObject) {
 
     const scanner =
-      checkoutScanner;
+      checkoutScannerObject;
 
-    checkoutScanner = null;
+    checkoutScannerObject = null;
 
 
     scanner
       .stop()
-      .then(function() {
+      .then(
+        function() {
 
-        scanner.clear();
+          scanner.clear();
 
-      })
-      .catch(function() {});
+          document.body.classList.remove(
+            "scanning"
+          );
+
+          restoreScrollPosition();
+
+        }
+      )
+      .catch(
+        function() {
+
+          document.body.classList.remove(
+            "scanning"
+          );
+
+          restoreScrollPosition();
+
+        }
+      );
+
+  }
+  else {
+
+    document.body.classList.remove(
+      "scanning"
+    );
+
+    restoreScrollPosition();
 
   }
 
@@ -1486,10 +1587,9 @@ function stopCheckoutScan() {
     .getElementById(
       "checkoutScanner"
     )
-    .classList.add("hidden");
-
-
-  unlockPagePosition();
+    .classList.add(
+      "hidden"
+    );
 
 }
 
@@ -1508,6 +1608,7 @@ function checkin() {
     );
 
     return;
+
   }
 
 
@@ -1518,6 +1619,7 @@ function checkin() {
     );
 
     return;
+
   }
 
 
@@ -1538,8 +1640,11 @@ function checkin() {
     "checkinTool",
 
     {
-      workerId: workerId,
-      toolId: toolId
+      workerId:
+        workerId,
+
+      toolId:
+        toolId
     },
 
     function(result) {
@@ -1552,21 +1657,18 @@ function checkin() {
         escapeHtml(
           result.worker
         ) +
-
         "<br>" +
 
         "Tool: " +
         escapeHtml(
           result.tool
         ) +
-
         "<br>" +
 
         "Transaction ID: " +
         escapeHtml(
           result.transactionId
         ) +
-
         "<br>" +
 
         "Time: " +
@@ -1622,6 +1724,7 @@ function checkout() {
     );
 
     return;
+
   }
 
 
@@ -1656,21 +1759,18 @@ function checkout() {
         escapeHtml(
           result.worker
         ) +
-
         "<br>" +
 
         "Tool: " +
         escapeHtml(
           result.tool
         ) +
-
         "<br>" +
 
         "Transaction ID: " +
         escapeHtml(
           result.transactionId
         ) +
-
         "<br>" +
 
         "Returned: " +
@@ -1769,7 +1869,8 @@ function showCameraError(error) {
 
     "<br><br>" +
 
-    "Make sure camera permission is allowed for this website."
+    "Make sure camera permission is allowed " +
+    "for this website."
 
   );
 
