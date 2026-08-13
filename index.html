@@ -27,11 +27,54 @@ body {
   color: #111827;
 }
 
-.container {
+/* =====================================================
+   FINAL COMPACT LAYOUT
+   ===================================================== */
+
+html,
+body {
   width: 100%;
-  max-width: 500px;
-  margin: auto;
-  padding: 18px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100% !important;
+  max-width: 500px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Keep cards compact */
+.card {
+  width: 100%;
+}
+
+/* Keep header compact */
+.header {
+  width: 100%;
+  text-align: center;
+}
+
+/* Center JOBSITE TOOL TRACKER */
+.header h1 {
+  width: 100%;
+  text-align: center !important;
+}
+
+/* Make Tool Checkout & Check-in BLACK */
+.header .subtitle {
+  color: #000000 !important;
+  text-align: center !important;
+  font-weight: 600;
+}
+
+/* If subtitle is a normal div instead of .subtitle */
+.header > div {
+  color: #000000 !important;
+  text-align: center !important;
 }
 
 .header {
@@ -589,10 +632,17 @@ return;
 workerScanLocked = false;
 
 
-document
-.getElementById("workerScanner")
-.classList.remove("hidden");
+const savedScrollPosition = window.scrollY;
 
+document
+  .getElementById("workerScanner")
+  .classList.remove("hidden");
+
+window.scrollTo(0, savedScrollPosition);
+
+setTimeout(function() {
+  window.scrollTo(0, savedScrollPosition);
+}, 100);
 
 showMessage(
 "Starting camera..."
@@ -792,11 +842,19 @@ return;
 toolScanLocked = false;
 
 
+const savedScrollPosition = window.scrollY;
+
 document
-.getElementById(
-"toolScanner"
-)
-.classList.remove("hidden");
+  .getElementById(
+    "toolboxScanner"
+  )
+  .classList.remove("hidden");
+
+window.scrollTo(0, savedScrollPosition);
+
+setTimeout(function() {
+  window.scrollTo(0, savedScrollPosition);
+}, 100);
 
 
 showMessage(
@@ -987,11 +1045,19 @@ return;
 checkoutScanLocked = false;
 
 
+const savedScrollPosition = window.scrollY;
+
 document
-.getElementById(
-"checkoutScanner"
-)
-.classList.remove("hidden");
+  .getElementById(
+    "checkinScanner"
+  )
+  .classList.remove("hidden");
+
+window.scrollTo(0, savedScrollPosition);
+
+setTimeout(function() {
+  window.scrollTo(0, savedScrollPosition);
+}, 100);
 
 
 showMessage(
