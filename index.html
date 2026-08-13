@@ -3,192 +3,155 @@
 
 <head>
 
-  <base target="_top">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-  <title>Jobsite Tool Tracker</title>
+<title>Jobsite Tool Tracker</title>
 
-  <script
-    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
-  </script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 
-  <style>
+<style>
 
-    * {
-      box-sizing: border-box;
-    }
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f4f6;
-      color: #111827;
-    }
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 18px;
+}
 
+.header {
+  background: #111827;
+  color: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  text-align: center;
+}
 
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 18px;
-    }
+.header h1 {
+  margin: 0;
+  font-size: 23px;
+}
 
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
 
-    .header {
-      background: #111827;
-      color: white;
-      padding: 20px;
-      border-radius: 14px;
-      margin-bottom: 18px;
-      text-align: center;
-    }
+button {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
+button:disabled {
+  opacity: 0.5;
+}
 
-    .header h1 {
-      margin: 0;
-      font-size: 23px;
-    }
+.scan {
+  background: #111827;
+  color: white;
+}
 
+.checkin {
+  background: #2563eb;
+  color: white;
+}
 
-    .card {
-      background: white;
-      padding: 18px;
-      border-radius: 14px;
-      margin-bottom: 16px;
-      box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-    }
+.checkout {
+  background: #16a34a;
+  color: white;
+}
 
+.cancel {
+  background: #e5e7eb;
+  color: #111827;
+}
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      padding: 15px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+.info {
+  background: #f9fafb;
+  padding: 14px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
 
+.success {
+  background: #dcfce7;
+  color: #166534;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-weight: bold;
+}
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-weight: bold;
+}
 
+.label {
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 8px;
+}
 
-    .scan {
-      background: #111827;
-      color: white;
-    }
+.value {
+  font-size: 18px;
+  font-weight: bold;
+}
 
+.hidden {
+  display: none;
+}
 
-    .checkout {
-      background: #16a34a;
-      color: white;
-    }
+.scanner {
+  width: 100%;
+  margin-top: 15px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
 
+.scanner video {
+  width: 100% !important;
+  border-radius: 12px;
+}
 
-    .checkin {
-      background: #2563eb;
-      color: white;
-    }
+.scan-instruction {
+  background: #111827;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
 
-
-    .cancel {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-
-    .info {
-      background: #f9fafb;
-      padding: 14px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
-
-    .success {
-      background: #dcfce7;
-      color: #166534;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-
-    .error {
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-
-    .label {
-      color: #6b7280;
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-
-    .value {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-
-    .hidden {
-      display: none;
-    }
-
-
-    .scanner {
-      width: 100%;
-      margin-top: 15px;
-      overflow: hidden;
-      border-radius: 12px;
-      background: #000;
-    }
-
-
-    .scanner video {
-      width: 100% !important;
-      border-radius: 12px;
-    }
-
-
-    .scan-instruction {
-      background: #111827;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-
-    .status-available {
-      color: #16a34a;
-      font-weight: bold;
-    }
-
-
-    .status-out {
-      color: #dc2626;
-      font-weight: bold;
-    }
-
-
-  </style>
+</style>
 
 </head>
 
@@ -199,234 +162,222 @@
 <div class="container">
 
 
-  <!-- HEADER -->
+<!-- HEADER -->
 
-  <div class="header">
+<div class="header">
 
-    <h1>
-      🔧 JOBSITE TOOL TRACKER
-    </h1>
+<h1>🔧 JOBSITE TOOL TRACKER</h1>
 
-    <div>
-      Tool Checkout & Check-in
-    </div>
+<div>
+Tool Checkout & Check-in
+</div>
 
-  </div>
+</div>
 
 
 
-  <!-- CHECKOUT -->
+<!-- CHECK IN / GIVE TOOL TO WORKER -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>
-      🟢 Check Out Tool
-    </h2>
+<h2>🔵 Check In</h2>
 
+<p>
+Scan the worker first, then scan the tool being given to the worker.
+</p>
 
-    <div class="label">
-      1. Worker
-    </div>
 
+<!-- WORKER -->
 
-    <div
-      id="workerDisplay"
-      class="info">
+<div class="label">
+1. Worker
+</div>
 
-      No worker scanned
+<div
+id="workerDisplay"
+class="info">
 
-    </div>
+No worker scanned
 
+</div>
 
-    <button
-      id="workerScanButton"
-      class="scan"
-      onclick="startWorkerScan()">
 
-      📷 SCAN WORKER BARCODE
+<button
+id="workerScanButton"
+class="scan"
+onclick="startWorkerScan()">
 
-    </button>
+📷 SCAN WORKER BARCODE
 
+</button>
 
-    <div
-      id="workerScanner"
-      class="hidden">
 
+<div
+id="workerScanner"
+class="hidden">
 
-      <div class="scan-instruction">
+<div class="scan-instruction">
 
-        Point the camera at the
-        worker Code 39 barcode
+Point the camera at the worker Code 39 barcode
 
-      </div>
+</div>
 
+<div
+id="workerReader"
+class="scanner">
+</div>
 
-      <div
-        id="workerReader"
-        class="scanner">
-      </div>
+<button
+class="cancel"
+onclick="stopWorkerScan()">
 
+Cancel
 
-      <button
-        class="cancel"
-        onclick="stopWorkerScan()">
+</button>
 
-        Cancel
+</div>
 
-      </button>
 
-    </div>
 
+<!-- TOOL -->
 
+<div class="label">
 
-    <div class="label">
+2. Tool
 
-      2. Tool
+</div>
 
-    </div>
 
+<div
+id="toolDisplay"
+class="info">
 
-    <div
-      id="toolDisplay"
-      class="info">
+No tool scanned
 
-      No tool scanned
+</div>
 
-    </div>
 
+<button
+id="toolScanButton"
+class="scan"
+onclick="startToolScan()">
 
-    <button
-      id="toolScanButton"
-      class="scan"
-      onclick="startToolScan()">
+📷 SCAN TOOL BARCODE
 
-      📷 SCAN TOOL BARCODE
+</button>
 
-    </button>
 
+<div
+id="toolScanner"
+class="hidden">
 
-    <div
-      id="toolScanner"
-      class="hidden">
+<div class="scan-instruction">
 
+Point the camera at the tool Code 39 barcode
 
-      <div class="scan-instruction">
+</div>
 
-        Point the camera at the
-        tool Code 39 barcode
+<div
+id="toolReader"
+class="scanner">
+</div>
 
-      </div>
+<button
+class="cancel"
+onclick="stopToolScan()">
 
+Cancel
 
-      <div
-        id="toolReader"
-        class="scanner">
-      </div>
+</button>
 
+</div>
 
-      <button
-        class="cancel"
-        onclick="stopToolScan()">
 
-        Cancel
+<button
+id="checkinButton"
+class="checkin"
+onclick="checkin()">
 
-      </button>
+✓ CHECK IN TOOL
 
-    </div>
+</button>
 
+</div>
 
-    <button
-      id="checkoutButton"
-      class="checkout"
-      onclick="checkout()">
 
-      ✓ CHECK OUT TOOL
 
-    </button>
+<!-- CHECK OUT / RETURN TOOL -->
 
-  </div>
+<div class="card">
 
+<h2>🟢 Check Out</h2>
 
+<p>
+Scan the tool being returned by the worker.
+</p>
 
-  <!-- CHECK IN -->
 
-  <div class="card">
+<div
+id="checkoutToolDisplay"
+class="info">
 
-    <h2>
-      🔵 Check In Tool
-    </h2>
+No tool scanned
 
+</div>
 
-    <p>
-      Scan the tool being returned.
-    </p>
 
+<button
+id="checkoutScanButton"
+class="scan"
+onclick="startCheckoutScan()">
 
-    <div
-      id="checkinToolDisplay"
-      class="info">
+📷 SCAN TOOL BARCODE
 
-      No tool scanned
+</button>
 
-    </div>
 
+<div
+id="checkoutScanner"
+class="hidden">
 
-    <button
-      id="checkinScanButton"
-      class="scan"
-      onclick="startCheckinScan()">
+<div class="scan-instruction">
 
-      📷 SCAN TOOL BARCODE
+Point the camera at the tool Code 39 barcode
 
-    </button>
+</div>
 
+<div
+id="checkoutReader"
+class="scanner">
+</div>
 
-    <div
-      id="checkinScanner"
-      class="hidden">
+<button
+class="cancel"
+onclick="stopCheckoutScan()">
 
+Cancel
 
-      <div class="scan-instruction">
+</button>
 
-        Point the camera at the
-        tool Code 39 barcode
+</div>
 
-      </div>
 
+<button
+id="checkoutButton"
+class="checkout"
+onclick="checkout()">
 
-      <div
-        id="checkinReader"
-        class="scanner">
-      </div>
+✓ CHECK OUT TOOL
 
+</button>
 
-      <button
-        class="cancel"
-        onclick="stopCheckinScan()">
+</div>
 
-        Cancel
 
-      </button>
 
-    </div>
+<!-- MESSAGE -->
 
-
-    <button
-      id="checkinButton"
-      class="checkin"
-      onclick="checkin()">
-
-      ✓ CHECK IN TOOL
-
-    </button>
-
-  </div>
-
-
-
-  <!-- MESSAGE -->
-
-  <div id="message"></div>
+<div id="message"></div>
 
 
 </div>
@@ -437,6 +388,14 @@
 
 
 // =====================================================
+// APPS SCRIPT URL
+// =====================================================
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbzyuJ4Oqlmwj5FFgNdWki7F5IOwFE23vhz73VTvG3-LCr3KMPuH9ukz7WRgTtsLTJ2Ohg/exec";
+
+
+// =====================================================
 // VARIABLES
 // =====================================================
 
@@ -444,43 +403,144 @@ let workerId = "";
 
 let toolId = "";
 
-let checkinToolId = "";
+let checkoutToolId = "";
 
 
 let workerScanner = null;
 
 let toolScanner = null;
 
-let checkinScanner = null;
+let checkoutScanner = null;
 
 
 let workerScanLocked = false;
 
 let toolScanLocked = false;
 
-let checkinScanLocked = false;
-
+let checkoutScanLocked = false;
 
 
 // =====================================================
-// CODE 39
+// SCANNER CONFIGURATION
 // =====================================================
 
 const scannerConfig = {
 
-  fps: 10,
+fps: 10,
 
-  qrbox: {
-    width: 300,
-    height: 120
-  },
+qrbox: {
+  width: 300,
+  height: 120
+},
 
-  formatsToSupport: [
-    Html5QrcodeSupportedFormats.CODE_39
-  ]
+formatsToSupport: [
+  Html5QrcodeSupportedFormats.CODE_39
+]
 
 };
 
+
+// =====================================================
+// API CALL
+// =====================================================
+
+function callApi(action, params, success, failure) {
+
+const callbackName =
+"apiCallback_" +
+Date.now() +
+"_" +
+Math.floor(Math.random() * 10000);
+
+
+window[callbackName] =
+function(result) {
+
+try {
+
+if (
+result &&
+result.success === false
+) {
+
+failure({
+message:
+result.error ||
+"An error occurred."
+});
+
+return;
+
+}
+
+success(result);
+
+}
+
+catch(error) {
+
+failure(error);
+
+}
+
+finally {
+
+delete window[callbackName];
+
+script.remove();
+
+}
+
+};
+
+
+const script =
+document.createElement("script");
+
+
+let url =
+API_URL +
+"?action=" +
+encodeURIComponent(action) +
+"&callback=" +
+encodeURIComponent(callbackName);
+
+
+Object.keys(params || {}).forEach(
+function(key) {
+
+url +=
+"&" +
+encodeURIComponent(key) +
+"=" +
+encodeURIComponent(
+params[key]
+);
+
+});
+
+
+script.src = url;
+
+
+script.onerror =
+function() {
+
+delete window[callbackName];
+
+script.remove();
+
+failure({
+message:
+"Could not connect to Google Sheets."
+});
+
+};
+
+
+document.body.appendChild(script);
+
+}
 
 
 // =====================================================
@@ -489,196 +549,201 @@ const scannerConfig = {
 
 function startWorkerScan() {
 
-  if (workerScanner) {
-    return;
-  }
+if (workerScanner) {
+return;
+}
+
+workerScanLocked = false;
 
 
-  workerScanLocked = false;
+document
+.getElementById("workerScanner")
+.classList.remove("hidden");
 
 
-  document
-    .getElementById("workerScanner")
-    .classList.remove("hidden");
+showMessage(
+"Starting camera..."
+);
 
 
-  showMessage("Starting camera...");
+workerScanner =
+new Html5Qrcode(
+"workerReader"
+);
 
 
-  workerScanner =
-    new Html5Qrcode(
-      "workerReader"
-    );
+workerScanner
+.start(
+
+{
+facingMode: "environment"
+},
+
+scannerConfig,
+
+function(decodedText) {
+
+if (workerScanLocked) {
+return;
+}
 
 
-  workerScanner
-    .start(
-
-      {
-        facingMode: "environment"
-      },
-
-      scannerConfig,
-
-      function(decodedText) {
-
-        if (workerScanLocked) {
-          return;
-        }
+workerScanLocked = true;
 
 
-        workerScanLocked = true;
+workerId =
+decodedText.trim();
 
 
-        workerId =
-          decodedText.trim();
+showMessage(
+"Worker barcode detected: " +
+workerId
+);
 
 
-        google.script.run
+callApi(
 
-          .withSuccessHandler(
-            function(worker) {
+"getWorker",
 
-              if (!worker) {
+{
+barcode: workerId
+},
 
-                workerScanLocked = false;
-
-                showError(
-                  "Worker not found: " +
-                  workerId
-                );
-
-                return;
-
-              }
+function(worker) {
 
 
-              if (!worker.active) {
+if (!worker.found) {
 
-                workerScanLocked = false;
+workerScanLocked = false;
 
-                showError(
-                  worker.name +
-                  " is not active."
-                );
+showError(
+"Worker not found: " +
+workerId
+);
 
-                return;
-
-              }
-
-
-              document
-                .getElementById(
-                  "workerDisplay"
-                )
-                .innerHTML =
-
-                "<div class='label'>" +
-                "Worker" +
-                "</div>" +
-
-                "<div class='value'>" +
-                escapeHtml(
-                  worker.name
-                ) +
-                "</div>" +
-
-                "<div>ID: " +
-                escapeHtml(
-                  worker.id
-                ) +
-                "</div>" +
-
-                "<div>" +
-                escapeHtml(
-                  worker.trade
-                ) +
-                "</div>";
-
-
-              stopWorkerScan();
-
-
-              showSuccess(
-                "Worker scanned: " +
-                worker.name
-              );
-
-            }
-          )
-
-          .withFailureHandler(
-            function(error) {
-
-              workerScanLocked = false;
-
-              showError(
-                error.message
-              );
-
-            }
-          )
-
-          .getWorker(workerId);
-
-      },
-
-      function() {}
-
-    )
-
-    .catch(function(error) {
-
-      workerScanner = null;
-
-      document
-        .getElementById(
-          "workerScanner"
-        )
-        .classList.add("hidden");
-
-      showCameraError(error);
-
-    });
+return;
 
 }
 
 
+if (!worker.active) {
+
+workerScanLocked = false;
+
+showError(
+worker.name +
+" is not active."
+);
+
+return;
+
+}
+
+
+document
+.getElementById(
+"workerDisplay"
+)
+.innerHTML =
+
+"<div class='label'>Worker</div>" +
+
+"<div class='value'>" +
+escapeHtml(worker.name) +
+"</div>" +
+
+"<div>ID: " +
+escapeHtml(worker.id) +
+"</div>" +
+
+"<div>Trade: " +
+escapeHtml(worker.trade) +
+"</div>";
+
+
+stopWorkerScan();
+
+
+showSuccess(
+"Worker scanned: " +
+worker.name
+);
+
+},
+
+function(error) {
+
+workerScanLocked = false;
+
+showError(
+error.message ||
+"Could not find worker."
+);
+
+}
+
+);
+
+},
+
+function(errorMessage) {
+
+// Normal scanner messages ignored.
+
+}
+
+)
+
+.catch(function(error) {
+
+workerScanner = null;
+
+document
+.getElementById(
+"workerScanner"
+)
+.classList.add("hidden");
+
+showCameraError(error);
+
+});
+
+}
+
 
 // =====================================================
-// STOP WORKER
+// STOP WORKER SCANNER
 // =====================================================
 
 function stopWorkerScan() {
 
-  if (workerScanner) {
+if (workerScanner) {
 
-    const scanner =
-      workerScanner;
+const scanner =
+workerScanner;
 
-    workerScanner = null;
-
-
-    scanner
-      .stop()
-      .then(function() {
-
-        scanner.clear();
-
-      })
-      .catch(function() {});
-
-  }
+workerScanner = null;
 
 
-  document
-    .getElementById(
-      "workerScanner"
-    )
-    .classList.add("hidden");
+scanner
+.stop()
+.then(function() {
+
+scanner.clear();
+
+})
+.catch(function() {});
 
 }
 
+
+document
+.getElementById(
+"workerScanner"
+)
+.classList.add("hidden");
+
+}
 
 
 // =====================================================
@@ -687,694 +752,626 @@ function stopWorkerScan() {
 
 function startToolScan() {
 
-  if (toolScanner) {
-    return;
-  }
+if (toolScanner) {
+return;
+}
 
+toolScanLocked = false;
 
-  toolScanLocked = false;
 
+document
+.getElementById(
+"toolScanner"
+)
+.classList.remove("hidden");
 
-  document
-    .getElementById(
-      "toolScanner"
-    )
-    .classList.remove("hidden");
 
+showMessage(
+"Starting camera..."
+);
 
-  showMessage("Starting camera...");
 
+toolScanner =
+new Html5Qrcode(
+"toolReader"
+);
 
-  toolScanner =
-    new Html5Qrcode(
-      "toolReader"
-    );
 
+toolScanner
+.start(
 
-  toolScanner
-    .start(
+{
+facingMode: "environment"
+},
 
-      {
-        facingMode: "environment"
-      },
+scannerConfig,
 
-      scannerConfig,
+function(decodedText) {
 
-      function(decodedText) {
+if (toolScanLocked) {
+return;
+}
 
-        if (toolScanLocked) {
-          return;
-        }
 
+toolScanLocked = true;
 
-        toolScanLocked = true;
 
+toolId =
+decodedText.trim();
 
-        toolId =
-          decodedText.trim();
 
+showMessage(
+"Tool barcode detected: " +
+toolId
+);
 
-        google.script.run
 
-          .withSuccessHandler(
-            function(tool) {
+callApi(
 
-              if (!tool) {
+"getTool",
 
-                toolScanLocked = false;
+{
+barcode: toolId
+},
 
-                showError(
-                  "Tool not found: " +
-                  toolId
-                );
+function(tool) {
 
-                return;
 
-              }
+if (!tool.found) {
 
+toolScanLocked = false;
 
-              google.script.run
+showError(
+"Tool not found: " +
+toolId
+);
 
-                .withSuccessHandler(
-                  function(status) {
-
-                    document
-                      .getElementById(
-                        "toolDisplay"
-                      )
-                      .innerHTML =
-
-                      "<div class='label'>" +
-                      "Tool" +
-                      "</div>" +
-
-                      "<div class='value'>" +
-                      escapeHtml(
-                        tool.name
-                      ) +
-                      "</div>" +
-
-                      "<div>ID: " +
-                      escapeHtml(
-                        tool.id
-                      ) +
-                      "</div>" +
-
-                      "<div>Status: " +
-
-                      (
-                        status.status ===
-                        "Available"
-
-                        ?
-
-                        "<span class='status-available'>" +
-                        "Available" +
-                        "</span>"
-
-                        :
-
-                        "<span class='status-out'>" +
-                        "Checked Out" +
-                        "</span>"
-
-                      ) +
-
-                      "</div>";
-
-
-                    stopToolScan();
-
-
-                    if (
-                      status.status ===
-                      "Checked Out"
-                    ) {
-
-                      showError(
-                        "This tool is currently with " +
-                        status.worker
-                      );
-
-                    }
-
-                    else {
-
-                      showSuccess(
-                        "Tool scanned: " +
-                        tool.name
-                      );
-
-                    }
-
-                  }
-                )
-
-                .withFailureHandler(
-                  function(error) {
-
-                    toolScanLocked = false;
-
-                    showError(
-                      error.message
-                    );
-
-                  }
-                )
-
-                .getToolStatus(tool.id);
-
-            }
-          )
-
-          .withFailureHandler(
-            function(error) {
-
-              toolScanLocked = false;
-
-              showError(
-                error.message
-              );
-
-            }
-          )
-
-          .getTool(toolId);
-
-      },
-
-      function() {}
-
-    )
-
-    .catch(function(error) {
-
-      toolScanner = null;
-
-      document
-        .getElementById(
-          "toolScanner"
-        )
-        .classList.add("hidden");
-
-      showCameraError(error);
-
-    });
+return;
 
 }
 
 
+document
+.getElementById(
+"toolDisplay"
+)
+.innerHTML =
+
+"<div class='label'>Tool</div>" +
+
+"<div class='value'>" +
+escapeHtml(tool.name) +
+"</div>" +
+
+"<div>ID: " +
+escapeHtml(tool.id) +
+"</div>" +
+
+"<div>Type: " +
+escapeHtml(tool.type) +
+"</div>" +
+
+"<div>Status: " +
+escapeHtml(tool.status) +
+"</div>";
+
+
+stopToolScan();
+
+
+showSuccess(
+"Tool scanned: " +
+tool.name
+);
+
+},
+
+function(error) {
+
+toolScanLocked = false;
+
+showError(
+error.message ||
+"Could not find tool."
+);
+
+}
+
+);
+
+},
+
+function(errorMessage) {
+
+// Normal scanner messages ignored.
+
+}
+
+)
+
+.catch(function(error) {
+
+toolScanner = null;
+
+document
+.getElementById(
+"toolScanner"
+)
+.classList.add("hidden");
+
+showCameraError(error);
+
+});
+
+}
+
 
 // =====================================================
-// STOP TOOL
+// STOP TOOL SCANNER
 // =====================================================
 
 function stopToolScan() {
 
-  if (toolScanner) {
+if (toolScanner) {
 
-    const scanner =
-      toolScanner;
+const scanner =
+toolScanner;
 
-    toolScanner = null;
-
-
-    scanner
-      .stop()
-      .then(function() {
-
-        scanner.clear();
-
-      })
-      .catch(function() {});
-
-  }
+toolScanner = null;
 
 
-  document
-    .getElementById(
-      "toolScanner"
-    )
-    .classList.add("hidden");
+scanner
+.stop()
+.then(function() {
+
+scanner.clear();
+
+})
+.catch(function() {});
 
 }
 
 
-
-// =====================================================
-// CHECK-IN SCANNER
-// =====================================================
-
-function startCheckinScan() {
-
-  if (checkinScanner) {
-    return;
-  }
-
-
-  checkinScanLocked = false;
-
-
-  document
-    .getElementById(
-      "checkinScanner"
-    )
-    .classList.remove("hidden");
-
-
-  showMessage("Starting camera...");
-
-
-  checkinScanner =
-    new Html5Qrcode(
-      "checkinReader"
-    );
-
-
-  checkinScanner
-    .start(
-
-      {
-        facingMode: "environment"
-      },
-
-      scannerConfig,
-
-      function(decodedText) {
-
-        if (checkinScanLocked) {
-          return;
-        }
-
-
-        checkinScanLocked = true;
-
-
-        checkinToolId =
-          decodedText.trim();
-
-
-        google.script.run
-
-          .withSuccessHandler(
-            function(tool) {
-
-              if (!tool) {
-
-                checkinScanLocked = false;
-
-                showError(
-                  "Tool not found: " +
-                  checkinToolId
-                );
-
-                return;
-
-              }
-
-
-              google.script.run
-
-                .withSuccessHandler(
-                  function(status) {
-
-                    if (
-                      status.status !==
-                      "Checked Out"
-                    ) {
-
-                      checkinScanLocked = false;
-
-                      showError(
-                        "This tool is not currently checked out."
-                      );
-
-                      return;
-
-                    }
-
-
-                    document
-                      .getElementById(
-                        "checkinToolDisplay"
-                      )
-                      .innerHTML =
-
-                      "<div class='label'>" +
-                      "Tool" +
-                      "</div>" +
-
-                      "<div class='value'>" +
-                      escapeHtml(
-                        tool.name
-                      ) +
-                      "</div>" +
-
-                      "<div>ID: " +
-                      escapeHtml(
-                        tool.id
-                      ) +
-                      "</div>" +
-
-                      "<div>Currently with:</div>" +
-
-                      "<div class='value'>" +
-                      escapeHtml(
-                        status.worker
-                      ) +
-                      "</div>";
-
-
-                    stopCheckinScan();
-
-
-                    showSuccess(
-                      "Tool belongs to " +
-                      status.worker
-                    );
-
-                  }
-                )
-
-                .withFailureHandler(
-                  function(error) {
-
-                    checkinScanLocked = false;
-
-                    showError(
-                      error.message
-                    );
-
-                  }
-                )
-
-                .getToolStatus(tool.id);
-
-            }
-          )
-
-          .withFailureHandler(
-            function(error) {
-
-              checkinScanLocked = false;
-
-              showError(
-                error.message
-              );
-
-            }
-          )
-
-          .getTool(checkinToolId);
-
-      },
-
-      function() {}
-
-    )
-
-    .catch(function(error) {
-
-      checkinScanner = null;
-
-      document
-        .getElementById(
-          "checkinScanner"
-        )
-        .classList.add("hidden");
-
-      showCameraError(error);
-
-    });
+document
+.getElementById(
+"toolScanner"
+)
+.classList.add("hidden");
 
 }
 
 
-
 // =====================================================
-// STOP CHECK-IN
+// CHECKOUT TOOL SCANNER
 // =====================================================
 
-function stopCheckinScan() {
+function startCheckoutScan() {
 
-  if (checkinScanner) {
+if (checkoutScanner) {
+return;
+}
 
-    const scanner =
-      checkinScanner;
-
-    checkinScanner = null;
-
-
-    scanner
-      .stop()
-      .then(function() {
-
-        scanner.clear();
-
-      })
-      .catch(function() {});
-
-  }
+checkoutScanLocked = false;
 
 
-  document
-    .getElementById(
-      "checkinScanner"
-    )
-    .classList.add("hidden");
+document
+.getElementById(
+"checkoutScanner"
+)
+.classList.remove("hidden");
+
+
+showMessage(
+"Starting camera..."
+);
+
+
+checkoutScanner =
+new Html5Qrcode(
+"checkoutReader"
+);
+
+
+checkoutScanner
+.start(
+
+{
+facingMode: "environment"
+},
+
+scannerConfig,
+
+function(decodedText) {
+
+if (checkoutScanLocked) {
+return;
+}
+
+
+checkoutScanLocked = true;
+
+
+checkoutToolId =
+decodedText.trim();
+
+
+showMessage(
+"Tool barcode detected: " +
+checkoutToolId
+);
+
+
+callApi(
+
+"getTool",
+
+{
+barcode: checkoutToolId
+},
+
+function(tool) {
+
+
+if (!tool.found) {
+
+checkoutScanLocked = false;
+
+showError(
+"Tool not found: " +
+checkoutToolId
+);
+
+return;
 
 }
 
 
+document
+.getElementById(
+"checkoutToolDisplay"
+)
+.innerHTML =
 
-// =====================================================
-// CHECKOUT
-// =====================================================
+"<div class='label'>Tool</div>" +
 
-function checkout() {
+"<div class='value'>" +
+escapeHtml(tool.name) +
+"</div>" +
 
-  if (!workerId) {
+"<div>ID: " +
+escapeHtml(tool.id) +
+"</div>" +
 
-    showError(
-      "Please scan the worker barcode first."
-    );
+"<div>Type: " +
+escapeHtml(tool.type) +
+"</div>" +
 
-    return;
-
-  }
-
-
-  if (!toolId) {
-
-    showError(
-      "Please scan the tool barcode."
-    );
-
-    return;
-
-  }
+"<div>Status: " +
+escapeHtml(tool.status) +
+"</div>";
 
 
-  const button =
-    document.getElementById(
-      "checkoutButton"
-    );
+stopCheckoutScan();
 
 
-  button.disabled = true;
+showSuccess(
+"Tool scanned: " +
+tool.name
+);
 
+},
 
-  showMessage(
-    "Checking out tool..."
-  );
+function(error) {
 
+checkoutScanLocked = false;
 
-  google.script.run
+showError(
+error.message ||
+"Could not find tool."
+);
 
-    .withSuccessHandler(
-      function(result) {
+}
 
-        showSuccess(
+);
 
-          "✓ CHECKOUT COMPLETE<br><br>" +
+},
 
-          "Worker: " +
-          escapeHtml(
-            result.worker
-          ) +
+function(errorMessage) {
 
-          "<br>" +
+// Normal scanner messages ignored.
 
-          "Tool: " +
-          escapeHtml(
-            result.tool
-          ) +
+}
 
-          "<br>" +
+)
 
-          "Checkin Date Time: " +
-          escapeHtml(
-            result.time
-          )
+.catch(function(error) {
 
-        );
+checkoutScanner = null;
 
+document
+.getElementById(
+"checkoutScanner"
+)
+.classList.add("hidden");
 
-        resetCheckout();
+showCameraError(error);
 
-
-        button.disabled = false;
-
-      }
-    )
-
-    .withFailureHandler(
-      function(error) {
-
-        button.disabled = false;
-
-        showError(
-          error.message
-        );
-
-      }
-    )
-
-    .checkoutTool(
-      workerId,
-      toolId
-    );
+});
 
 }
 
 
+// =====================================================
+// STOP CHECKOUT SCANNER
+// =====================================================
+
+function stopCheckoutScan() {
+
+if (checkoutScanner) {
+
+const scanner =
+checkoutScanner;
+
+checkoutScanner = null;
+
+
+scanner
+.stop()
+.then(function() {
+
+scanner.clear();
+
+})
+.catch(function() {});
+
+}
+
+
+document
+.getElementById(
+"checkoutScanner"
+)
+.classList.add("hidden");
+
+}
+
 
 // =====================================================
-// CHECK-IN
+// CHECK IN
+// Worker receives tool
 // =====================================================
 
 function checkin() {
 
-  if (!checkinToolId) {
+if (!workerId) {
 
-    showError(
-      "Please scan the tool barcode first."
-    );
+showError(
+"Please scan the worker barcode first."
+);
 
-    return;
-
-  }
-
-
-  const button =
-    document.getElementById(
-      "checkinButton"
-    );
-
-
-  button.disabled = true;
-
-
-  showMessage(
-    "Checking in tool..."
-  );
-
-
-  google.script.run
-
-    .withSuccessHandler(
-      function(result) {
-
-        showSuccess(
-
-          "✓ CHECK-IN COMPLETE<br><br>" +
-
-          "Worker: " +
-          escapeHtml(
-            result.worker
-          ) +
-
-          "<br>" +
-
-          "Tool: " +
-          escapeHtml(
-            result.tool
-          ) +
-
-          "<br>" +
-
-          "Checkout Date Time: " +
-          escapeHtml(
-            result.time
-          )
-
-        );
-
-
-        checkinToolId = "";
-
-
-        document
-          .getElementById(
-            "checkinToolDisplay"
-          )
-          .innerHTML =
-          "No tool scanned";
-
-
-        button.disabled = false;
-
-      }
-    )
-
-    .withFailureHandler(
-      function(error) {
-
-        button.disabled = false;
-
-        showError(
-          error.message
-        );
-
-      }
-    )
-
-    .checkinTool(
-      checkinToolId
-    );
+return;
 
 }
 
 
+if (!toolId) {
 
-// =====================================================
-// RESET
-// =====================================================
+showError(
+"Please scan the tool barcode."
+);
 
-function resetCheckout() {
-
-  workerId = "";
-
-  toolId = "";
-
-
-  document
-    .getElementById(
-      "workerDisplay"
-    )
-    .innerHTML =
-    "No worker scanned";
-
-
-  document
-    .getElementById(
-      "toolDisplay"
-    )
-    .innerHTML =
-    "No tool scanned";
+return;
 
 }
 
+
+showMessage(
+"Checking in tool..."
+);
+
+
+document
+.getElementById(
+"checkinButton"
+)
+.disabled = true;
+
+
+callApi(
+
+"checkinTool",
+
+{
+workerId: workerId,
+toolId: toolId
+},
+
+function(result) {
+
+
+showSuccess(
+
+"✓ CHECK-IN COMPLETE<br><br>" +
+
+"Worker: " +
+escapeHtml(result.worker) +
+"<br>" +
+
+"Tool: " +
+escapeHtml(result.tool) +
+"<br>" +
+
+"Transaction ID: " +
+escapeHtml(result.transactionId) +
+"<br>" +
+
+"Time: " +
+escapeHtml(result.time)
+
+);
+
+
+resetCheckin();
+
+
+document
+.getElementById(
+"checkinButton"
+)
+.disabled = false;
+
+},
+
+function(error) {
+
+document
+.getElementById(
+"checkinButton"
+)
+.disabled = false;
+
+
+showError(
+error.message
+);
+
+}
+
+);
+
+}
+
+
+// =====================================================
+// CHECK OUT
+// Worker returns tool
+// =====================================================
+
+function checkout() {
+
+if (!checkoutToolId) {
+
+showError(
+"Please scan the tool barcode."
+);
+
+return;
+
+}
+
+
+showMessage(
+"Checking out tool..."
+);
+
+
+document
+.getElementById(
+"checkoutButton"
+)
+.disabled = true;
+
+
+callApi(
+
+"checkoutTool",
+
+{
+toolId:
+checkoutToolId
+},
+
+function(result) {
+
+
+showSuccess(
+
+"✓ CHECK-OUT COMPLETE<br><br>" +
+
+"Worker: " +
+escapeHtml(result.worker) +
+"<br>" +
+
+"Tool: " +
+escapeHtml(result.tool) +
+"<br>" +
+
+"Transaction ID: " +
+escapeHtml(result.transactionId) +
+"<br>" +
+
+"Returned: " +
+escapeHtml(result.time)
+
+);
+
+
+checkoutToolId = "";
+
+
+document
+.getElementById(
+"checkoutToolDisplay"
+)
+.innerHTML =
+"No tool scanned";
+
+
+document
+.getElementById(
+"checkoutButton"
+)
+.disabled = false;
+
+},
+
+function(error) {
+
+document
+.getElementById(
+"checkoutButton"
+)
+.disabled = false;
+
+
+showError(
+error.message
+);
+
+}
+
+);
+
+}
+
+
+// =====================================================
+// RESET CHECK-IN
+// =====================================================
+
+function resetCheckin() {
+
+workerId = "";
+
+toolId = "";
+
+
+document
+.getElementById(
+"workerDisplay"
+)
+.innerHTML =
+"No worker scanned";
+
+
+document
+.getElementById(
+"toolDisplay"
+)
+.innerHTML =
+"No tool scanned";
+
+}
 
 
 // =====================================================
@@ -1383,27 +1380,25 @@ function resetCheckout() {
 
 function showCameraError(error) {
 
-  let message =
-    error && error.message
-      ? error.message
-      : String(error);
+let message =
+error && error.message
+? error.message
+: String(error);
 
 
-  showError(
+showError(
 
-    "Camera could not start.<br><br>" +
+"Camera could not start.<br><br>" +
 
-    escapeHtml(message) +
+escapeHtml(message) +
 
-    "<br><br>" +
+"<br><br>" +
 
-    "Make sure camera permission is allowed " +
-    "for this website."
+"Make sure camera permission is allowed for this website."
 
-  );
+);
 
 }
-
 
 
 // =====================================================
@@ -1412,43 +1407,44 @@ function showCameraError(error) {
 
 function escapeHtml(value) {
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
-    return "";
-  }
+if (
+value === null ||
+value === undefined
+) {
 
-
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+return "";
 
 }
 
+
+return String(value)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
 
 
 // =====================================================
@@ -1457,51 +1453,50 @@ function escapeHtml(value) {
 
 function showSuccess(message) {
 
-  document
-    .getElementById(
-      "message"
-    )
-    .innerHTML =
+document
+.getElementById(
+"message"
+)
+.innerHTML =
 
-    "<div class='success'>" +
-    message +
-    "</div>";
+"<div class='success'>" +
+message +
+"</div>";
 
 }
 
 
 function showError(message) {
 
-  document
-    .getElementById(
-      "message"
-    )
-    .innerHTML =
+document
+.getElementById(
+"message"
+)
+.innerHTML =
 
-    "<div class='error'>" +
-    "⚠ " +
-    message +
-    "</div>";
+"<div class='error'>" +
+"⚠ " +
+message +
+"</div>";
 
 }
 
 
 function showMessage(message) {
 
-  document
-    .getElementById(
-      "message"
-    )
-    .innerHTML =
+document
+.getElementById(
+"message"
+)
+.innerHTML =
 
-    "<div class='info'>" +
-    message +
-    "</div>";
+"<div class='info'>" +
+message +
+"</div>";
 
 }
 
 </script>
-
 
 </body>
 
